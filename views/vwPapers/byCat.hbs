@@ -1,6 +1,6 @@
 <div class="card">
   <h4 class="card-header">
-    Products
+    Papers
   </h4>
   <div class="card-body">
     {{#if this.empty}}
@@ -8,18 +8,18 @@
     <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
     {{else}}
     <div class="row">
-      {{#each this.products}}
+      {{#each this.papers}}
       <div class="col-sm-4 mb-3">
         <div class="card h-100">
-          <img src="/public/imgs/sp/{{ProID}}/main_thumbs.jpg" class="card-img-top" alt="{{ProName}}"
-            title="{{ProName}}">
+          <img src="/public/imgs/sp/{{PaperID}}/main_thumbs.jpg" class="card-img-top" alt="{{PaperID}}"
+            title="{{PaperID}}">
           <div class="card-body">
-            <h5 class="card-title">{{ProName}}</h5>
-            <h5 class="card-title text-danger">{{format_number Price}}</h5>
-            <p class="card-text">{{TinyDes}}</p>
+            <h5 class="card-title">{{Title}}</h5>
+            {{!-- <h5 class="card-title text-danger">{{format_number Price}}</h5> --}}
+            {{!-- <p class="card-text">{{TinyDes}}</p> --}}
           </div>
           <div class="card-footer">
-            <a class="btn btn-outline-primary btn-sm" href="/products/details/{{ProID}}" role="button">
+            <a class="btn btn-outline-primary btn-sm" href="/papers/details/{{PaperID}}" role="button">
               <i class="fa fa-eye" aria-hidden="true"></i>
               Details
             </a>

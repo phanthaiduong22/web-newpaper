@@ -7,30 +7,29 @@
 //   { CatID: 6, CatName: 'Khác' },
 // ];
 
-const db = require('../utils/db');
+const db = require("../utils/db");
 
 module.exports = {
   all() {
-    return db('categories');
+    return db("categories");
   },
 
   allWithDetails() {
     const sql = `
-      select c.*, count(p.ProID) as ProductCount
-      from categories c left join products p on c.CatID = p.CatID
+      select c.*, count(p.PaperID) as PaperCount
+      from categories c left join papers p on c.CatID = p.CatID
       group by c.CatID, c.CatName
       `;
     return db.raw(sql);
   },
 
   add(category) {
-    return db('categories').insert(category);
+    return db("categories").insert(category);
   },
 
   async findById(id) {
-    const rows = await db('categories').where('CatID', id);
-    if (rows.length === 0)
-      return null;
+    const rows = await db("categories").where("CatID", id);
+    if (rows.length === 0) return null;
 
     return rows[0];
   },
@@ -39,14 +38,10 @@ module.exports = {
     const id = category.CatID;
     delete category.CatID;
 
-    return db('categories')
-      .where('CatID', id)
-      .update(category);
+    return db("categories").where("CatID", id).update(category);
   },
 
   del(id) {
-    return db('categories')
-      .where('CatID', id)
-      .del();
-  }
+    return db("categories").where("CatID", id).del();
+  },
 };

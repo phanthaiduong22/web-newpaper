@@ -98,12 +98,12 @@
           </h4>
           <div class="list-group list-group-flush">
             {{#each lcCategories}}
-            <a href="/products/byCat/{{CatID}}"
+            <a href="/papers/byCat/{{CatID}}"
               class="list-group-item list-group-item-action {{#if IsActive}}active{{/if}}">
               <i class="fa fa-caret-right" aria-hidden="true"></i>
               {{CatName}}
-              {{#if ProductCount}}
-              <span class="badge badge-pill badge-danger float-right">{{ProductCount}}</span>
+              {{#if PaperCount}}
+              <span class="badge badge-pill badge-danger float-right">{{PaperCount}}</span>
               {{/if}}
             </a>
             {{/each}}

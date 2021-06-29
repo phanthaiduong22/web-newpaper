@@ -1,9 +1,9 @@
-const express = require('express');
-const productModel = require('../models/product.model');
+const express = require("express");
+const paperModel = require("../models/paper.model");
 
 const router = express.Router();
 
-router.get('/byCat/:id', async function (req, res) {
+router.get("/byCat/:id", async function (req, res) {
   const catId = +req.params.id || 0;
 
   for (c of res.locals.lcCategories) {
@@ -23,7 +23,7 @@ router.get('/byCat/:id', async function (req, res) {
   const page = req.query.page || 1;
   if (page < 1) page = 1;
 
-  const total = await productModel.countByCatID(catId);
+  const total = await paperModel.countByCatID(catId);
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
 
@@ -31,20 +31,20 @@ router.get('/byCat/:id', async function (req, res) {
   for (i = 1; i <= nPages; i++) {
     page_numbers.push({
       value: i,
-      isCurrent: i === +page
+      isCurrent: i === +page,
     });
   }
 
   const offset = (page - 1) * limit;
-  const list = await productModel.findByCatID(catId, offset);
-  res.render('vwProducts/byCat', {
-    products: list,
+  const list = await paperModel.findByCatID(catId, offset);
+  res.render("vwPapers/byCat", {
+    papers: list,
     empty: list.length === 0,
-    page_numbers
+    page_numbers,
   });
 });
 
-router.get('/details/:id', async function (req, res) {
+router.get("/details/:id", async function (req, res) {
   const proId = +req.params.id || 0;
 
   // for (c of res.locals.lcCategories) {
@@ -54,13 +54,13 @@ router.get('/details/:id', async function (req, res) {
   //   }
   // }
 
-  const product = await productModel.findById(proId);
-  if (product === null) {
-    return res.redirect('/');
+  const paper = await paperModel.findById(proId);
+  if (paper === null) {
+    return res.redirect("/");
   }
 
-  res.render('vwProducts/details', {
-    product: product
+  res.render("vwPapers/details", {
+    paper: paper,
   });
 });
 

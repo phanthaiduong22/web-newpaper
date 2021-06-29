@@ -4,7 +4,7 @@ const knex = require("knex")({
     host: "127.0.0.1",
     user: "bietdoibancuoi",
     password: "BDbc@123",
-    database: "newspaper",
+    database: "newspapers",
     port: 3306,
   },
   pool: {
