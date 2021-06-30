@@ -38,6 +38,11 @@ module.exports = {
     return db("papers").where("PaperID", id).update(paper);
   },
 
+  async size() {
+    const rows = await db("papers").count("*", { as: "total" });
+    return rows[0].total;
+  },
+
   del(id) {
     return db("papers").where("PaperID", id).del();
   },

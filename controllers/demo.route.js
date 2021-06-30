@@ -2,6 +2,7 @@ const express = require("express");
 const multer = require("multer");
 const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
+const fs = require("fs");
 
 const router = express.Router();
 
@@ -16,20 +17,21 @@ const router = express.Router();
 
 router.get("/upload", async function (req, res) {
   const list = await categoryModel.all();
-  console.log(list);
   res.render("vwDemo/upload", {
     categories: list,
     empty: list.length === 0,
   });
 });
 
-router.post("/upload", function (req, res) {
+router.post("/upload", async function (req, res) {
+  const number = await paperModel.size();
+
   const storage = multer.diskStorage({
     destination(req, file, cb) {
       cb(null, "./public/imgs");
     },
     filename(req, file, cb) {
-      cb(null, file.originalname);
+      cb(null, number + ".png");
     },
   });
   const upload = multer({
@@ -45,11 +47,18 @@ router.post("/upload", function (req, res) {
         Abstract: req.body.abstract,
         Content: req.body.content,
         CatID: req.body.categories,
-        Avatar: req.file.filename,
+        Avatar: number + ".png",
       };
+      sqlStr = `INSERT INTO papers (Title, Abstract, Content, CatID, Avatar)
+      VALUES ("${newPaper.Title}", "${newPaper.Abstract}", "${newPaper.Content}", ${newPaper.CatID}, "${newPaper.Avatar}");
+      `;
+
+      fs.appendFile("message.txt", sqlStr, function (err) {
+        if (err) throw err;
+      });
       //todo: tags
       paperModel.add(newPaper);
-      res.render("vwDemo/upload");
+      res.redirect("/demo/upload");
     }
   });
 });

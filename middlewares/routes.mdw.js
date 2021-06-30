@@ -1,9 +1,10 @@
 module.exports = function (app) {
+  // app.get("/", function (req, res) {
+  //   res.render("home", { layout: "main.hbs" });
+  // });
   app.get("/", function (req, res) {
-    // res.send('<b>Hello</b> World!');
     res.render("home");
   });
-
   app.get("/about", function (req, res) {
     res.render("about");
   });

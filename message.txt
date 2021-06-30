@@ -1,0 +1,71 @@
+INSERT INTO papers (Title, Abstract, Content, CatID, Avatar)
+      VALUES ("Microsoft càng ngày càng ép người dùng phải làm theo ý của mình", "“Tôi sẽ không bao giờ sử dụng tài khoản Microsoft để đăng nhập vào chiếc PC của mình”.
+
+", "<p>Theo bi&ecirc;n tập vi&ecirc;n Joel Hruska của trang ExtremeTech, Windows 11 c&oacute; một bước cải l&ugrave;i thực sự đ&aacute;ng kể so với Windows 10. Cụ thể l&agrave; Windows 11 Home sẽ y&ecirc;u cầu kết nối internet v&agrave; bạn phải đăng nhập t&agrave;i khoản Microsoft, để c&oacute; thể c&agrave;i đặt tr&ecirc;n một chiếc PC. Trong khi Windows 10 Home vẫn c&oacute; thể c&agrave;i đặt khi ngoại tuyến, với t&ugrave;y chọn tạo một t&agrave;i khoản cục bộ.</p>
+<p>C&oacute; vẻ như Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh.</p>
+<p>&ldquo;Đ&oacute; l&agrave; một y&ecirc;u cầu lố bịch&rdquo;, Joel Hruska nhận x&eacute;t. Bởi kh&ocirc;ng phải l&uacute;c n&agrave;o bạn cũng cần phải kết nối internet để sử dụng m&aacute;y t&iacute;nh. Mặc d&ugrave; internet hiện nay l&agrave; một thứ g&igrave; đ&oacute; kh&ocirc;ng thể thiếu. Nhưng r&otilde; r&agrave;ng c&oacute; sự kh&aacute;c biệt giữa việc sử dụng PC v&agrave; internet.</p>
+<p>&nbsp;</p>
+<div>
+<div><a title="Windows 11 Home sẽ y&ecirc;u cầu kết nối internet v&agrave; đăng nhập t&agrave;i khoản Microsoft để c&oacute; thể c&agrave;i đặt." href="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-1625023827355758938712.jpg" target="_blank" rel="noopener" data-fancybox-group="img-lightbox"><img id="img_334536966726451200" title="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 1." src="https://genk.mediacdn.vn/thumb_w/660/139269124445442048/2021/6/30/photo-1-1625023827355758938712.jpg" alt="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 1." width="" height="" data-original="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-1625023827355758938712.jpg" /></a></div>
+<div>
+<p data-placeholder="[nhập ch&uacute; th&iacute;ch]">Windows 11 Home sẽ y&ecirc;u cầu kết nối internet v&agrave; đăng nhập t&agrave;i khoản Microsoft để c&oacute; thể c&agrave;i đặt.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Bản th&acirc;n t&ocirc;i cũng kh&ocirc;ng bao giờ sử dụng t&agrave;i khoản Microsoft để đăng nhập v&agrave;o chiếc PC đang sử dụng ở nh&agrave;. Thậm ch&iacute; t&ocirc;i c&ograve;n kh&ocirc;ng sử dụng t&agrave;i khoản cục bộ v&agrave; mật khẩu, v&igrave; chiếc PC n&agrave;y chỉ c&oacute; t&ocirc;i sử dụng v&agrave; t&ocirc;i muốn khi bật l&ecirc;n n&oacute; sẽ hiện m&agrave;n h&igrave;nh desktop lu&ocirc;n m&agrave; kh&ocirc;ng cần phải nhập bất kỳ mật khẩu n&agrave;o.</p>
+<p>Việc sử dụng t&agrave;i khoản Microsoft, đi k&egrave;m với một mật khẩu phức tạp để đảm bảo t&iacute;nh bảo mật tr&ecirc;n mạng internet, ho&agrave;n to&agrave;n kh&ocirc;ng ph&ugrave; hợp với việc sử dụng để đăng nhập v&agrave;o một chiếc m&aacute;y t&iacute;nh c&aacute; nh&acirc;n. T&ocirc;i kh&ocirc;ng cần phải bảo mật chiếc m&aacute;y t&iacute;nh c&aacute; nh&acirc;n của m&igrave;nh như việc bảo vệ t&agrave;i khoản online, v&agrave; cũng kh&ocirc;ng c&oacute; nhu cầu như vậy.</p>
+<p>&nbsp;</p>
+<div>
+<div><a title="Windows 11 cải l&ugrave;i so với Windows 10." href="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250239144221214076107.jpg" target="_blank" rel="noopener" data-fancybox-group="img-lightbox"><img id="img_334537332572782592" title="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 2." src="https://genk.mediacdn.vn/thumb_w/660/139269124445442048/2021/6/30/photo-1-16250239144221214076107.jpg" alt="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 2." width="" height="" data-original="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250239144221214076107.jpg" /></a></div>
+<div>
+<p data-placeholder="[nhập ch&uacute; th&iacute;ch]">Windows 11 cải l&ugrave;i so với Windows 10.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Tuy nhi&ecirc;n theo Joel Hruska, điều khiến &ocirc;ng kh&oacute; chịu hơn cả, l&agrave; c&aacute;ch m&agrave; Microsoft ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh. Microsoft muốn bạn phải cập nhật hệ điều h&agrave;nh mới (Windows 10), Microsoft muốn bạn phải sử dụng tr&igrave;nh duyệt Edge l&agrave;m mặc định, Microsoft muốn bạn phải đăng nhập t&agrave;i khoản Microsoft tr&ecirc;n m&aacute;y t&iacute;nh c&aacute; nh&acirc;n.</p>
+<p>Dường như những điều đ&oacute; kh&ocirc;ng c&ograve;n l&agrave; một t&ugrave;y chọn của người d&ugrave;ng, m&agrave; Microsoft lại t&igrave;m mọi c&aacute;ch để &eacute;p họ phải l&agrave;m như vậy. Theo Joel Hruska, kể từ khi ra mắt Windows 10, Microsoft đ&atilde; sử dụng nhiều chi&ecirc;u tr&ograve; v&agrave; thủ đoạn để đạt được điều m&igrave;nh muốn.</p>
+<div id="admzone480457">
+<div id="zone-480457">
+<div id="share-jny27esn">
+<div id="placement-khlquba2">
+<div id="banner-480457-khlqubal">
+<div id="slot-1-480457-khlqubal">
+<div id="ssppagebid_8214">
+<div id="sspbid_2017500" data-height="undefined" data-width="undefined" data-admssprqid="da8773db-f67a-4a58-adae-493f91dbb56b115-60dc72e2" data-ssp="sspbid_2017500"><iframe id="ads-place-2017500" width="0" height="0" scrolling="no" data-mce-fragment="1"></iframe></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Microsoft đ&atilde; thay đổi c&aacute;ch tạo t&agrave;i khoản cục bộ, bằng c&aacute;ch ẩn n&oacute; đi để người d&ugrave;ng kh&oacute; t&igrave;m ra. Microsoft tạo ra một t&ugrave;y chọn ẩn để c&oacute; thể c&agrave;i đặt t&agrave;i khoản cục bộ, khi người d&ugrave;ng ngoại tuyến trong l&uacute;c c&agrave;i Windows 10. &ldquo;Get Windows 10&rdquo; gi&uacute;p tải v&agrave; c&agrave;i đặt Windows, nhưng n&oacute; lại giống như một phần mềm độc hại hơn l&agrave; một sản phẩm được tạo ra bởi một c&ocirc;ng ty phần mềm h&agrave;ng đầu thế giới.</p>
+<p>&nbsp;</p>
+<div>
+<div><a title="Chiến dịch &ldquo;Get Windows 10&rdquo; bị v&iacute; như một phần mềm độc hại." href="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250234496501830162090.jpg" target="_blank" rel="noopener" data-fancybox-group="img-lightbox"><img id="img_334535382389956608" title="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 3." src="https://genk.mediacdn.vn/thumb_w/660/139269124445442048/2021/6/30/photo-1-16250234496501830162090.jpg" alt="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 3." width="" height="" data-original="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250234496501830162090.jpg" /></a></div>
+<div>
+<p data-placeholder="[nhập ch&uacute; th&iacute;ch]">Chiến dịch &ldquo;Get Windows 10&rdquo; bị v&iacute; như một phần mềm độc hại.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Chiến dịch &ldquo;Get Windows 10&rdquo; thực sự l&agrave; một thảm họa, đ&acirc;y l&agrave; một nỗ lực của Microsoft để &ldquo;&eacute;p&rdquo; người d&ugrave;ng n&acirc;ng cấp l&ecirc;n Windows 10. Microsoft cố t&igrave;nh giấu đi t&ugrave;y chọn hủy bỏ, khiến người d&ugrave;ng lặp đi lặp lại th&ocirc;ng b&aacute;o n&agrave;y, cho đến khi họ thực sự n&acirc;ng cấp l&ecirc;n Windows 10. N&oacute; giống như một loại quảng c&aacute;o spam người d&ugrave;ng.</p>
+<p>&nbsp;</p>
+<div>
+<div><a title="C&agrave;i đặt Windows 10 ban đầu cho ph&eacute;p sử dụng t&agrave;i khoản cục bộ, với t&ugrave;y chọn đăng nhập t&agrave;i khoản trực tuyến." href="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-1625023471692904847129.jpg" target="_blank" rel="noopener" data-fancybox-group="img-lightbox"><img id="img_334535474713985024" title="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 4." src="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-1625023471692904847129.jpg" alt="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 4." width="" height="" data-original="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-1625023471692904847129.jpg" /></a></div>
+<div>
+<p data-placeholder="[nhập ch&uacute; th&iacute;ch]">C&agrave;i đặt Windows 10 ban đầu cho ph&eacute;p sử dụng t&agrave;i khoản cục bộ, với t&ugrave;y chọn đăng nhập t&agrave;i khoản trực tuyến.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>Cho đến khi c&agrave;i đặt Windows 10 c&aacute;c phi&ecirc;n bản đầu ti&ecirc;n, Microsoft cho ph&eacute;p người d&ugrave;ng tạo ngay một t&agrave;i khoản cục bộ m&agrave; kh&ocirc;ng cần đăng nhập t&agrave;i khoản trực tuyến. Nhưng đến phi&ecirc;n bản 1809, Microsoft lại bắt người d&ugrave;ng phải đăng nhập v&agrave;o t&agrave;i khoản trực tuyến khi c&agrave;i đặt v&agrave; giấu t&ugrave;y chọn tạo t&agrave;i khoản cục bộ.</p>
+<p>&nbsp;</p>
+<div>
+<div><a title="Sau đ&oacute; th&igrave; bắt người d&ugrave;ng sử dụng t&agrave;i khoản trực tuyến, kh&ocirc;ng c&oacute; cả t&ugrave;y chọn d&ugrave;ng t&agrave;i khoản cục bộ." href="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250235067971639719940.jpg" target="_blank" rel="noopener" data-fancybox-group="img-lightbox"><img id="img_334535621928366080" title="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 5." src="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250235067971639719940.jpg" alt="Microsoft c&agrave;ng ng&agrave;y c&agrave;ng &eacute;p người d&ugrave;ng phải l&agrave;m theo &yacute; của m&igrave;nh - Ảnh 5." width="" height="" data-original="https://genk.mediacdn.vn/139269124445442048/2021/6/30/photo-1-16250235067971639719940.jpg" /></a></div>
+<div>
+<p data-placeholder="[nhập ch&uacute; th&iacute;ch]">Sau đ&oacute; th&igrave; bắt người d&ugrave;ng sử dụng t&agrave;i khoản trực tuyến, kh&ocirc;ng c&oacute; cả t&ugrave;y chọn d&ugrave;ng t&agrave;i khoản cục bộ.</p>
+</div>
+</div>
+<p>&nbsp;</p>
+<p>T&ocirc;i kh&ocirc;ng cho rằng việc đăng nhập t&agrave;i khoản trực tuyến Microsoft khi c&agrave;i đặt Windows l&agrave; một điều tồi tệ. Nhưng điều tồi tệ l&agrave; Microsoft &eacute;p người d&ugrave;ng phải l&agrave;m như vậy, thay v&igrave; cho họ quyền lựa chọn giữa việc sử dụng t&agrave;i khoản trực tuyến hoặc t&agrave;i khoản cục bộ.</p>
+<p>Kh&ocirc;ng r&otilde; l&yacute; do tại sao Microsoft lại l&agrave;m như vậy. C&oacute; thể l&agrave; v&igrave; chiến lược kinh doanh mới của Microsoft tập trung nhiều hơn v&agrave;o c&aacute;c dịch vụ, thay v&igrave; l&agrave; b&aacute;n phần mềm. N&ecirc;n họ muốn người d&ugrave;ng đăng nhập t&agrave;i khoản trực tuyến để thu thập dữ liệu?</p>", 3, "0.png");
+      

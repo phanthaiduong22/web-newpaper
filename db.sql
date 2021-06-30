@@ -25,7 +25,7 @@ CREATE TABLE `papers`(
   `CatID` int(11) NOT NULL,
 	`CreatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
 	`Abstract` varchar(500) NOT NULL,
-	`Content` varchar(5000) NOT NULL,
+	`Content` text NOT NULL,
   	PRIMARY KEY (`PaperID`)
 );
 
@@ -84,13 +84,11 @@ CREATE TABLE `users` (
 -- ----------------------------
 
 BEGIN;
-INSERT INTO `categories` VALUES (1, 'Sách');
-INSERT INTO `categories` VALUES (2, 'Điện thoại');
-INSERT INTO `categories` VALUES (3, 'Máy chụp hình');
-INSERT INTO `categories` VALUES (4, 'Quần áo - Giày dép');
-INSERT INTO `categories` VALUES (5, 'Máy tính');
-INSERT INTO `categories` VALUES (6, 'Đồ trang sức');
-INSERT INTO `categories` VALUES (7, 'Khác');
+INSERT INTO `categories` VALUES (1, 'Mobile');
+INSERT INTO `categories` VALUES (2, 'TinICT');
+INSERT INTO `categories` VALUES (3, 'Internet');
+INSERT INTO `categories` VALUES (4, 'Explore');
+
 COMMIT;
 
 -- ----------------------------
@@ -117,12 +115,3 @@ INSERT INTO `paper_tags` VALUES (2, 4);
 INSERT INTO `paper_tags` VALUES (2, 5);
 INSERT INTO `paper_tags` VALUES (2, 6);
 
-
-
-
-
-
-
-
-
-----------------------------------------------------------------------------
