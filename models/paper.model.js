@@ -5,6 +5,19 @@ module.exports = {
     return db("papers");
   },
 
+  hotNews() {
+    return db("papers")
+      .select([
+        "papers.PaperID",
+        "papers.Avatar",
+        "papers.Title",
+        "papers.CreatedAt",
+        "categories.CatName",
+      ])
+      .join("categories", "papers.PaperID", "=", "categories.catID")
+      .limit(4);
+  },
+
   findByCatID(catId, offset) {
     return db("papers").where("CatID", catId).limit(6).offset(offset);
   },
