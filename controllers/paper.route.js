@@ -1,5 +1,7 @@
 const express = require("express");
 const paperModel = require("../models/paper.model");
+const categoryModel = require("../models/category.model");
+const moment = require("moment");
 
 const router = express.Router();
 
@@ -12,12 +14,6 @@ router.get("/byCat/:id", async function (req, res) {
       break;
     }
   }
-
-  // const list = await productModel.findByCatID(catId);
-  // res.render('vwProducts/byCat', {
-  //   products: list,
-  //   empty: list.length === 0
-  // });
 
   const limit = 6;
   const page = req.query.page || 1;
@@ -37,24 +33,25 @@ router.get("/byCat/:id", async function (req, res) {
 
   const offset = (page - 1) * limit;
   const list = await paperModel.findByCatID(catId, offset);
+  const categories = await categoryModel.allWithDetails();
+  console.log(categories);
   res.render("vwPapers/byCat", {
+    catId,
     papers: list,
+    categories: categories,
     empty: list.length === 0,
     page_numbers,
+    layout: "categories.hbs",
+    active: { categories: true },
   });
 });
 
 router.get("/details/:id", async function (req, res) {
-  const proId = +req.params.id || 0;
+  const paperId = +req.params.id || 0;
 
-  // for (c of res.locals.lcCategories) {
-  //   if (c.CatID === catId) {
-  //     c.IsActive = true;
-  //     break;
-  //   }
-  // }
-
-  const paper = await paperModel.findById(proId);
+  let paper = await paperModel.findById(paperId);
+  paperModel.increaseView(paperId, paper.Views);
+  paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
   if (paper === null) {
     return res.redirect("/");
   }

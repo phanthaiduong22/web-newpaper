@@ -27,8 +27,15 @@ CREATE TABLE `papers`(
 	`Abstract` varchar(500) NOT NULL,
 	`Content` text NOT NULL,
 	`Tags` varchar(100) NOT NULL,
+  `Views` int(11) NOT NULL DEFAULT 0,
   	PRIMARY KEY (`PaperID`)
 );
+
+-- ----------------------------
+-- Create FTS for papers
+-- ----------------------------
+
+ALTER TABLE papers ADD FULLTEXT (Title, Abstract, Content);
 
 
 -- ----------------------------

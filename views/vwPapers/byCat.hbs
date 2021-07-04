@@ -10,23 +10,21 @@
     <div class="row">
       {{#each this.papers}}
       <div class="col-sm-4 mb-3">
-        <div class="card h-100">
-          <img src="/public/imgs/{{Avatar}}" class="card-img-top" alt="{{Avatar}}"
-            title="{{PaperTitle}}">
-          <div class="card-body">
-            <h5 class="card-title">{{Title}}</h5>
-          </div>
-          <div class="card-footer">
-            <a class="btn btn-outline-primary btn-sm" href="/papers/details/{{PaperID}}" role="button">
-              <i class="fa fa-eye" aria-hidden="true"></i>
-              Details
-            </a>
-            <a class="btn btn-outline-success btn-sm" href="#" role="button">
-              <i class="fa fa-cart-plus" aria-hidden="true"></i>
-              Add to cart
-            </a>
-          </div>
-        </div>
+        <button class="card h-100 link-secondary zoom">
+          <a  href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;">
+            <img src="/public/imgs/{{Avatar}}" class="card-img-top" alt="{{Avatar}}" 
+              title="{{PaperTitle}}">
+            <div class="card-body">
+              <h5 class="card-title">{{Title}}</h5>
+            </div>
+            {{!-- <div class="card-footer">
+              <a class="btn btn-outline-primary btn-sm" href="/papers/details/{{PaperID}}" role="button">
+                <i class="fa fa-eye" aria-hidden="true"></i>
+                Details
+              </a>
+            </div> --}}
+          </a>
+        </button>
       </div>
       {{/each}}
     </div>
