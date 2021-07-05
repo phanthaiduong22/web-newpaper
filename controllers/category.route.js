@@ -4,9 +4,10 @@ const categoryModel = require("../models/category.model");
 const router = express.Router();
 
 router.get("/", async function (req, res) {
-  const list = await categoryModel.all();
+  const categories = await categoryModel.all();
+
   res.render("vwCategories/index", {
-    categories: list,
+    categories: categories,
     empty: list.length === 0,
   });
 });
@@ -17,12 +18,9 @@ router.get("/add", function (req, res) {
 
 router.post("/add", async function (req, res) {
   const new_category = {
-    // CatID: -1,
     CatName: req.body.txtCatName,
   };
 
-  // const rs = await categoryModel.add(new_category);
-  // console.log(rs);
   await categoryModel.add(new_category);
   res.render("vwCategories/add");
 });

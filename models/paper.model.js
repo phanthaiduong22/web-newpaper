@@ -4,8 +4,7 @@ module.exports = {
   all() {
     return db("papers");
   },
-
-  hotNews() {
+  hotNews(limit) {
     return db("papers")
       .select([
         "papers.PaperID",
@@ -16,11 +15,31 @@ module.exports = {
         "categories.CatName",
       ])
       .join("categories", "papers.PaperID", "=", "categories.catID")
-      .limit(4);
+      .orderBy("Views", "desc")
+      .limit(limit);
+  },
+
+  latestNews(limit) {
+    return db("papers")
+      .select([
+        "papers.PaperID",
+        "papers.Avatar",
+        "papers.Title",
+        "papers.Views",
+        "papers.CreatedAt",
+        "categories.CatName",
+      ])
+      .join("categories", "papers.PaperID", "=", "categories.catID")
+      .orderBy("CreatedAt", "desc")
+      .limit(limit);
   },
 
   findByCatID(catId, offset) {
     return db("papers").where("CatID", catId).limit(6).offset(offset);
+  },
+
+  findBySubCatID(subCatId, offset) {
+    return db("papers").where("SubCatID", subCatId).limit(6).offset(offset);
   },
 
   async countByCatID(catId) {

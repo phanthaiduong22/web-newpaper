@@ -6,6 +6,9 @@
       }); 
     });
   </script>
+  <script>
+    let Cat = 1
+  </script>
 {{/section}}
 
 <!-- 
@@ -90,6 +93,7 @@
           <div class="card-body">
             <div class="row" >
               <div class="col card-title text-secondary"><b>{{CatName}}</b></div>
+              <div class="card-title text-secondary small float-right"><b>Views: {{Views}}</b></div>
               <div class="col-7 card-title text-secondary small float-right"><b>{{CreatedAt}}</b></div>
             </div>
             <p class="card-title link-secondary"><b>{{Title}}</b></p>
@@ -103,73 +107,59 @@
   </div>
 </div>
 
-<!-- Lastest News -->
+<!-- Most watched -->
 <div class="container mt-2 mb-2">
-  <h1 class="border-bottom m-4">Lastest</h1>
+  <h1 class="border-bottom m-4">Most watched</h1>
   <div class="row ">
-    <div class="col-3 mr-5">
-      {{!--  --}}
-      {{#each this.categories}}
-      <div class="row mb-1">
-        <button
-          type="button"
-          class="btn btn-danger border btn-lg btn-block"
-        >
-          {{CatName}}
-        </button>
-      </div>
-      {{/each}}
-      {{!--  --}}
-    </div>
-    <div class="col">
-      {{!--  --}}
-      {{#each this.hotNews}}
-      <a href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;" >
-        <div class="row mb-1 zoom">
-          <div class="col-5">
-            <img
-              src="/public/imgs/{{Avatar}}"
-              class="
-                img-thumbnail
-                ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-              "
-              alt="image-paper"
-            />
+    {{!--  --}}
+    {{#each this.hotNews}}
+    <a href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;" >
+      <div class="row mb-1 zoom">
+        <div class="col-3">
+          <img
+            src="/public/imgs/{{Avatar}}"
+            class="
+              img-thumbnail
+              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
+            "
+            alt="image-paper"
+          />
+        </div>
+        <div class="col">
+          <div class="row">
+            <div class="badge">
+              <i class="fa fa-calendar" aria-hidden="true"></i>{{CreatedAt}}
+            </div>
+            <div class="badge">
+              <i class="fa fa-eye" aria-hidden="true"></i>{{Views}}
+            </div>
           </div>
-          <div class="col">
-            <div class="row">
-              <div class="badge">
-                <i class="fa fa-calendar" aria-hidden="true"></i>{{CreatedAt}}
-              </div>
-              <div class="badge">
-                <i class="fa fa-eye" aria-hidden="true"></i>{{Views}}
-              </div>
-            </div>
-            <div class="row">
-              <p class="card-title text-dark">
-                <b>
-                {{Title}}
-                </b>
-              </p>
-            </div>
+          <div class="row">
+            <h4 class="card-title text-dark">
+              <b>
+              {{Title}}
+              </b>
+            </h4>
           </div>
         </div>
-      </a>
-      {{/each}}
-      {{!--  --}}
-    </div>
+      </div>
+    </a>
+    {{/each}}
+    {{!--  --}}
   </div>
 </div>
 
-<!-- Trending -->
-<div class="" style="background-color: #f6f6f8">
+<!-- Lastest -->
+<div class="">
   <div class="container">
-    <h1 class="border-bottom m-4">Trending</h1>
+    <h1 class="border-bottom m-4">Latest News</h1>
     <div class="row">
+      {{!--  --}}
+      {{#each this.latestNews}}
       <div class="col-3">
         <div class="row">
           <img
-            src="\logo1.png"
+            src="/public/imgs/{{Avatar}}"
             class="
               img-thumbnail
               ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
@@ -180,125 +170,15 @@
         <div class="row">
           <a href="#" class=""
             ><h5 class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
+              <b>
+                {{Title}}
+              </b>
             </h5></a
           >
         </div>
       </div>
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="\logo1.png"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="row">
-          <a href="#" class=""
-            ><h5 class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
-            </h5></a
-          >
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="\logo1.png"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="row">
-          <a href="#" class=""
-            ><h5 class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
-            </h5></a
-          >
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="\logo1.png"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="row">
-          <a href="#" class=""
-            ><h5 class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
-            </h5></a
-          >
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="\logo1.png"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="row">
-          <a href="#" class=""
-            ><h5 class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
-            </h5></a
-          >
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="\logo1.png"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="row">
-          <a href="#" class=""
-            ><h5 class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
-            </h5></a
-          >
-        </div>
-      </div>
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="\logo1.png"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="row m-1">
-          <a href="#" class=""
-            ><p class="card-title text-dark">
-              Get the Best Portable Hi-Fi Sound With the Best MP3 Players
-            </p></a
-          >
-        </div>
-      </div>
+      {{/each}}
+      {{!--  --}}
     </div>
   </div>
 </div>

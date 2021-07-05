@@ -23,6 +23,33 @@ module.exports = {
     return db.raw(sql);
   },
 
+  getSubCategories() {
+    return db("category_sub_categories")
+      .select([
+        "categories.CatID",
+        "categories.CatName",
+        "sub_categories.SubCatID",
+        "sub_categories.SubCatName",
+      ])
+      .join(
+        "categories",
+        "category_sub_categories.CatID",
+        "=",
+        "categories.CatID"
+      )
+      .join(
+        "sub_categories",
+        "category_sub_categories.SubCatID",
+        "=",
+        "sub_categories.SubCatID"
+      );
+  },
+
+  getCatbySubCatID(SubCatID) {
+    return db("category_sub_categories")
+      .select("CatID")
+      .where("SubCatID", SubCatID);
+  },
   add(category) {
     return db("categories").insert(category);
   },

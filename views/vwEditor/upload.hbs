@@ -79,10 +79,10 @@
           <textarea id="txtContent" name="content" rows="20"></textarea>
         </div>
         <div class="form-group">
-            <label for="categories">Choose a categories:</label>
-            <select id="categories" name="categories">
-              {{#each this.categories}}
-              <option value="{{CatID}}">{{CatName}}</option>
+            <label for="sub_categories">Choose a sub categories:</label>
+            <select id="sub_categories" name="sub_categories">
+              {{#each this.sub_categories}}
+                <option value="{{SubCatID}}">{{SubCatName}}</option>
               {{/each}}
             </select>
         </div>
