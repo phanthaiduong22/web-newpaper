@@ -28,28 +28,60 @@
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-                <li class="nav-item {{#if active.home}}active{{/if}}">
-                    <a class="nav-link" href="/">Home</a>
-                </li> 
-                <li class="nav-item {{#if active.categories}}active{{/if}}">
-                    <a class="nav-link" href="/papers/byCat/1">Categories</a>
-                </li> 
-                <li class="nav-item {{#if active.upload}}active{{/if}}">
-                    <a class="nav-link" href="/editor/upload">Upload</a>
-                </li>
-                <li class="nav-item {{#if active.login}}active{{/if}}">
-                    <a class="nav-link" href="/account/login">Login</a>
-                </li>
-            </ul>
-        </div>
         {{!-- search --}}
         <form method="POST" class="form-inline my-2 my-lg-0" action="/search">
           <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+        <form id="frmLogout" action="/account/logout" method="POST"></form>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav ml-auto">
+                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
+                <li class="nav-item {{#if active.home}}active{{/if}}">
+                    <a class="nav-link" href="/">
+                    <i class="fa fa-home" aria-hidden="true"></i> Home
+                </a>
+                </li> 
+                <li class="nav-item {{#if active.categories}}active{{/if}}">
+                    <a class="nav-link" href="/papers/byCat/1">
+                    <i class="fa fa-list" aria-hidden="true"></i> Categories
+                    </a>
+                </li> 
+                {{!--  --}}
+                {{#if auth}}
+                <li class="nav-item {{#if active.upload}}active{{/if}}">
+                    <a class="nav-link" href="/editor/upload">
+                      <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                    </a>
+                </li>
+                <li class="nav-item {{#if active.profile}}active{{/if}}">
+                  <a class="nav-link">
+                    Hi, <b>{{authUser.name}}</b>
+                  </a>
+                <li class="nav-item">
+                    <a class="nav-link" href="javascript: $('#frmLogout').submit();">
+                      <i class="fa fa-sign-out" aria-hidden="true"></i>
+                      Sign Out
+                    </a>
+                </li>
+                {{else}}
+                <li class="nav-item {{#if active.register}}active{{/if}}">
+                  <a class="nav-link" href="/account/register">
+                    <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    Register
+                  </a>
+                </li>
+                <li class="nav-item {{#if active.login}}active{{/if}}">
+                    <a class="nav-link" href="/account/login">
+                      <i class="fa fa-sign-in" aria-hidden="true"></i>
+                      Sign In
+                    </a>
+                </li>
+                {{/if}}
+                {{!--  --}}
+            </ul>
+        </div>
+
     </nav>
       {{{body}}}
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

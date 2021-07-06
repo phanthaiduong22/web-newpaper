@@ -83,6 +83,7 @@ router.post("/login", async function (req, res) {
   delete user.password;
   req.session.auth = true;
   req.session.authUser = user;
+  console.log("hello");
 
   const url = req.session.retUrl || "/";
   res.redirect(url);
