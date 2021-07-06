@@ -112,6 +112,9 @@
   INSERT INTO `sub_categories` VALUES (1, 'Iphone');
   INSERT INTO `sub_categories` VALUES (2, 'Android');;
   INSERT INTO `sub_categories` VALUES (3, 'Machine Learning');
+  INSERT INTO `sub_categories` VALUES (4, 'Networking');
+  INSERT INTO `sub_categories` VALUES (5, 'Google');
+  INSERT INTO `sub_categories` VALUES (6, 'Knowledge');
   COMMIT;
 
   -- ----------------------------
@@ -122,4 +125,7 @@
   INSERT INTO `category_sub_categories` VALUES (1, 1);
   INSERT INTO `category_sub_categories` VALUES (1, 2);
   INSERT INTO `category_sub_categories` VALUES (2, 3);
+  INSERT INTO `category_sub_categories` VALUES (3, 4);
+  INSERT INTO `category_sub_categories` VALUES (3, 5);
+  INSERT INTO `category_sub_categories` VALUES (4, 6);
   COMMIT;
