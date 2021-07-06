@@ -51,13 +51,14 @@ router.get("/byCat/:id", async function (req, res) {
   }
 
   res.render("vwPapers/byCat", {
-    catId,
     papers: list,
     categories: categories,
     empty: list.length === 0,
     page_numbers,
     layout: "categories.hbs",
     active: { categories: true },
+    CatActive: catId,
+    SubCatActive: 0,
   });
 });
 
@@ -65,33 +66,31 @@ router.get("/details/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
 
   let paper = await paperModel.findById(paperId);
+  let relatedNews = await paperModel.findByCatID(paper.CatID);
+
   paperModel.increaseView(paperId, paper.Views);
   paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
+  for(i = 0;i<relatedNews.length; i++){
+    relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format("Do MMMM YYYY");
+  }
+
   if (paper === null) {
     return res.redirect("/");
   }
 
   res.render("vwPapers/details", {
     paper: paper,
+    relatedNews,
   });
 });
 
-router.get("/byCat/:id/bySubCat/:subcatid", async function (req, res) {
-  const catId = +req.params.id || 0;
+router.get("/bySubCat/:subcatid", async function (req, res) {
   const subCatId = +req.params.subcatid || 0;
-
-  for (c of res.locals.lcCategories) {
-    if (c.CatID === catId) {
-      c.IsActive = true;
-      break;
-    }
-  }
-
+  const cat = await categoryModel.getCatbySubCatID(subCatId);
   const limit = 6;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
-
-  const total = await paperModel.countByCatID(catId);
+  const total = await paperModel.countByCatID(cat[0].CatID);
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
 
@@ -123,13 +122,14 @@ router.get("/byCat/:id/bySubCat/:subcatid", async function (req, res) {
   }
 
   res.render("vwPapers/byCat", {
-    catId,
     papers: list,
     categories: categories,
     empty: list.length === 0,
     page_numbers,
     layout: "categories.hbs",
     active: { categories: true },
+    CatActive: cat[0].CatID,
+    SubCatActive: subCatId,
   });
 });
 

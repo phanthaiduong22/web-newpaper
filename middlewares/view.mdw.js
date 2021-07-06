@@ -1,6 +1,7 @@
 const exphbs = require("express-handlebars");
 const hbs_sections = require("express-handlebars-sections");
 const numeral = require("numeral");
+var helpers = require("handlebars-helpers")();
 module.exports = function (app) {
   app.engine(
     "hbs",
@@ -12,6 +13,7 @@ module.exports = function (app) {
         format_number(val) {
           return numeral(val).format("0,0");
         },
+        helpers,
       },
     })
   );
