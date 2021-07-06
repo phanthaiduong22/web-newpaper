@@ -87,7 +87,7 @@
     `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
     `dob` date NOT NULL,
-    `permission` int(11) NOT NULL,
+    `role` varchar(50) NOT NULL DEFAULT 'user',
     PRIMARY KEY (`id`)
   );
 

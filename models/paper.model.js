@@ -34,6 +34,19 @@ module.exports = {
       .limit(limit);
   },
 
+  // relatedNews(catId, limit) {
+  //   return db("papers")
+  //     .select([
+  //       "papers.PaperID",
+  //       "papers.Avatar",
+  //       "papers.Title",
+  //       "papers.Views",
+  //       "papers.CreatedAt",
+  //     ])
+  //     .where("CatID", catId)
+  //     .limit(limit);
+  // },
+
   findByCatID(catId, offset) {
     return db("papers").where("CatID", catId).limit(6).offset(offset);
   },
@@ -60,7 +73,7 @@ module.exports = {
   async findById(id) {
     const rows = await db("papers")
       .where("PaperID", id)
-      .join("categories", "papers.PaperID", "=", "categories.catID");
+      .join("categories", "papers.CatID", "=", "categories.CatID");
     if (rows.length === 0) return null;
 
     return rows[0];
