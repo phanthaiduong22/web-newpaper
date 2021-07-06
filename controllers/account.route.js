@@ -3,11 +3,11 @@ const bcrypt = require("bcryptjs");
 const moment = require("moment");
 
 const userModel = require("../models/user.model");
-const auth = require("../middlewares/auth.mdw");
+const { authUser, authRole } = require("../middlewares/auth.mdw");
 
 const router = express.Router();
 
-router.get("/profile", auth, function (req, res) {
+router.get("/profile", authUser, authRole("user"), function (req, res) {
   res.render("vwAccount/profile");
 });
 
@@ -83,13 +83,12 @@ router.post("/login", async function (req, res) {
   delete user.password;
   req.session.auth = true;
   req.session.authUser = user;
-  console.log("hello");
 
   const url = req.session.retUrl || "/";
   res.redirect(url);
 });
 
-router.post("/logout", auth, async function (req, res) {
+router.post("/logout", authUser, async function (req, res) {
   req.session.auth = false;
   req.session.authUser = null;
   req.session.retUrl = "";
