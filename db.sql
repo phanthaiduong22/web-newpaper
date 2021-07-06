@@ -1,74 +1,131 @@
-/*
- Navicat Premium Data Transfer
+  /*
+  Navicat Premium Data Transfer
 
- Source Server Type    : MySQL
- Source Host           : 127.0.0.1:3306
- Source Schema         : newpapers
+  Source Server Type    : MySQL
+  Source Host           : 127.0.0.1:3306
+  Source Schema         : newpapers
 
- Target Server Type    : MySQL
+  Target Server Type    : MySQL
 
- Date: 26/07/2021
-*/
+  Date: 26/07/2021
+  */
 
-SET NAMES utf8mb4;
-SET FOREIGN_KEY_CHECKS = 0;
+  SET NAMES utf8mb4;
+  SET FOREIGN_KEY_CHECKS = 0;
 
--- ----------------------------
--- Table structure for papers
--- ----------------------------
+  -- ----------------------------
+  -- Table structure for categories
+  -- ----------------------------
 
-DROP TABLE IF EXISTS `papers`;
-CREATE TABLE `papers`(
-	`PaperID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-	`Avatar` varchar(500) NOT NULL,
-	`Title` varchar(500) NOT NULL,
-  `CatID` int(11) NOT NULL,
-	`CreatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
-	`Abstract` varchar(500) NOT NULL,
-	`Content` text NOT NULL,
-	`Tags` varchar(100) NOT NULL,
-  	PRIMARY KEY (`PaperID`)
-);
+  DROP TABLE IF EXISTS `categories`;
+  CREATE TABLE `categories` (
+    `CatID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `CatName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`CatID`)
+  );
+
+  -- ----------------------------
+  -- Table structure for sub_categories
+  -- ----------------------------
+
+  DROP TABLE IF EXISTS `sub_categories`;
+  CREATE TABLE `sub_categories` (
+    `SubCatID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `SubCatName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    PRIMARY KEY (`SubCatID`)
+  );
+
+  -- ----------------------------
+  -- Table structure for papers
+  -- ----------------------------
+
+  DROP TABLE IF EXISTS `papers`;
+  CREATE TABLE `papers`(
+    `PaperID` int(11) unsigned NOT NULL AUTO_INCREMENT,
+    `Avatar` varchar(500) NOT NULL,
+    `Title` varchar(500) NOT NULL,
+    `CatID` int(11) unsigned NOT NULL,
+    `SubCatID` int(11) unsigned NOT NULL,
+    `CreatedAt` TIMESTAMP DEFAULT CURRENT_TIMESTAMP ,
+    `Abstract` varchar(500) NOT NULL,
+    `Content` text NOT NULL,
+    `Tags` varchar(100) NOT NULL,
+    `Views` int(11) NOT NULL DEFAULT 0,
+    PRIMARY KEY (`PaperID`),
+    FOREIGN KEY (`CatID`) REFERENCES categories(`CatID`),
+    FOREIGN KEY (`SubCatID`) REFERENCES sub_categories(`SubCatID`)
+  );
+
+  -- ----------------------------
+  -- Create FTS for papers
+  -- ----------------------------
+
+  ALTER TABLE papers ADD FULLTEXT (Title, Abstract, Content);
+
+  -- ----------------------------
+  -- Table structure for sub_categories
+  -- ----------------------------
+
+  DROP TABLE IF EXISTS `category_sub_categories`;
+  CREATE TABLE `category_sub_categories` (
+    `CatID` int(11) unsigned NOT NULL ,
+    `SubCatID` int(11) unsigned NOT NULL ,
+    PRIMARY KEY (`CatID`, `SubCatID`),
+    FOREIGN KEY (`CatID`) REFERENCES categories(`CatID`),
+    FOREIGN KEY (`SubCatID`) REFERENCES sub_categories(`SubCatID`)
+  );
 
 
--- ----------------------------
--- Table structure for categories
--- ----------------------------
-
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
-  `CatID` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `CatName` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`CatID`)
-) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-
-
--- ----------------------------
--- Table structure for users
--- ----------------------------
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-  `dob` date NOT NULL,
-  `permission` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  -- ----------------------------
+  -- Table structure for users
+  -- ----------------------------
+  DROP TABLE IF EXISTS `users`;
+  CREATE TABLE `users` (
+    `id` int(11) NOT NULL AUTO_INCREMENT,
+    `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `dob` date NOT NULL,
+    `permission` int(11) NOT NULL,
+    PRIMARY KEY (`id`)
+  );
 
 
--- ----------------------------
--- Records of categories
--- ----------------------------
+  -- ----------------------------
+  -- Records of categories
+  -- ----------------------------
 
-BEGIN;
-INSERT INTO `categories` VALUES (1, 'Mobile');
-INSERT INTO `categories` VALUES (2, 'TinICT');
-INSERT INTO `categories` VALUES (3, 'Internet');
-INSERT INTO `categories` VALUES (4, 'Explore');
-COMMIT;
+  BEGIN;
+  INSERT INTO `categories` VALUES (1, 'Mobile');
+  INSERT INTO `categories` VALUES (2, 'TinICT');
+  INSERT INTO `categories` VALUES (3, 'Internet');
+  INSERT INTO `categories` VALUES (4, 'Explore');
+  COMMIT;
 
 
+  -- ----------------------------
+  -- Records of sub_categories
+  -- ----------------------------
+
+  BEGIN;
+  INSERT INTO `sub_categories` VALUES (1, 'Iphone');
+  INSERT INTO `sub_categories` VALUES (2, 'Android');;
+  INSERT INTO `sub_categories` VALUES (3, 'Machine Learning');
+  INSERT INTO `sub_categories` VALUES (4, 'Networking');
+  INSERT INTO `sub_categories` VALUES (5, 'Google');
+  INSERT INTO `sub_categories` VALUES (6, 'Knowledge');
+  COMMIT;
+
+  -- ----------------------------
+  -- Records of category_sub_categories
+  -- ----------------------------
+
+  BEGIN;
+  INSERT INTO `category_sub_categories` VALUES (1, 1);
+  INSERT INTO `category_sub_categories` VALUES (1, 2);
+  INSERT INTO `category_sub_categories` VALUES (2, 3);
+  INSERT INTO `category_sub_categories` VALUES (3, 4);
+  INSERT INTO `category_sub_categories` VALUES (3, 5);
+  INSERT INTO `category_sub_categories` VALUES (4, 6);
+  COMMIT;

@@ -24,7 +24,7 @@
       NavBar
     -->
     <nav class="navbar navbar-expand-custom navbar-mainbg pr-2">
-        <a class="navbar-brand navbar-logo" href="#">BietDoiBanCuoi</a>
+        <a class="navbar-brand navbar-logo" href="/">BietDoiBanCuoi</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
@@ -51,7 +51,59 @@
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </nav>
-      {{{body}}} 
+
+  <div class="container-fluid mt-2">
+    <div class="row">
+      <div class="col-3">
+        <div class="card">
+          <h4 class="card-header">
+            Papers
+          </h4>
+          <div class="card-body">
+            <div class="list-group list-group-flush">
+            {{!--  --}}
+              {{#each categories}}
+                <div>
+                  <a 
+                    data-toggle="collapse" href="#collapseExample{{CatID}}" role="button" aria-expanded="false" aria-controls="collapseExample"
+                    class="list-group-item list-group-item-action {{#if IsActive}}active{{/if}}">
+                    <i class="fa fa-caret-right" aria-hidden="true"></i>
+                    {{CatName}}
+                    {{#if ProductCount}}
+                    <span class="badge badge-pill badge-danger float-right">{{ProductCount}}</span>
+                    {{/if}}
+                  </a>
+                  <div class="m-2">
+                    <div class="collapse" id="collapseExample{{CatID}}">
+                      {{!--  --}}
+                      {{#each SubCategory}}
+                        <a href="/papers/byCat/{{CatID}}"
+                          class="list-group-item list-group-item-action {{#if IsActive}}active{{/if}}">
+                          <i class="fa fa-caret-right" aria-hidden="true"></i>
+                          {{SubCatName}}
+                          {{#if ProductCount}}
+                          <span class="badge badge-pill badge-danger float-right">{{ProductCount}}</span>
+                          {{/if}}
+                        </a>
+                        {{/each}}
+                      {{!--  --}}
+                    </div>
+                  </div>
+                </div>
+              {{/each}}
+            {{!--  --}}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col">
+        {{{body}}} 
+      </div>
+    </div>
+  </div>
+
+
+
     <script
       src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
       integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
