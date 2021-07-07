@@ -81,14 +81,14 @@
   -- ----------------------------
   DROP TABLE IF EXISTS `users`;
   CREATE TABLE `users` (
-    `id` int(11) NOT NULL AUTO_INCREMENT,
-    `username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `dob` date NOT NULL,
-    `role` varchar(50) NOT NULL DEFAULT 'user',
-    PRIMARY KEY (`id`)
+    `UserID` int(11) NOT NULL AUTO_INCREMENT,
+    `Username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `Password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `Name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `Email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `Dob` date NOT NULL,
+    `Role` varchar(50) NOT NULL DEFAULT 'user',
+    PRIMARY KEY (`UserID`)
   );
 
 
@@ -129,3 +129,6 @@
   INSERT INTO `category_sub_categories` VALUES (3, 5);
   INSERT INTO `category_sub_categories` VALUES (4, 6);
   COMMIT;
+
+-- After create Admin
+-- UPDATE users SET Role = 'admin' WHERE Username = 'admin';

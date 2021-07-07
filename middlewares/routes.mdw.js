@@ -1,10 +1,11 @@
 module.exports = function (app) {
-
   app.use("/", require("../controllers/home.route"));
 
   app.use("/account/", require("../controllers/account.route"));
 
   app.use("/admin/categories/", require("../controllers/category.route"));
+
+  app.use("/admin/", require("../controllers/admin.route"));
 
   app.use("/papers/", require("../controllers/paper.route"));
 

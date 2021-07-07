@@ -49,6 +49,14 @@
                 </li> 
                 {{!--  --}}
                 {{#if auth}}
+                  {{#eq authUser.Role "admin"}}
+                  <li class="nav-item {{#if active.adminUser}}active{{/if}}">
+                      <a class="nav-link" href="/admin/users">
+                        <i class="fa fa-user" aria-hidden="true"></i> User Management
+                      </a>
+                  </li>
+                  {{/eq}}
+
                 <li class="nav-item {{#if active.upload}}active{{/if}}">
                     <a class="nav-link" href="/editor/upload">
                       <i class="fa fa-upload" aria-hidden="true"></i> Upload
@@ -56,7 +64,7 @@
                 </li>
                 <li class="nav-item {{#if active.profile}}active{{/if}}">
                   <a class="nav-link" href="/account/profile">
-                    Hi, <b>{{authUser.name}}</b>
+                    Hi, <b>{{authUser.Name}}</b>
                   </a>
                 <li class="nav-item">
                     <a class="nav-link" href="javascript: $('#frmLogout').submit();">

@@ -13,7 +13,7 @@ router.get("/profile", authUser, authRole("user"), function (req, res) {
 
 router.get("/register", function (req, res) {
   res.render("vwAccount/register", {
-    active: { login: true },
+    active: { register: true },
   });
 });
 
@@ -21,16 +21,16 @@ router.post("/register", async function (req, res) {
   const hash = bcrypt.hashSync(req.body.raw_password, 10);
   const dob = moment(req.body.raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
   const user = {
-    email: req.body.email,
-    username: req.body.username,
-    password: hash,
-    dob: dob,
-    name: req.body.name,
+    Email: req.body.email,
+    Username: req.body.username,
+    Password: hash,
+    Dob: dob,
+    Name: req.body.name,
   };
 
   await userModel.add(user);
   res.render("vwAccount/register", {
-    active: { login: true },
+    active: { register: true },
   });
 });
 
@@ -72,7 +72,7 @@ router.post("/login", async function (req, res) {
     });
   }
 
-  const ret = bcrypt.compareSync(req.body.password, user.password);
+  const ret = bcrypt.compareSync(req.body.password, user.Password);
   if (ret === false) {
     return res.render("vwAccount/login", {
       layout: false,
@@ -80,7 +80,7 @@ router.post("/login", async function (req, res) {
     });
   }
 
-  delete user.password;
+  delete user.Password;
   req.session.auth = true;
   req.session.authUser = user;
 

@@ -9,7 +9,7 @@ function authUser(req, res, next) {
 
 function authRole(role) {
   return (req, res, next) => {
-    if (req.session.authUser.role !== role) {
+    if (!role.includes(req.session.authUser.Role)) {
       req.session.retUrl = req.originalUrl;
       return res.redirect("/");
     }
