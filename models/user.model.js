@@ -5,6 +5,18 @@ module.exports = {
     return db("users");
   },
 
+  async allWithSpecific() {
+    return await db("category_editors")
+      .select("*")
+      .rightJoin("users", "users.UserID", "=", "category_editors.EditorID")
+      .leftJoin(
+        "categories",
+        "categories.CatID",
+        "=",
+        "category_editors.CatID"
+      );
+  },
+
   add(user) {
     return db("users").insert(user);
   },
@@ -34,6 +46,18 @@ module.exports = {
       })
       .catch(() => {
         return 0;
+      });
+  },
+  async upsertEditorCategory(userID, catID) {
+    await db
+      .raw(
+        `REPLACE INTO category_editors (EditorID, CatID) VALUES (${userID}, ${catID})`
+      )
+      .then((data) => {
+        return data;
+      })
+      .catch((err) => {
+        return err;
       });
   },
 };

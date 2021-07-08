@@ -93,6 +93,20 @@
 
 
   -- ----------------------------
+  -- Table structure for users
+  -- ----------------------------
+  -- each editor manages a category
+  DROP TABLE IF EXISTS `category_editors`;
+  CREATE TABLE `category_editors` (
+    `EditorID` int(11) NOT NULL UNIQUE,
+    `CatID` int(11) unsigned,
+    PRIMARY KEY (`EditorID`),
+    FOREIGN KEY (`CatID`) REFERENCES categories(`CatID`),
+    FOREIGN KEY (`EditorID`) REFERENCES users(`UserID`)
+  );
+
+
+  -- ----------------------------
   -- Records of categories
   -- ----------------------------
 
