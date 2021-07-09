@@ -10,8 +10,6 @@ router.get("/users", async function (req, res) {
   const users = await userModel.allWithSpecific();
   const categories = await categoryModel.all();
 
-  console.log(users)
-
   res.render("vwAdmin/users", {
     users: users,
     categories: categories,

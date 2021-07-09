@@ -1,0 +1,76 @@
+{{#section "css"}}
+  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="/public/css/details.css" />
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{/section}}
+
+{{#section "js"}}
+  <script src="https://unpkg.com/@yaireo/tagify"></script>
+  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script>
+    var input = document.querySelector('input[name=tags]');
+    new Tagify(input)
+  </script>
+  <script>
+    //Get the button
+    var mybutton = document.getElementById("myBtn");
+
+    // When the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()};
+
+    function scrollFunction() {
+      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+      } else {
+        mybutton.style.display = "none";
+      }
+    }
+
+    // When the user clicks on the button, scroll to the top of the document
+    function topFunction() {
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    }
+  </script>
+  <script
+  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+{{/section}}
+
+<div class="container card mt-3 p-2">
+  <div class="row">
+    <div class="col-3">
+      <img
+        src="/public/imgs/{{this.paper.Avatar}}"
+        class="
+          img-thumbnail
+          ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
+        "
+        alt="image-paper"
+      />
+    </div>
+    <div class="col">
+      <h2 class="card-title">
+        <b>
+          {{this.paper.Title}}
+        </b>
+      </h2>
+      <p>
+        <i class="fa fa-clock-o" aria-hidden="true"></i>{{this.paper.CreatedAt}}
+      </p>
+      <a href="/papers/byCat/{{this.paper.CatID}}" class="badge badge-primary mb-2  ">
+        <i class="fa fa-list-alt" aria-hidden="true"></i>{{this.paper.CatName}}
+      </a>
+      <div class="">
+        <i class="fa fa-tags" aria-hidden="true"></i><input class="d-inline-block"name="tags" value='{{this.paper.Tags}}'/>
+      </div>
+    </div>  
+  </div>
+  <div class="row m-3 border-top p-1">
+    <div class="card-body">
+      {{{this.paper.Content}}}
+    </div>
+  </div>
+</div>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>

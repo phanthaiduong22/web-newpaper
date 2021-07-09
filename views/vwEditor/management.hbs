@@ -1,0 +1,58 @@
+{{#section "css"}}
+  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+{{/section}}
+
+{{#section "js"}}
+  <script src="https://unpkg.com/@yaireo/tagify"></script>
+  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script>
+    var input = document.querySelector('input[name=tags]');
+    new Tagify(input)
+  </script>
+
+{{/section}}
+<div class="container-fluid mt-2">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-uppercase mb-0">Manage Users</h5>
+        </div>
+        <div class="table-responsive">
+          <table class="table border no-wrap user-table mb-0">
+            <thead>
+              <tr>
+                <th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>
+                <th scope="col" class="border-0 text-uppercase font-medium">Title</th>
+                <th scope="col" class="border-0 text-uppercase font-medium">Created</th>
+                <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
+                <th scope="col" class="border-0 text-uppercase font-medium">Tags</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{!--  --}}
+              {{#each this.papers}}
+                <tr >
+                  <td class="pl-4">{{@index}}</td>
+                  <td>
+                      <h5><a class="font-medium mb-0" href="/editor/management/paper/{{PaperID}}">{{Title}}</a></h5>
+                  </td>
+                  <td>  
+                    <span class="text-muted">{{CreatedAt}}</span><br>
+                  </td>
+                  <td>  
+                    <span class="text-muted">{{Status}}</span><br>
+                  </td>
+                  <td> 
+                    <input name='tags' value='{{Tags}}' style="border: 0;"></input>
+                  </td> 
+                </tr>
+              {{/each}}
+            {{!--  --}}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -34,6 +34,16 @@ module.exports = {
       .limit(limit);
   },
 
+  async editorFindByCat(catId) {
+    return await db("papers").select([
+      "papers.PaperID",
+      "papers.Title",
+      "papers.CreatedAt",
+      "papers.Status",
+      "papers.Tags",
+    ]).where("CatID", catId);
+  },
+
   // relatedNews(catId, limit) {
   //   return db("papers")
   //     .select([

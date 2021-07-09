@@ -51,6 +51,7 @@
     `Content` text NOT NULL,
     `Tags` varchar(100) NOT NULL,
     `Views` int(11) NOT NULL DEFAULT 0,
+    `Status` varchar(500) NOT NULL DEFAULT 'draft',
     PRIMARY KEY (`PaperID`),
     FOREIGN KEY (`CatID`) REFERENCES categories(`CatID`),
     FOREIGN KEY (`SubCatID`) REFERENCES sub_categories(`SubCatID`)
