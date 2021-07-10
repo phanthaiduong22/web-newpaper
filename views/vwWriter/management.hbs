@@ -9,6 +9,10 @@
     var input = document.querySelector('input[name=tags]');
     new Tagify(input)
   </script>
+    <script
+    src="https://cdn.tiny.cloud/1/gvtv7ihf6847atiz3flob6067u01hd25hmsld40h5o94kqy1/tinymce/5/tinymce.min.js"
+    referrerpolicy="origin"
+  ></script
 
 {{/section}}
 <div class="container-fluid mt-2">
@@ -38,7 +42,7 @@
                 <tr >
                   <td class="pl-4">{{@index}}</td>
                   <td>
-                      <h5><a class="font-medium mb-0" href="/editor/management/paper/{{PaperID}}">{{Title}}</a></h5>
+                      <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
                   </td>
                   <td>  
                     <span class="text-muted">{{Status}}</span><br>

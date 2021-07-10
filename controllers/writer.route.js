@@ -21,6 +21,31 @@ router.get("/management", async function (req, res) {
   });
 });
 
+router.get("/management/paper/:id", async function (req, res) {
+  const paperId = +req.params.id || 0;
+
+  let paper = await paperModel.findById(paperId);
+  paper.CreatedAt = moment(paper.CreatedAt).format("L");
+  const sub_categories = await categoryModel.getSubCategories();
+
+  for (i = 0; i < sub_categories.length; ++i) {
+    if (sub_categories[i].SubCatName == paper.SubCatName) {
+      sub_categories.splice(i, 1);
+    }
+  }
+
+  if (paper === null) {
+    return res.redirect("/");
+  }
+
+  console.log(paper);
+
+  res.render("vwEditor/managementPaperId", {
+    paper: paper,
+    sub_categories,
+  });
+});
+
 router.get("/upload", async function (req, res) {
   const sub_categories = await categoryModel.getSubCategories();
 

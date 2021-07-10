@@ -1,11 +1,16 @@
 {{#section "css"}}
   <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
   <link rel="stylesheet" href="/public/css/details.css" />
+  <link rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
 {{/section}}
 
 {{#section "js"}}
   <script src="https://unpkg.com/@yaireo/tagify"></script>
   <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+  </script>
   <script>
     var input = document.querySelector('input[name=tags]');
     new Tagify(input)
@@ -40,6 +45,11 @@
       document.documentElement.scrollTop = 0;
     }
 
+    $('#txtDOB').datetimepicker({
+      format: 'd/m/Y',
+      timepicker: false,
+      mask: true
+    })
   </script> 
 {{/section}}
 
@@ -67,6 +77,12 @@
             <label><b>Paper's Status:</b> {{this.paper.Status}}</label>
           </div>
           <div class="row">
+            <div class="form-group">
+              <label for="txtName"><b>Date release:</b> {{this.paper.CreatedAt}}</label>
+              <input type="text" class="form-control" id="txtDOB" name="raw_dob"/>
+            </div>
+          </div>
+          <div class="row">
             <div class="form-group" id="txtCategory">
               <label for="txtName"><b>Categories</b> </label> <i class="fa fa-list" aria-hidden="true"></i>
               <select class="form-control" aria-label="Default select example" name="sub_categories">
@@ -85,7 +101,13 @@
         </div>
         <div class="form-group">
           <label for="txtComment"><i class="fa fa-comment" aria-hidden="true"></i> <b>Comment</b>:</label>
-          <textarea id="txtComment" class="p-2" name="editorComment" rows="5" style="width: 100%" readonly>{{this.paper.EditorComment}}</textarea>
+          <textarea id="txtComment" class="p-2" name="editorComment" rows="3" style="width: 100%" required></textarea>
+        </div>
+        <div class="row m-2">
+            <div id="buttons">
+              <input type="submit" class="btn btn-info m-2" name="accept" value="Accept">
+              <input type="submit" class="btn btn-danger" name="reject" value="Reject">
+            </div>
         </div>
       </form> 
     </div>
