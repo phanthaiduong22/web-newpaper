@@ -69,13 +69,12 @@
                         <i class="fa fa-user" aria-hidden="true"></i> Writer Management
                       </a>
                   </li>
-                  {{/eq}}
-
-                <li class="nav-item {{#if active.upload}}active{{/if}}">
+                  <li class="nav-item {{#if active.upload}}active{{/if}}">
                     <a class="nav-link" href="/writer/upload">
                       <i class="fa fa-upload" aria-hidden="true"></i> Upload
                     </a>
                 </li>
+                  {{/eq}}
                 <li class="nav-item {{#if active.profile}}active{{/if}}">
                   <a class="nav-link" href="/account/profile">
                     Hi, <b>{{authUser.Name}}</b>

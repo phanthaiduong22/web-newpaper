@@ -151,4 +151,4 @@
   COMMIT;
 
 -- After create Admin
--- UPDATE users SET Role = 'admin' WHERE Username = 'admin';
+--  
