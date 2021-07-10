@@ -35,18 +35,6 @@ module.exports = {
       .limit(limit);
   },
 
-  async editorFindByCat(catId) {
-    return await db("papers")
-      .select([
-        "papers.PaperID",
-        "papers.Title",
-        "papers.CreatedAt",
-        "papers.Status",
-        "papers.Tags",
-      ])
-      .where("CatID", catId);
-  },
-
   // relatedNews(catId, limit) {
   //   return db("papers")
   //     .select([
@@ -60,7 +48,31 @@ module.exports = {
   //     .limit(limit);
   // },
 
-  async editorAcceptPaper(paperID, dateRelease, subCatID, tags) {
+  async editorFindByCat(catID) {
+    return await db("papers")
+      .select([
+        "papers.PaperID",
+        "papers.Title",
+        "papers.CreatedAt",
+        "papers.Status",
+        "papers.Tags",
+      ])
+      .where("CatID", catID);
+  },
+
+  async writerFindByUserId(userID) {
+    return await db("papers")
+      .select([
+        "papers.PaperID",
+        "papers.Title",
+        "papers.CreatedAt",
+        "papers.Status",
+        "papers.EditorComment",
+      ])
+      .where("UserID", userID);
+  },
+
+  async editorAcceptPaper(paperID, dateRelease, subCatID, tags, editorComment) {
     cat = await categoryModel.getCatbySubCatID(subCatID);
 
     await db("papers").where("PaperID", paperID).update({
@@ -68,6 +80,7 @@ module.exports = {
       SubCatID: subCatID,
       Tags: tags,
       Status: "Accepted",
+      EditorComment: editorComment,
     });
 
     if (dateRelease != "Invalid date") {
@@ -80,6 +93,7 @@ module.exports = {
   async editorRejectPaper(paperID) {
     await db("papers").where("PaperID", paperID).update({
       Status: "Rejected",
+      EditorComment: editorComment,
     });
   },
 
@@ -120,7 +134,6 @@ module.exports = {
         "sub_categories.SubCatID"
       );
     if (rows.length === 0) return null;
-
     return rows[0];
   },
 

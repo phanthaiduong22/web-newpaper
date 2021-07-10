@@ -7,9 +7,11 @@ module.exports = function (app) {
 
   app.use("/admin/", require("../controllers/admin.route"));
 
+  app.use("/editor/", require("../controllers/editor.route"));
+
+  app.use("/writer/", require("../controllers/writer.route"));
+
   app.use("/papers/", require("../controllers/paper.route"));
 
   app.use("/search/", require("../controllers/search.route"));
-
-  app.use("/editor/", require("../controllers/editor.route"));
 };

@@ -35,7 +35,23 @@
     PRIMARY KEY (`SubCatID`)
   );
 
+
   -- ----------------------------
+  -- Table structure for users
+  -- ----------------------------
+  DROP TABLE IF EXISTS `users`;
+  CREATE TABLE `users` (
+    `UserID` int(11) NOT NULL AUTO_INCREMENT,
+    `Username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `Password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+    `Name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `Email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+    `Dob` date NOT NULL,
+    `Role` varchar(50) NOT NULL DEFAULT 'user',
+    PRIMARY KEY (`UserID`)
+  );
+
+    -- ----------------------------
   -- Table structure for papers
   -- ----------------------------
 
@@ -52,9 +68,12 @@
     `Tags` varchar(100) NOT NULL,
     `Views` int(11) NOT NULL DEFAULT 0,
     `Status` varchar(500) NOT NULL DEFAULT 'Draft',
+    `UserID`  int(11) NOT NULL,
+    `EditorComment` varchar(500),
     PRIMARY KEY (`PaperID`),
     FOREIGN KEY (`CatID`) REFERENCES categories(`CatID`),
-    FOREIGN KEY (`SubCatID`) REFERENCES sub_categories(`SubCatID`)
+    FOREIGN KEY (`SubCatID`) REFERENCES sub_categories(`SubCatID`),
+    FOREIGN KEY (`UserID`) REFERENCES users(`UserID`)
   );
 
   -- ----------------------------
@@ -77,20 +96,6 @@
   );
 
 
-  -- ----------------------------
-  -- Table structure for users
-  -- ----------------------------
-  DROP TABLE IF EXISTS `users`;
-  CREATE TABLE `users` (
-    `UserID` int(11) NOT NULL AUTO_INCREMENT,
-    `Username` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `Password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-    `Name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `Email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
-    `Dob` date NOT NULL,
-    `Role` varchar(50) NOT NULL DEFAULT 'user',
-    PRIMARY KEY (`UserID`)
-  );
 
 
   -- ----------------------------

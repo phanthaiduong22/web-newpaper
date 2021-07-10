@@ -37,6 +37,8 @@ router.get("/management/paper/:id", async function (req, res) {
     return res.redirect("/");
   }
 
+  console.log(paper);
+
   res.render("vwEditor/managementPaperId", {
     paper: paper,
     sub_categories,
@@ -45,7 +47,7 @@ router.get("/management/paper/:id", async function (req, res) {
 
 router.post("/management/paper/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
-  const { accept, reject } = req.body;
+  const { accept, reject, editorComment } = req.body;
   if (accept) {
     let { raw_dob, sub_categories, tags } = req.body;
     const dateRelease = moment(raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
@@ -53,74 +55,14 @@ router.post("/management/paper/:id", async function (req, res) {
       paperId,
       dateRelease,
       sub_categories,
-      tags
+      tags,
+      editorComment
     );
-  } else {
-    await paperModel.editorRejectPaper(paperId);
+  } else if (reject) {
+    await paperModel.editorRejectPaper(paperId, editorComment);
   }
 
   res.redirect(`/editor/management/paper/${paperId}`);
-});
-
-router.get("/upload", async function (req, res) {
-  // const raw_data = await categoryModel.allWithDetails();
-  // const categories = raw_data[0];
-  const sub_categories = await categoryModel.getSubCategories();
-
-  // for (let i = 0; i < categories.length; i++) {
-  //   categories[i].SubCategory = [];
-  //   for (let j = 0; j < subcategories.length; j++) {
-  //     if (categories[i].CatID == subcategories[j].CatID) {
-  //       let obj = {
-  //         SubCatName: subcategories[j].SubCatName,
-  //         SubCatID: subcategories[j].SubCatID,
-  //       };
-  //       categories[i].SubCategory.push(obj);
-  //     }
-  //   }
-  // }
-
-  res.render("vwEditor/upload", {
-    sub_categories,
-    active: { upload: true },
-    empty: sub_categories.length === 0,
-  });
-});
-
-router.post("/upload", async function (req, res) {
-  const number = (await paperModel.size()) + 1;
-
-  const storage = multer.diskStorage({
-    destination(req, file, cb) {
-      cb(null, "./public/imgs");
-    },
-    filename(req, file, cb) {
-      cb(null, number + ".png");
-    },
-  });
-  const upload = multer({
-    storage,
-  });
-
-  upload.single("avatar")(req, res, async function (err) {
-    if (err) {
-      console.log(err);
-    } else {
-      const Cat = await categoryModel.getCatbySubCatID(req.body.sub_categories);
-      const newPaper = {
-        Title: req.body.title,
-        Abstract: req.body.abstract,
-        Content: req.body.content,
-        CatID: Cat[0].CatID,
-        SubCatID: req.body.sub_categories,
-        Avatar: number + ".png",
-        Tags: req.body.tags,
-      };
-
-      paperModel.add(newPaper);
-      res.redirect("/editor/upload");
-    }
-  });
 });
 
 module.exports = router;
