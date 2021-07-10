@@ -8,6 +8,9 @@
 {{#section "js"}}
   <script src="https://unpkg.com/@yaireo/tagify"></script>
   <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+  </script>
   <script>
     var input = document.querySelector('input[name=tags]');
     new Tagify(input)
@@ -27,14 +30,27 @@
       }
     }
 
+    function hiddenTag(tagID) {
+      var x = document.getElementById(tagID);
+      if (x.style.display === "none") {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+      }
+    }
+
     // When the user clicks on the button, scroll to the top of the document
     function topFunction() {
       document.body.scrollTop = 0;
       document.documentElement.scrollTop = 0;
     }
-  </script>
-  <script
-  src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"></script>
+
+    $('#txtDOB').datetimepicker({
+      format: 'd/m/Y',
+      timepicker: false,
+      mask: true
+    })
+  </script> 
 {{/section}}
 
 <div class="container card mt-3 p-2">
@@ -55,17 +71,43 @@
           {{this.paper.Title}}
         </b>
       </h2>
-      <p>
-        <i class="fa fa-clock-o" aria-hidden="true"></i>{{this.paper.CreatedAt}}
-      </p>
-      <a href="/papers/byCat/{{this.paper.CatID}}" class="badge badge-primary mb-2  ">
-        <i class="fa fa-list-alt" aria-hidden="true"></i>{{this.paper.CatName}}
-      </a>
-      <div class="">
-        <i class="fa fa-tags" aria-hidden="true"></i><input class="d-inline-block"name="tags" value='{{this.paper.Tags}}'/>
-      </div>
-    </div>  
-  </div>
+      <form method="POST" action="/editor/management/paper/{{this.paper.PaperID}}">
+        <div class="container">
+          <div class="row">
+            <label>Paper's Status: {{this.paper.Status}}</label>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label for="txtName">Date release: {{this.paper.CreatedAt}}</label>
+              <input type="text" class="form-control" id="txtDOB" name="raw_dob"/>
+            </div>
+          </div>
+          <div class="row">
+
+            <div class="form-group" id="txtCategory">
+              <label for="txtName">Categories </label> <i class="fa fa-list" aria-hidden="true"></i>
+              <select class="form-control" aria-label="Default select example" name="sub_categories">
+                <option selected value={{this.paper.SubCatID}}>{{this.paper.SubCatName}}</option>
+                {{#each this.sub_categories}}
+                <option value="{{SubCatID}}">{{SubCatName}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+        </div>
+      
+        <div class="">
+          <label for="txtName">Tags</label>
+          <i class="fa fa-tags" aria-hidden="true"></i><input class="block"name="tags" value='{{this.paper.Tags}}'/>
+        </div>
+        <div class="row m-2">
+            <div id="buttons">
+              <input type="submit" class="btn btn-info m-2" name="accept" value="Accept">
+              <input type="submit" class="btn btn-danger" name="reject" value="Reject">
+            </div>
+        </div>
+      </form> 
+    </div>
   <div class="row m-3 border-top p-1">
     <div class="card-body">
       {{{this.paper.Content}}}

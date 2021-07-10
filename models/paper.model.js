@@ -1,4 +1,5 @@
 const db = require("../utils/db");
+const categoryModel = require("./category.model");
 
 module.exports = {
   all() {
@@ -29,19 +30,21 @@ module.exports = {
         "papers.CreatedAt",
         "categories.CatName",
       ])
-      .join("categories", "papers.PaperID", "=", "categories.catID")
+      .join("categories", "papers.CatID", "=", "categories.CatID")
       .orderBy("CreatedAt", "desc")
       .limit(limit);
   },
 
   async editorFindByCat(catId) {
-    return await db("papers").select([
-      "papers.PaperID",
-      "papers.Title",
-      "papers.CreatedAt",
-      "papers.Status",
-      "papers.Tags",
-    ]).where("CatID", catId);
+    return await db("papers")
+      .select([
+        "papers.PaperID",
+        "papers.Title",
+        "papers.CreatedAt",
+        "papers.Status",
+        "papers.Tags",
+      ])
+      .where("CatID", catId);
   },
 
   // relatedNews(catId, limit) {
@@ -57,12 +60,38 @@ module.exports = {
   //     .limit(limit);
   // },
 
-  findByCatID(catId, offset) {
-    return db("papers").where("CatID", catId).limit(6).offset(offset);
+  async editorAcceptPaper(paperID, dateRelease, subCatID, tags) {
+    cat = await categoryModel.getCatbySubCatID(subCatID);
+
+    await db("papers").where("PaperID", paperID).update({
+      CatID: cat.CatID,
+      SubCatID: subCatID,
+      Tags: tags,
+      Status: "Accepted",
+    });
+
+    if (dateRelease != "Invalid date") {
+      await db("papers").where("PaperID", paperID).update({
+        createdAt: dateRelease,
+      });
+    }
   },
 
-  findBySubCatID(subCatId, offset) {
-    return db("papers").where("SubCatID", subCatId).limit(6).offset(offset);
+  async editorRejectPaper(paperID) {
+    await db("papers").where("PaperID", paperID).update({
+      Status: "Rejected",
+    });
+  },
+
+  async findByCatID(catId, offset) {
+    return await db("papers").where("CatID", catId).limit(6).offset(offset);
+  },
+
+  async findBySubCatID(subCatId, offset) {
+    return await db("papers")
+      .where("SubCatID", subCatId)
+      .limit(6)
+      .offset(offset);
   },
 
   async countByCatID(catId) {
@@ -83,7 +112,13 @@ module.exports = {
   async findById(id) {
     const rows = await db("papers")
       .where("PaperID", id)
-      .join("categories", "papers.CatID", "=", "categories.CatID");
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join(
+        "sub_categories",
+        "papers.SubCatID",
+        "=",
+        "sub_categories.SubCatID"
+      );
     if (rows.length === 0) return null;
 
     return rows[0];
