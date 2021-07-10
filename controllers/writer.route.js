@@ -38,11 +38,45 @@ router.get("/management/paper/:id", async function (req, res) {
     return res.redirect("/");
   }
 
-  console.log(paper);
-
-  res.render("vwEditor/managementPaperId", {
+  res.render("vwWriter/managementPaperId", {
     paper: paper,
     sub_categories,
+  });
+});
+
+router.post("/management/paper/:id", async function (req, res) {
+  // const number = (await paperModel.size()) + 1;
+  const paperId = +req.params.id || 0;
+
+  const storage = multer.diskStorage({
+    destination(req, file, cb) {
+      cb(null, "./public/imgs");
+    },
+    filename(req, file, cb) {
+      cb(null, paperId + ".png");
+    },
+  });
+  const upload = multer({
+    storage,
+  });
+
+  upload.single("avatar")(req, res, async function (err) {
+    if (err) {
+      console.log(err);
+    } else {
+      const Cat = await categoryModel.getCatbySubCatID(req.body.sub_categories);
+      const editPaper = {
+        Title: req.body.title,
+        Abstract: req.body.abstract,
+        Content: req.body.content,
+        CatID: Cat[0].CatID,
+        SubCatID: req.body.sub_categories,
+        Tags: req.body.tags,
+      };
+
+      await paperModel.update(paperId, editPaper);
+      res.redirect(`/writer/management/paper/${paperId}`);
+    }
   });
 });
 
@@ -58,6 +92,8 @@ router.get("/upload", async function (req, res) {
 
 router.post("/upload", async function (req, res) {
   const number = (await paperModel.size()) + 1;
+  if (req.session.authUser) console.log(req.session.authUser.UserID);
+  else res.redirect("/");
 
   const storage = multer.diskStorage({
     destination(req, file, cb) {

@@ -116,11 +116,19 @@ module.exports = {
     return rows[0].total;
   },
 
-  add(paper) {
-    db("papers")
-      .insert(paper)
-      .then(() => console.log("Insert paper to database successful"))
-      .catch((err) => console.log(err));
+  async add(paper) {
+    await db("papers").insert(paper);
+  },
+
+  async update(paperID, paper) {
+    await db("papers").where("PaperID", paperID).update({
+      Title: paper.Title,
+      Abstract: paper.Abstract,
+      Content: paper.Content,
+      CatID: paper.CatID,
+      SubCatID: paper.SubCatID,
+      Tags: paper.Tags,
+    });
   },
 
   async findById(id) {
