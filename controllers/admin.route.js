@@ -5,8 +5,7 @@ const userModel = require("../models/user.model");
 const categoryModel = require("../models/category.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 
-//authUser, authRole("admin")
-router.get("/users", async function (req, res) {
+router.get("/users", authUser, authRole("admin"), async function (req, res) {
   const users = await userModel.allWithSpecific();
   const categories = await categoryModel.all();
 
@@ -18,7 +17,7 @@ router.get("/users", async function (req, res) {
 });
 
 // authUser, authRole("admin")
-router.post("/users", async function (req, res) {
+router.post("/users", authUser, authRole("admin"), async function (req, res) {
   let role = req.body.role;
   let userID = req.body.userID;
 
@@ -27,13 +26,18 @@ router.post("/users", async function (req, res) {
   res.redirect("/admin/users");
 });
 
-router.post("/users/editor", async function (req, res) {
-  let userID = req.body.userID;
-  let catID = req.body.category;
+router.post(
+  "/users/editor",
+  authUser,
+  authRole("admin"),
+  async function (req, res) {
+    let userID = req.body.userID;
+    let catID = req.body.category;
 
-  await userModel.upsertEditorCategory(userID, catID);
+    await userModel.upsertEditorCategory(userID, catID);
 
-  res.redirect("/admin/users");
-});
+    res.redirect("/admin/users");
+  }
+);
 
 module.exports = router;
