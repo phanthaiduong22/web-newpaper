@@ -56,6 +56,13 @@
                       </a>
                   </li>
                   {{/eq}}
+                  {{#eq authUser.Role "editor"}}
+                  <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
+                      <a class="nav-link" href="/editor/management">
+                        <i class="fa fa-user" aria-hidden="true"></i> Editor Management
+                      </a>
+                  </li>
+                  {{/eq}}
 
                 <li class="nav-item {{#if active.upload}}active{{/if}}">
                     <a class="nav-link" href="/editor/upload">
