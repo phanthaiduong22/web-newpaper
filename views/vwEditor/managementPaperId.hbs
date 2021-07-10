@@ -74,13 +74,13 @@
       </h2>
       <form method="POST" action="/editor/management/paper/{{this.paper.PaperID}}">
         <div class="container">
-          <div class="row">
+          <div class="row"> 
             <label><b>Paper's Status:</b> {{this.paper.Status}}</label>
           </div>
           <div class="row">
             <div class="form-group">
               <label for="txtName"><b>Date release:</b> {{this.paper.CreatedAt}}</label>
-              <input type="text" class="form-control" id="txtDOB" name="raw_dob"/>
+              <input type="text" class="form-control" id="txtDOB" name="raw_dob" required/>
             </div>
           </div>
           <div class="row">

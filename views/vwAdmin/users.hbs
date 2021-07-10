@@ -40,18 +40,18 @@
                 </td>
                 <td>  
                   <span class="text-muted">{{Role}}</span><br>
-                  <span class="text-muted">Category: {{CatName}}</span>
                 </td>
                 <td> 
                   {{#eq Role "editor"}}
                   <form method="POST" action="/admin/users/editor">
                     <input type="hidden" name="userID" value="{{UserID}}"/>
                     <select name="category" class="form-control category-select d-inline" id="exampleFormControlSelect2">
-                      {{!--  --}}
-                        {{#each ../this.categories}}
-                          <option value={{CatID}}>{{CatName}}</option>
-                        {{/each}}
-                      {{!--  --}}
+                      <option selected value={{CatID}}>{{CatName}}</option>
+                      {{#each ../this.categories}}
+                        {{#isnt CatID ../CatID}}
+                        <option value="{{CatID}}">{{CatName}}</option>
+                        {{/isnt}}
+                      {{/each}}
                     </select>
                     <button type="submit" class="btn btn-outline-info d-inline"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form>

@@ -128,12 +128,13 @@
           <textarea id="txtContent" name="content" rows="20">{{this.paper.Content}}</textarea>
         </div>
         <div class="form-group">
-            <label for="sub_categories">Choose a sub categories:</label>
-            <select id="sub_categories" name="sub_categories">
-              {{#each this.sub_categories}}
-                <option value="{{SubCatID}}">{{SubCatName}}</option>
-              {{/each}}
-            </select>
+          <label for="sub_categories">Choose a sub categories:</label>
+          <select class="form-control" aria-label="Default select example" name="sub_categories">
+            <option selected value={{this.paper.SubCatID}}>{{this.paper.SubCatName}}</option>
+            {{#each this.sub_categories}}
+            <option value="{{SubCatID}}">{{SubCatName}}</option>
+            {{/each}}
+          </select>
         </div>
         <div class="form-group">
           <label for="txtContent">Tags</label>

@@ -6,12 +6,12 @@ const categoryModel = require("../models/category.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 
 router.get("/users", authUser, authRole("admin"), async function (req, res) {
-  const users = await userModel.allWithSpecific();
-  const categories = await categoryModel.all();
+  let users = await userModel.allWithSpecific();
+  let categories = await categoryModel.all();
 
   res.render("vwAdmin/users", {
-    users: users,
-    categories: categories,
+    users,
+    categories,
     active: { adminUsers: true },
   });
 });
