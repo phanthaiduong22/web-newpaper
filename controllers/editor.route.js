@@ -18,14 +18,14 @@ router.get(
   async function (req, res) {
     if (req.session.authUser) console.log(req.session.authUser.UserID);
     else res.redirect("/");
-    const papers = await paperModel.editorFindByCat(1);
+    const papers = await paperModel.editorFindByCat(4);
     for (i = 0; i < papers.length; i++) {
       papers[i].CreatedAt = moment(papers[i].CreatedAt).format("Do MMMM YYYY");
     }
     res.render("vwEditor/management", {
       papers: papers,
     });
-  }
+  },
 );
 
 router.get(
@@ -55,7 +55,7 @@ router.get(
       paper: paper,
       sub_categories,
     });
-  }
+  },
 );
 
 router.post(
@@ -73,14 +73,14 @@ router.post(
         dateRelease,
         sub_categories,
         tags,
-        editorComment
+        editorComment,
       );
     } else if (reject) {
       await paperModel.editorRejectPaper(paperId, editorComment);
     }
 
     res.redirect(`/editor/management/paper/${paperId}`);
-  }
+  },
 );
 
 module.exports = router;

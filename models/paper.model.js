@@ -90,7 +90,7 @@ module.exports = {
     }
   },
 
-  async editorRejectPaper(paperID) {
+  async editorRejectPaper(paperID, editorComment) {
     await db("papers").where("PaperID", paperID).update({
       Status: "Rejected",
       EditorComment: editorComment,
@@ -139,7 +139,7 @@ module.exports = {
         "sub_categories",
         "papers.SubCatID",
         "=",
-        "sub_categories.SubCatID"
+        "sub_categories.SubCatID",
       );
     if (rows.length === 0) return null;
     return rows[0];
@@ -148,7 +148,7 @@ module.exports = {
   async search(query) {
     //FTS
     const rows = await db.raw(
-      `SELECT * FROM papers WHERE MATCH (Title, Content, Abstract) AGAINST ('${query}')`
+      `SELECT * FROM papers WHERE MATCH (Title, Content, Abstract) AGAINST ('${query}')`,
     );
 
     return rows[0];

@@ -137,7 +137,7 @@
 
   BEGIN;
   INSERT INTO `sub_categories` VALUES (1, 'Iphone');
-  INSERT INTO `sub_categories` VALUES (2, 'Android');;
+  INSERT INTO `sub_categories` VALUES (2, 'Android');
   INSERT INTO `sub_categories` VALUES (3, 'Machine Learning');
   INSERT INTO `sub_categories` VALUES (4, 'Networking');
   INSERT INTO `sub_categories` VALUES (5, 'Google');

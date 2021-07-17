@@ -23,10 +23,11 @@ router.get(
     for (i = 0; i < papers.length; i++) {
       papers[i].CreatedAt = moment(papers[i].CreatedAt).format("Do MMMM YYYY");
     }
+    console.log(papers);
     res.render("vwWriter/management", {
       papers: papers,
     });
-  }
+  },
 );
 
 router.get(
@@ -54,7 +55,7 @@ router.get(
       paper: paper,
       sub_categories,
     });
-  }
+  },
 );
 
 router.post(
@@ -85,7 +86,7 @@ router.post(
         console.log(err);
       } else {
         const Cat = await categoryModel.getCatbySubCatID(
-          req.body.sub_categories
+          req.body.sub_categories,
         );
         const editPaper = {
           Title: req.body.title,
@@ -100,7 +101,7 @@ router.post(
         res.redirect(`/writer/management/paper/${paperId}`);
       }
     });
-  }
+  },
 );
 
 router.get("/upload", authUser, authRole("writer"), async function (req, res) {
