@@ -10,6 +10,13 @@
   Date: 26/07/2021
   */
 
+
+  drop database newspapers;
+
+  create database newspapers;
+
+  USE newspapers;
+
   SET NAMES utf8mb4;
   SET FOREIGN_KEY_CHECKS = 0;
 
