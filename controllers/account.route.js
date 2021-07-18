@@ -5,6 +5,8 @@ const moment = require("moment");
 const userModel = require("../models/user.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 
+const sendEmail = require("../utils/sendEmail");
+
 const router = express.Router();
 
 router.get("/profile", authUser, authRole("user"), function (req, res) {
@@ -29,6 +31,9 @@ router.post("/register", async function (req, res) {
   };
 
   await userModel.add(user);
+
+  sendEmail();
+
   res.render("vwAccount/register", {
     active: { register: true },
   });

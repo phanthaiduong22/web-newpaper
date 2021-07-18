@@ -23,6 +23,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "mysql2": "^2.2.5",
+    "nodemailer": "^6.6.3",
     "nodemon": "^2.0.7",
     "numeral": "^2.0.6"
   }
