@@ -102,4 +102,14 @@ router.post("/logout", authUser, async function (req, res) {
   res.redirect(url);
 });
 
+router.get("/resetpassword", async (req, res) => {
+  res.render("vwAccount/resetpassword.hbs");
+});
+
+router.post("/resetpassword", async (req, res) => {
+  const email = req.body.email;
+  console.log(email);
+  sendEmail(email);
+});
+
 module.exports = router;

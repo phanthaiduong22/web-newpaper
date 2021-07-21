@@ -1,10 +1,7 @@
 {{#section "js"}}
   <script>
-    $(document).ready(function () {
-      $("#myCarousel").carousel({
-        interval: 2000,
-      }); 
-    });
+    $(document).ready(function () { $("#myCarousel").carousel({ interval: 2000,
+    }); });
   </script>
   <script>
     let Cat = 1
@@ -14,7 +11,7 @@
 <!-- 
   Casourel
 -->
-<div class="border" >
+<div class="border">
   <div class="container mb-2 mt-1">
     <div class="row">
       <div
@@ -32,19 +29,23 @@
           <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
         </ol>
         <div class="carousel-inner">
-        {{!--  --}}
+          {{!  }}
           {{#each this.carousels}}
             <div class="carousel-item {{active}}">
-              <img src="/public/carousels/{{id}}.png" class="d-block w-100" alt="..." />
+              <img
+                src="/public/carousels/{{id}}.png"
+                class="d-block w-100"
+                alt="..."
+              />
               <div class="carousel-caption d-none d-md-block">
                 <h5>First slide label</h5>
                 <p>
-                Some representative placeholder content for the first slide.
+                  Some representative placeholder content for the first slide.
                 </p>
               </div>
             </div>
           {{/each}}
-          {{!--  --}}
+          {{!  }}
         </div>
         <a
           class="carousel-control-prev"
@@ -53,10 +54,7 @@
           data-slide="prev"
           style="height: 80%;"
         >
-          <span
-            class="carousel-control-prev-icon"
-            aria-hidden="true"
-          ></span>
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
         </a>
         <a
@@ -65,10 +63,7 @@
           role="button"
           data-slide="next"
         >
-          <span
-            class="carousel-control-next-icon"
-            aria-hidden="true"
-          ></span>
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
       </div>
@@ -80,103 +75,110 @@
 -->
 <div class="">
   <div class="container mt-2 mb-2">
-    <h1 class="border-bottom m-4">Hot News</h1>
+    <h1 class="border-bottom m-4 font-italic">Hot News</h1>
     <div class="row">
-      {{!--  --}}
+      {{!  }}
       {{#each this.hotNews}}
-      <div class="col-3">
-        <div class="card link-secondary zoom">
-          <a href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;">
-          <img class="card-img-top" src="/public/imgs/{{Avatar}}" alt="Card Image" style="height: 55%;"/>
-          <div class="card-body">
-            <div class="row" >
-              <div class="col card-title text-secondary"><b>{{CatName}}</b></div>
-              <div class="card-title text-secondary small float-right"><b>Views: {{Views}}</b></div>
-              <div class="col-7 card-title text-secondary small float-right"><b>{{CreatedAt}}</b></div>
-            </div>
-            <p class="card-title link-secondary"><b>{{Title}}</b></p>
+        <div class="col-3">
+          <div class="card link-secondary zoom">
+            <a
+              href="/papers/details/{{PaperID}}"
+              style="color: inherit; text-decoration:none;"
+            >
+              <img
+                class="card-img-top"
+                src="/public/imgs/{{Avatar}}"
+                alt="Card Image"
+                style="height: 55%;"
+              />
+              <div class="card-body">
+                <div class="row">
+                  <div class="col card-title text-secondary"><b
+                    >{{CatName}}</b></div>
+                  <div class="card-title text-secondary small float-right"><b
+                    >Views: {{Views}}</b></div>
+                  <div
+                    class="col-7 card-title text-secondary small float-right"
+                  ><b>{{CreatedAt}}</b></div>
+                </div>
+                <p class="card-title link-secondary"><b>{{Title}}</b></p>
+              </div>
+            </a>
           </div>
-          </a>
         </div>
-      </div>
       {{/each}}
-      {{!--  --}}
+      {{!  }}
     </div>
   </div>
 </div>
 
 <!-- Most watched -->
 <div class="container mt-2 mb-2">
-  <h1 class="border-bottom m-4">Most watched</h1>
-  <div class="row ">
-    {{!--  --}}
+  <h1 class="border-bottom m-4 font-italic">Most watched</h1>
+  <div class="row">
+    {{!  }}
     {{#each this.hotNews}}
-    <a href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;" >
-      <div class="row mb-1 zoom">
-        <div class="col-3">
-          <img
-            src="/public/imgs/{{Avatar}}"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
-        </div>
-        <div class="col">
-          <div class="row">
-            <div class="badge">
-              <i class="fa fa-calendar" aria-hidden="true"></i>{{CreatedAt}}
+      <a
+        href="/papers/details/{{PaperID}}"
+        style="color: inherit; text-decoration:none;"
+      >
+        <div class="row mb-1 zoom">
+          <div class="col-3">
+            <img
+              src="/public/imgs/{{Avatar}}"
+              class="img-thumbnail ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+              alt="image-paper"
+            />
+          </div>
+          <div class="col">
+            <div class="row">
+              <div class="badge">
+                <i class="fa fa-calendar" aria-hidden="true"></i>{{CreatedAt}}
+              </div>
+              <div class="badge">
+                <i class="fa fa-eye" aria-hidden="true"></i>{{Views}}
+              </div>
             </div>
-            <div class="badge">
-              <i class="fa fa-eye" aria-hidden="true"></i>{{Views}}
+            <div class="row">
+              <h4 class="card-title text-dark">
+                <b>
+                  {{Title}}
+                </b>
+              </h4>
             </div>
           </div>
-          <div class="row">
-            <h4 class="card-title text-dark">
-              <b>
-              {{Title}}
-              </b>
-            </h4>
-          </div>
         </div>
-      </div>
-    </a>
+      </a>
     {{/each}}
-    {{!--  --}}
+    {{!  }}
   </div>
 </div>
 
 <!-- Lastest -->
 <div class="">
   <div class="container">
-    <h1 class="border-bottom m-4">Latest News</h1>
+    <h1 class="border-bottom m-4 font-italic">Latest News</h1>
     <div class="row">
-      {{!--  --}}
+      {{!  }}
       {{#each this.latestNews}}
-      <div class="col-3">
-        <div class="row">
-          <img
-            src="/public/imgs/{{Avatar}}"
-            class="
-              img-thumbnail
-              ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-            "
-            alt="image-paper"
-          />
+        <div class="col-3">
+          <div class="row">
+            <img
+              src="/public/imgs/{{Avatar}}"
+              class="img-thumbnail ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+              alt="image-paper"
+            />
+          </div>
+          <div class="row">
+            <a href="#" class=""><h5 class="card-title text-dark">
+                <b>
+                  {{Title}}
+                </b>
+              </h5></a>
+          </div>
         </div>
-        <div class="row">
-          <a href="#" class=""
-            ><h5 class="card-title text-dark">
-              <b>
-                {{Title}}
-              </b>
-            </h5></a
-          >
-        </div>
-      </div>
       {{/each}}
-      {{!--  --}}
+      {{!  }}
     </div>
   </div>
 </div>

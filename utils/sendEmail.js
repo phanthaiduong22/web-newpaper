@@ -1,7 +1,7 @@
 const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
-const sendEmail = async () => {
+const sendEmail = async (email) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
@@ -12,7 +12,7 @@ const sendEmail = async () => {
 
   let mailOptions = {
     from: "nguyenvitieubao021700@gmail.com",
-    to: "nguyenvitieubao021700@gmail.com",
+    to: email,
     subject: "Testing and testing",
     text: "it worked",
   };

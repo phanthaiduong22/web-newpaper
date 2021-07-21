@@ -15,7 +15,7 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/public/css/main.css" />
+    <link rel="stylesheet" href="/public/css/main.css"/>
     <title>BietDoiBanCuoi - NewsPaper</title>
     {{{_sections.css}}}
   </head>
@@ -23,7 +23,7 @@
     <!-- 
       NavBar
     -->
-    <nav class="navbar navbar-expand-custom navbar-mainbg pr-2">
+    <nav class="navbar navbar-expand-custom navbar-mainbg pr-2 display-1 mb-3">
         <a class="navbar-brand navbar-logo" href="#">BietDoiBanCuoi</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
@@ -31,20 +31,20 @@
         {{!-- search --}}
         <form method="POST" class="form-inline my-2 my-lg-0" action="/search">
           <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          <button class="bg-transparent btn text-white text-center" type="submit"><i class="fa fa-search fa-2x w-100" aria-hidden="true"></i></button>
         </form>
         <form id="frmLogout" action="/account/logout" method="POST"></form>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto text-white">
                 <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
                 <li class="nav-item {{#if active.home}}active{{/if}}">
                     <a class="nav-link" href="/">
-                    <i class="fa fa-home" aria-hidden="true"></i> Home
+                    <i class="fa fa-home fa-2x" aria-hidden="true"></i> HOME
                 </a>
                 </li> 
                 <li class="nav-item {{#if active.categories}}active{{/if}}">
                     <a class="nav-link" href="/papers/byCat/1">
-                    <i class="fa fa-list" aria-hidden="true"></i> Categories
+                    <i class="fa fa-list fa-2x" aria-hidden="true"></i> CATEGORIES
                     </a>
                 </li> 
                 {{!--  --}}
@@ -52,50 +52,50 @@
                   {{#eq authUser.Role "admin"}}
                   <li class="nav-item {{#if active.adminUser}}active{{/if}}">
                       <a class="nav-link" href="/admin/users">
-                        <i class="fa fa-user" aria-hidden="true"></i> User Management
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i> USER MANAGEMENT
                       </a>
                   </li>
                   {{/eq}}
                   {{#eq authUser.Role "editor"}}
                   <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
                       <a class="nav-link" href="/editor/management">
-                        <i class="fa fa-user" aria-hidden="true"></i> Editor Management
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i> EDITOR MANAGEMENT
                       </a>
                   </li>
                   {{/eq}}
                   {{#eq authUser.Role "writer"}}
                   <li class="nav-item {{#if active.writer}}active{{/if}}">
                       <a class="nav-link" href="/writer/management">
-                        <i class="fa fa-user" aria-hidden="true"></i> Writer Management
+                        <i class="fa fa-user fa-2x" aria-hidden="true"></i> WRITER MANAGEMENT
                       </a>
                   </li>
                   <li class="nav-item {{#if active.upload}}active{{/if}}">
                     <a class="nav-link" href="/writer/upload">
-                      <i class="fa fa-upload" aria-hidden="true"></i> Upload
+                      <i class="fa fa-upload fa-2x" aria-hidden="true"></i> UPLOAD
                     </a>
                 </li>
                   {{/eq}}
                 <li class="nav-item {{#if active.profile}}active{{/if}}">
-                  <a class="nav-link" href="/account/profile">
-                    Hi, <b>{{authUser.Name}}</b>
+                  <a class="nav-link mt-2" href="/account/profile">
+                    Hi, <b>{{authUser.Name}}</b>!
                   </a>
                 <li class="nav-item">
                     <a class="nav-link" href="javascript: $('#frmLogout').submit();">
-                      <i class="fa fa-sign-out" aria-hidden="true"></i>
-                      Sign Out
+                      <i class="fa fa-sign-out fa-2x" aria-hidden="true"></i>
+                      SIGN OUT
                     </a>
                 </li>
                 {{else}}
                 <li class="nav-item {{#if active.register}}active{{/if}}">
                   <a class="nav-link" href="/account/register">
-                    <i class="fa fa-user-plus" aria-hidden="true"></i>
-                    Register
+                    <i class="fa fa-user-plus fa-2x" aria-hidden="true"></i>
+                    REGISTER
                   </a>
                 </li>
                 <li class="nav-item {{#if active.login}}active{{/if}}">
                     <a class="nav-link" href="/account/login">
-                      <i class="fa fa-sign-in" aria-hidden="true"></i>
-                      Sign In
+                      <i class="fa fa-sign-in fa-2x" aria-hidden="true"></i>
+                      SIGN IN
                     </a>
                 </li>
                 {{/if}}

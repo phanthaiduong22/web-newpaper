@@ -1,78 +1,91 @@
-{{#section 'css'}}
-<link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+  />
 {{/section}}
 
-{{#section 'js'}}
+{{#section "js"}}
   <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+  >
   </script>
   <script>
-  $('#frmRegister').on('submit', function (e) {
-    e.preventDefault();
+    $("#frmRegister").on("submit", function (e) { e.preventDefault(); const
+    username = $("#txtUsername").val(); const email = $("#txtEmail").val(); if
+    (username.length === 0 || email.length === 0) { alert("Invalid data!");
+    return; } $.getJSON(`/account/is-valid-username?username=${username}`,
+    function (data) { if (data === false) { alert("Username is used!"); return;
+    } }); $.getJSON(`/account/is-valid-email?email=${email}`, function (data) {
+    if (data === false) { alert("Email is used!"); return; } }); const password
+    = $("#txtPassword").val(); const confirmPassword =
+    $("#txtConfirmPassword").val(); if (password !== confirmPassword) {
+    alert("Password have to be match!"); return; }
+    $("#frmRegister").off("submit").submit(); }); $("#txtDOB").datetimepicker({
+    format: "d/m/Y", timepicker: false, mask: true, });
+    $("#txtUsername").focus();
 
-    const username = $('#txtUsername').val();
-    const email = $('#txtEmail').val();
-    if (username.length === 0 || email.length === 0) {
-      alert('Invalid data!');
-      return;
-    }
-
-    $.getJSON(`/account/is-valid-username?username=${username}`, function (data) {
-      if (data === false) {
-        alert('Username is used!');
-      }
-    });
-
-    $.getJSON(`/account/is-valid-email?email=${username}`, function (data) {
-    if (data === false) {
-      alert('Email is used!');
-      }
-    });
-
-    $('#frmRegister').off('submit').submit();
-  })
-
-  $('#txtDOB').datetimepicker({
-    format: 'd/m/Y',
-    timepicker: false,
-    mask: true
-  });
-
-  $('#txtUsername').focus();
-</script>
+  </script>
 {{/section}}
 
-<div class="card container">
-  <h4 class="card-header border">
-    Register
+<div class="card container mt-5 mb-5" style="max-width: 500px">
+  <h4 class="card-header border rounded bg-primary text-white text-center mt-3">
+    CREATE YOUR ACCOUNT
   </h4>
   <div class="card-body">
     <form id="frmRegister" method="POST">
       <div class="form-group">
-        <label for="txtUsername">User</label>
-        <input type="text" class="form-control" id="txtUsername" name="username">
+        <label for="txtUsername">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          id="txtUsername"
+          name="username"
+          placeholder="stark"
+        />
       </div>
       <div class="form-group">
         <label for="txtEmail">Email</label>
-        <input type="text" class="form-control" id="txtEmail" name="email">
-      </div>
-      <div class="form-group">
-        <label for="txtPassword">Password</label>
-        <input type="password" class="form-control" id="txtPassword" name="raw_password">
+        <input
+          type="text"
+          class="form-control"
+          id="txtEmail"
+          name="email"
+          placeholder="example@gmail.com"
+        />
       </div>
       <div class="form-group">
         <label for="txtName">Name</label>
-        <input type="text" class="form-control" id="txtName" name="name">
+        <input type="text" class="form-control" id="txtName" name="name" />
       </div>
       <div class="form-group">
-        <label for="txtDOB">DOB</label>
-        <input type="text" class="form-control" id="txtDOB" name="raw_dob">
+        <label for="txtPassword">Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="txtPassword"
+          name="raw_password"
+        />
       </div>
-      <button type="submit" class="btn btn-success">
-        <i class="fa fa-check" aria-hidden="true"></i>
+      <div class="form-group">
+        <label for="txtConfirmPassword">Confirm Password</label>
+        <input
+          type="password"
+          class="form-control"
+          id="txtConfirmPassword"
+          name="raw_confirmPassword"
+        />
+      </div>
+      <div class="form-group">
+        <label for="txtDOB">Date of Birth.</label>
+        <input type="text" class="form-control" id="txtDOB" name="raw_dob" />
+      </div>
+      <button type="submit" class="btn btn-success d-block w-100">
         Register
       </button>
+      <p class="text-center mt-2 text-muted">Have already an account?
+        <a href="/account/login" class="font-weight-bold text-dark"><u>Login
+            here</u></a></p>
     </form>
   </div>
 </div>
