@@ -18,11 +18,21 @@ const sendEmail = async (email, data) => {
   };
   await resetModel.add(info);
 
+  let text = "";
+  text += `<h2>Reset Your Password</h2>
+  To change your password, please use the following One Time Password (OTP):
+  <h2>${data.otp}</h2>
+  This code will expire <b>three hours</b> after this email was sent.<br>
+  Do not share this OTP with anyone. We takes your account security very
+  seriously.<br>
+  
+  We hope to see you again soon.`;
+
   let mailOptions = {
     from: "nguyenvitieubao021700@gmail.com",
     to: email,
     subject: "Bietdoibancuoi - Reset Password",
-    text: "" + data.otp,
+    html: text,
   };
 
   transporter.sendMail(mailOptions, function (err, data) {

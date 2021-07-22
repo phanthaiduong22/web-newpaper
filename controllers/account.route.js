@@ -136,7 +136,7 @@ router.post("/resetpassword", notAuth, async (req, res) => {
   const email = req.body.email;
   const otp = Math.floor(Math.random() * 900000) + 100000;
   console.log(email, otp);
-  await sendEmail(email, { otp, expiresIn: 60 * 5 });
+  await sendEmail(email, { otp, expiresIn: 60 * 60 * 3 });
   res.render("vwAccount/otp", { email });
 });
 
