@@ -4,29 +4,42 @@
     href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
   />
 {{/section}}
-
 {{#section "js"}}
   <script
     src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
-  >
-  </script>
+  ></script>
   <script>
     const form = $("#frmOtp"); form.on("submit", async (e) => {
     e.preventDefault(); const otp = $("#txtOtp").val(); const email =
-    $("#email").val(); if (otp.length !== 6) { alert("Invalid OTP!"); return; }
+    $("#email").val(); if (otp.length === 0) { alert("Invalid OTP!"); return; }
     form.off("submit").submit(); });
-
   </script>
 {{/section}}
-
 <div class="card container mt-5 mb-5" style="max-width: 500px">
+  {{#if err_message}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">
+          ×
+        </span>
+      </button>
+      {{err_message}}
+    </div>
+  {{/if}}
   <h4 class="card-header border rounded bg-primary text-white text-center mt-3">
     VERIFY OTP
   </h4>
   <div class="card-body">
     <form id="frmOtp" action="/account/otp/verify" method="POST">
       <div class="form-group">
-        <label for="txtOtp">Your OTP</label>
+        <label for="txtOtp">
+          Your OTP
+        </label>
         <input
           type="text"
           class="form-control"
@@ -39,7 +52,6 @@
       <button type="submit" class="btn btn-success d-block w-100">
         Verify
       </button>
-
     </form>
   </div>
 </div>
