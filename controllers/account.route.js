@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const moment = require("moment");
 
 const userModel = require("../models/user.model");
+const resetModel = require("../models/reset.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 
 const sendEmail = require("../utils/sendEmail");
@@ -31,9 +32,6 @@ router.post("/register", async function (req, res) {
   };
 
   await userModel.add(user);
-
-  sendEmail();
-
   res.render("vwAccount/register", {
     active: { register: true },
   });
@@ -103,13 +101,41 @@ router.post("/logout", authUser, async function (req, res) {
 });
 
 router.get("/resetpassword", async (req, res) => {
-  res.render("vwAccount/resetpassword.hbs");
+  res.render("vwAccount/resetpassword");
+});
+
+router.get("/otp", async (req, res) => {
+  res.render("vwAccount/otp");
+});
+
+router.post("/otp/verify", async (req, res) => {
+  const { email, otp } = req.body;
+  console.log("email:", email);
+  console.log("otp:", otp);
+  const reset = await resetModel.findByEmail(email);
+  const timeNow = new Date().getTime();
+  console.log(reset, timeNow);
+
+  if (
+    otp == reset.otp &&
+    email === reset.email &&
+    timeNow - reset.created_at <= reset.expiresin * 1000
+  ) {
+    console.log("otp was correct.");
+    return res.render("vwAccount/resetpassword", { email, otp, edit: true });
+  }
+  console.log("otp was not match or expired.");
+  res.render("vwAccount/resetpassword", { email });
 });
 
 router.post("/resetpassword", async (req, res) => {
   const email = req.body.email;
-  console.log(email);
-  sendEmail(email);
+  const otp = Math.floor(Math.random() * 900000) + 100000;
+  console.log(email, otp);
+  await sendEmail(email, { otp, expiresIn: 60 * 5 });
+  res.render("vwAccount/otp", { email });
 });
+
+router.put("/resetpassword", async (req, res) => {});
 
 module.exports = router;

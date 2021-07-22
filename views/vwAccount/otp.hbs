@@ -1,0 +1,45 @@
+{{#section "css"}}
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+  />
+{{/section}}
+
+{{#section "js"}}
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+  >
+  </script>
+  <script>
+    const form = $("#frmOtp"); form.on("submit", async (e) => {
+    e.preventDefault(); const otp = $("#txtOtp").val(); const email =
+    $("#email").val(); if (otp.length !== 6) { alert("Invalid OTP!"); return; }
+    form.off("submit").submit(); });
+
+  </script>
+{{/section}}
+
+<div class="card container mt-5 mb-5" style="max-width: 500px">
+  <h4 class="card-header border rounded bg-primary text-white text-center mt-3">
+    VERIFY OTP
+  </h4>
+  <div class="card-body">
+    <form id="frmOtp" action="/account/otp/verify" method="POST">
+      <div class="form-group">
+        <label for="txtOtp">Your OTP</label>
+        <input
+          type="text"
+          class="form-control"
+          id="txtOtp"
+          name="otp"
+          placeholder="6-digit code"
+        />
+      </div>
+      <input type="hidden" value="{{email}}" id="email" name="email" />
+      <button type="submit" class="btn btn-success d-block w-100">
+        Verify
+      </button>
+
+    </form>
+  </div>
+</div>
