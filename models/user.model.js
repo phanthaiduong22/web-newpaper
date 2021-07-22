@@ -13,7 +13,7 @@ module.exports = {
         "categories",
         "categories.CatID",
         "=",
-        "category_editors.CatID"
+        "category_editors.CatID",
       );
   },
 
@@ -35,6 +35,10 @@ module.exports = {
     return rows[0];
   },
 
+  async changePassword(userID, password) {
+    await db("users").where("UserID", userID).update({ Password: password });
+  },
+
   async updateUserRole(userID, role) {
     await db("users")
       .where("UserID", userID)
@@ -51,7 +55,7 @@ module.exports = {
   async upsertEditorCategory(userID, catID) {
     await db
       .raw(
-        `REPLACE INTO category_editors (EditorID, CatID) VALUES (${userID}, ${catID})`
+        `REPLACE INTO category_editors (EditorID, CatID) VALUES (${userID}, ${catID})`,
       )
       .then((data) => {
         return data;
