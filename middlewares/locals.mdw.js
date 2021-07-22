@@ -8,6 +8,7 @@ module.exports = function (app) {
 
     res.locals.auth = req.session.auth;
     res.locals.authUser = req.session.authUser;
+    res.locals.admin = req.session.authUser?.Name === "admin";
     next();
   });
 

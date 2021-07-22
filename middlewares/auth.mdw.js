@@ -13,12 +13,19 @@ function authRole(role) {
       req.session.retUrl = req.originalUrl;
       return res.redirect("/");
     }
-
     next();
   };
+}
+
+function notAuth(req, res, next) {
+  if (req.session.auth === true) {
+    return res.redirect("/");
+  }
+  next();
 }
 
 module.exports = {
   authUser,
   authRole,
+  notAuth,
 };

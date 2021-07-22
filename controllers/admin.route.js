@@ -37,7 +37,7 @@ router.post(
     await userModel.upsertEditorCategory(userID, catID);
 
     res.redirect("/admin/users");
-  }
+  },
 );
 
 module.exports = router;
