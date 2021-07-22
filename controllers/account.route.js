@@ -32,9 +32,7 @@ router.post("/register", notAuth, async function (req, res) {
   };
 
   await userModel.add(user);
-  res.render("vwAccount/register", {
-    active: { register: true },
-  });
+  res.redirect("/account/login");
 });
 
 router.get("/is-valid-username", async function (req, res) {
