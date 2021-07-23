@@ -117,7 +117,22 @@
     FOREIGN KEY (`CatID`) REFERENCES categories(`CatID`),
     FOREIGN KEY (`EditorID`) REFERENCES users(`UserID`)
   );
+  
 
+  -- ----------------------------
+  -- Table structure for reset
+  -- ----------------------------
+
+  DROP TABLE IF EXISTS `reset`;
+  CREATE TABLE `reset` (
+    `id` int(11) NOT NULL UNIQUE AUTO_INCREMENT,
+    `email` varchar(255),
+	`otp` int(11) NOT NULL,
+	`created_at` bigint NOT NULL,
+	`expiresin` bigint NOT NULL,
+    PRIMARY KEY (`id`)
+  );
+  
 
   -- ----------------------------
   -- Records of categories
