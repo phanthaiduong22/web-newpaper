@@ -18,7 +18,7 @@ module.exports = {
   },
 
   add(user) {
-    db("users").insert(user);
+    return db("users").insert(user);
   },
 
   async findByUsername(username) {
