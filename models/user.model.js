@@ -18,7 +18,7 @@ module.exports = {
   },
 
   add(user) {
-    return db("users").insert(user);
+    db("users").insert(user);
   },
 
   async findByUsername(username) {
@@ -36,11 +36,21 @@ module.exports = {
   },
 
   async changePassword(userID, password) {
-    await db("users").where("UserID", userID).update({ Password: password });
+    return await db("users")
+      .where("UserID", userID)
+      .update({ Password: password });
+  },
+
+  async updateProfile(userID, profile) {
+    return await db("users").where("UserID", userID).update({
+      Name: profile.name,
+      Email: profile.email,
+      Dob: profile.dob,
+    });
   },
 
   async updateUserRole(userID, role) {
-    await db("users")
+    return await db("users")
       .where("UserID", userID)
       .update({
         Role: role,
@@ -53,7 +63,7 @@ module.exports = {
       });
   },
   async upsertEditorCategory(userID, catID) {
-    await db
+    return await db
       .raw(
         `REPLACE INTO category_editors (EditorID, CatID) VALUES (${userID}, ${catID})`,
       )

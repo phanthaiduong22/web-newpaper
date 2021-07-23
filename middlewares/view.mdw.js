@@ -15,7 +15,7 @@ module.exports = function (app) {
         },
         helpers,
       },
-    })
+    }),
   );
   app.set("view engine", "hbs");
 };

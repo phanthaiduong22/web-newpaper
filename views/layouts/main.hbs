@@ -16,15 +16,16 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="/public/css/main.css"/>
-    <title>BietDoiBanCuoi - NewsPaper</title>
+
+    <title>GenZ</title>
     {{{_sections.css}}}
   </head>
-  <body>
+  <body class="pb-5">
     <!-- 
       NavBar
     -->
     <nav class="navbar navbar-expand-custom navbar-mainbg pr-2 display-1 mb-3">
-        <a class="navbar-brand navbar-logo" href="#">BietDoiBanCuoi</a>
+        <a class="navbar-brand navbar-logo" href="#">GenZ</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
@@ -39,12 +40,12 @@
                 <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
                 <li class="nav-item {{#if active.home}}active{{/if}}">
                     <a class="nav-link" href="/">
-                    <i class="fa fa-home " aria-hidden="true"></i> HOME
+                    <i class="fa fa-home " aria-hidden="true"></i> Home
                 </a>
                 </li> 
                 <li class="nav-item {{#if active.categories}}active{{/if}}">
                     <a class="nav-link" href="/papers/byCat/1">
-                    <i class="fa fa-list " aria-hidden="true"></i> CATEGORIES
+                    <i class="fa fa-list " aria-hidden="true"></i> Categories
                     </a>
                 </li> 
                 {{!--  --}}
@@ -52,35 +53,35 @@
                   {{#eq authUser.Role "admin"}}
                   <li class="nav-item {{#if active.adminUser}}active{{/if}}">
                       <a class="nav-link" href="/admin/users">
-                        <i class="fa fa-user " aria-hidden="true"></i> USER MANAGEMENT
+                        <i class="fa fa-user " aria-hidden="true"></i> User Management
                       </a>
                   </li>
                   {{/eq}}
                   {{#eq authUser.Role "editor"}}
                   <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
                       <a class="nav-link" href="/editor/management">
-                        <i class="fa fa-user " aria-hidden="true"></i> EDITOR MANAGEMENT
+                        <i class="fa fa-user " aria-hidden="true"></i> Editor Management
                       </a>
                   </li>
                   {{/eq}}
                   {{#eq authUser.Role "writer"}}
                   <li class="nav-item {{#if active.writer}}active{{/if}}">
                       <a class="nav-link" href="/writer/management">
-                        <i class="fa fa-user " aria-hidden="true"></i> WRITER MANAGEMENT
+                        <i class="fa fa-user " aria-hidden="true"></i> Writer Management
                       </a>
                   </li>
                   <li class="nav-item {{#if active.upload}}active{{/if}}">
                     <a class="nav-link" href="/writer/upload">
-                      <i class="fa fa-upload " aria-hidden="true"></i> UPLOAD
+                      <i class="fa fa-upload " aria-hidden="true"></i> Upload
                     </a>
                 </li>
                   {{/eq}}
                 <li class="nav-item {{#if active.profile}}active{{/if}}">
                   <a class="nav-link" href="/account/profile">
                     {{#if admin}}
-                      <i class="fa fa-user-secret " aria-hidden="true"></i>
+                      <i class="fa fa-user-secret" aria-hidden="true"></i>
                       {{else}} 
-                      <i class="fa fa-user-circle " aria-hidden="true"></i>
+                      <i class="fa fa-user-circle" aria-hidden="true"></i>
                     {{/if}}
                     
                     Hi, <b>{{authUser.Name}}</b>!
@@ -88,20 +89,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="javascript: $('#frmLogout').submit();">
                       <i class="fa fa-sign-out " aria-hidden="true"></i>
-                      SIGN OUT
+                      Sign Out
                     </a>
                 </li>
                 {{else}}
                 <li class="nav-item {{#if active.register}}active{{/if}}">
                   <a class="nav-link" href="/account/register">
                     <i class="fa fa-user-plus " aria-hidden="true"></i>
-                    REGISTER
+                    Register
                   </a>
                 </li>
                 <li class="nav-item {{#if active.login}}active{{/if}}">
                     <a class="nav-link" href="/account/login">
                       <i class="fa fa-sign-in " aria-hidden="true"></i>
-                      SIGN IN
+                      Sign in
                     </a>
                 </li>
                 {{/if}}

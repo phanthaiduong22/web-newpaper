@@ -24,6 +24,7 @@ router.get(
     }
     res.render("vwEditor/management", {
       papers: papers,
+      active: { editorManagement: true },
     });
   },
 );

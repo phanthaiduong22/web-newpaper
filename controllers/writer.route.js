@@ -26,6 +26,7 @@ router.get(
     console.log(papers);
     res.render("vwWriter/management", {
       papers: papers,
+      active: { writer: true },
     });
   },
 );

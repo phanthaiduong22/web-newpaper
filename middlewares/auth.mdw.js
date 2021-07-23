@@ -3,7 +3,6 @@ function authUser(req, res, next) {
     req.session.retUrl = req.originalUrl;
     return res.redirect("/account/login");
   }
-
   next();
 }
 
@@ -24,8 +23,17 @@ function notAuth(req, res, next) {
   next();
 }
 
+function notAdmin(req, res, next) {
+  if (req.session.authUser.role === "admin") {
+    req.session.retUrl = req.originalUrl;
+    return res.redirect("/");
+  }
+  next();
+}
+
 module.exports = {
   authUser,
   authRole,
   notAuth,
+  notAdmin,
 };

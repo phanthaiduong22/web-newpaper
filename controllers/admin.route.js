@@ -12,7 +12,7 @@ router.get("/users", authUser, authRole("admin"), async function (req, res) {
   res.render("vwAdmin/users", {
     users,
     categories,
-    active: { adminUsers: true },
+    active: { adminUser: true },
   });
 });
 

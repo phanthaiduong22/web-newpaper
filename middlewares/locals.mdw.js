@@ -5,10 +5,9 @@ module.exports = function (app) {
     if (typeof req.session.auth === "undefined") {
       req.session.auth = false;
     }
-
     res.locals.auth = req.session.auth;
     res.locals.authUser = req.session.authUser;
-    res.locals.admin = req.session.authUser?.Name === "admin";
+    res.locals.admin = req.session.admin;
     next();
   });
 
