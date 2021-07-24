@@ -6,44 +6,46 @@
   <script src="https://unpkg.com/@yaireo/tagify"></script>
   <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
   <script>
-    var input = document.querySelector('input[name=tags]');
-    new Tagify(input)
+    var tags = document.querySelectorAll('input');
+    tags.forEach(tag => {
+      new Tagify(tag);
+    })
   </script>
 
 {{/section}}
-<div class="container-fluid mt-2">
+<div class="container-fluid p-5">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
-        <div class="card-body">
-          <h5 class="card-title text-uppercase mb-0">Editor Management</h5>
+        <div class="card-body bg-primary">
+          <h1 class="card-title text-white text-center mb-0">List of Papers</h1>
         </div>
         <div class="table-responsive">
           <table class="table border no-wrap user-table mb-0">
             <thead>
-              <tr>
-                <th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Title</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Created</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Status</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Tags</th>
+              <tr class="text-center">
+                <th scope="col" class="border-0 font-medium pl-4">#</th>
+                <th scope="col" class="border-0 font-medium">Paper Title</th>
+                <th scope="col" class="border-0 font-medium">Created At</th>
+                <th scope="col" class="border-0 font-medium">Status</th>
+                <th scope="col" class="border-0 font-medium">Tags</th>
               </tr>
             </thead>
             <tbody>
               {{!--  --}}
               {{#each this.papers}}
-                <tr >
+                <tr>
                   <td class="pl-4">{{@index}}</td>
-                  <td>
+                  <td class="col-md-6">
                       <h5><a class="font-medium mb-0" href="/editor/management/paper/{{PaperID}}">{{Title}}</a></h5>
                   </td>
-                  <td>  
+                  <td class="col-md-2 text-center">  
                     <span class="text-muted">{{CreatedAt}}</span><br>
                   </td>
-                  <td>  
+                  <td class="col-md-1 text-center">  
                     <span class="text-muted">{{Status}}</span><br>
                   </td>
-                  <td> 
+                  <td class="col-md-3"> 
                     <input name='tags' value='{{Tags}}' style="border: 0;" readonly></input>
                   </td> 
                 </tr>

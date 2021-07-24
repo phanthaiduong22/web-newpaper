@@ -1,8 +1,8 @@
 const db = require("../utils/db");
 
 module.exports = {
-  all() {
-    return db("reset");
+  async all() {
+    return await db("reset");
   },
 
   async allWithSpecific() {

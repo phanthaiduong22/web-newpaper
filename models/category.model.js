@@ -10,11 +10,11 @@
 const db = require("../utils/db");
 
 module.exports = {
-  all() {
-    return db("categories");
+  async all() {
+    return await db("categories");
   },
 
-  allWithDetails() {
+  async allWithDetails() {
     const sql = `
       select c.*, count(p.PaperID) as PaperCount
       from categories c left join papers p on c.CatID = p.CatID
@@ -23,7 +23,7 @@ module.exports = {
     return db.raw(sql);
   },
 
-  getSubCategories() {
+  async getSubCategories() {
     return db("category_sub_categories")
       .select([
         "categories.CatID",
@@ -35,22 +35,23 @@ module.exports = {
         "categories",
         "category_sub_categories.CatID",
         "=",
-        "categories.CatID"
+        "categories.CatID",
       )
       .join(
         "sub_categories",
         "category_sub_categories.SubCatID",
         "=",
-        "sub_categories.SubCatID"
+        "sub_categories.SubCatID",
       );
   },
 
-  getCatbySubCatID(SubCatID) {
+  async getCatbySubCatID(SubCatID) {
     return db("category_sub_categories")
       .select("CatID")
       .where("SubCatID", SubCatID);
   },
-  add(category) {
+
+  async add(category) {
     return db("categories").insert(category);
   },
 
@@ -61,14 +62,20 @@ module.exports = {
     return rows[0];
   },
 
-  patch(category) {
+  async patch(category) {
     const id = category.CatID;
     delete category.CatID;
 
     return db("categories").where("CatID", id).update(category);
   },
 
-  del(id) {
+  async del(id) {
     return db("categories").where("CatID", id).del();
+  },
+
+  async findCatByEditorId(editorId) {
+    return await db("category_editors")
+      .select("CatID")
+      .where("EditorID", editorId);
   },
 };

@@ -1,31 +1,34 @@
 const express = require("express");
+const { authUser, authRole } = require("../middlewares/auth.mdw");
 const categoryModel = require("../models/category.model");
+const { route } = require("./editor.route");
 
 const router = express.Router();
 
-router.get("/", async function (req, res) {
+router.get("/", authUser, authRole("admin"), async function (req, res) {
   const categories = await categoryModel.all();
 
   res.render("vwCategories/index", {
     categories: categories,
-    empty: list.length === 0,
+    empty: categories.length === 0,
+    active: { categories: true },
   });
 });
 
-router.get("/add", function (req, res) {
+router.get("/add", authUser, authRole("admin"), function (req, res) {
   res.render("vwCategories/add");
 });
 
-router.post("/add", async function (req, res) {
+router.post("/add", authUser, authRole("admin"), async function (req, res) {
   const new_category = {
     CatName: req.body.txtCatName,
   };
 
   await categoryModel.add(new_category);
-  res.render("vwCategories/add");
+  res.redirect("/admin/categories");
 });
 
-router.get("/edit", async function (req, res) {
+router.get("/edit", authUser, authRole("admin"), async function (req, res) {
   const id = req.query.id || 0;
   const category = await categoryModel.findById(id);
   if (category === null) {
@@ -37,12 +40,12 @@ router.get("/edit", async function (req, res) {
   });
 });
 
-router.post("/patch", async function (req, res) {
+router.post("/patch", authUser, authRole("admin"), async function (req, res) {
   await categoryModel.patch(req.body);
   res.redirect("/admin/categories");
 });
 
-router.post("/del", async function (req, res) {
+router.post("/del", authUser, authRole("admin"), async function (req, res) {
   await categoryModel.del(req.body.CatID);
   res.redirect("/admin/categories");
 });

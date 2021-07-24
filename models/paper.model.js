@@ -48,7 +48,7 @@ module.exports = {
   //     .limit(limit);
   // },
 
-  async editorFindByCat(catID) {
+  async editorFindByCat(catId) {
     return await db("papers")
       .select([
         "papers.PaperID",
@@ -57,7 +57,8 @@ module.exports = {
         "papers.Status",
         "papers.Tags",
       ])
-      .where("CatID", catID);
+      .where({ CatId: catId })
+      .whereNot({ Status: "Accepted" });
   },
 
   async writerFindByUserId(userID) {
@@ -128,6 +129,7 @@ module.exports = {
       CatID: paper.CatID,
       SubCatID: paper.SubCatID,
       Tags: paper.Tags,
+      Avatar: paper.Avatar,
     });
   },
 
@@ -154,8 +156,8 @@ module.exports = {
     return rows[0];
   },
 
-  increaseView(PaperID, views) {
-    db("papers")
+  async increaseView(PaperID, views) {
+    return await db("papers")
       .where("PaperID", "=", PaperID)
       .update({
         Views: views + 1,
@@ -176,7 +178,7 @@ module.exports = {
     return rows[0].total;
   },
 
-  del(id) {
-    return db("papers").where("PaperID", id).del();
+  async del(id) {
+    return await db("papers").where("PaperID", id).del();
   },
 };

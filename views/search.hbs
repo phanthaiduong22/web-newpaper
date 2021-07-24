@@ -1,38 +1,40 @@
-
 <div class="container mt-3">
-      <h1>
-      Search for 
-      </h1>
-
-      {{!--  --}}
-      {{#each this.searchList}}
-      <a href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;" class="border-bottom" >
-        <div class="row mb-1 zoom">
-          <div class="col-4">
-            <img
-              src="/public/imgs/{{Avatar}}"
-              class="
-                img-thumbnail
-                ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-              "
-              alt="image-paper"
-            />
+  <h1>
+    Search for
+  </h1>
+  {{!  }}
+  {{#each this.searchList}}
+    <a
+      href="/papers/details/{{PaperID}}"
+      style="color: inherit; text-decoration:none;"
+      class="border-bottom"
+    >
+      <div class="row mb-1 zoom">
+        <div class="col-4">
+          <img
+            src="/public/imgs/{{Avatar}}"
+            class="img-thumbnail
+                ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
+            alt="image-paper"
+          />
+        </div>
+        <div class="col">
+          <div class="row">
+            {{CreatedAt}}
+            -
+            <i class="fa fa-comment" aria-hidden="true"></i>
+            71
           </div>
-          <div class="col">
-            <div class="row">
-              {{CreatedAt}} - &nbsp;<i class="fa fa-comment" aria-hidden="true"></i>
-              &nbsp;71
-            </div>
-            <div class="row">
-              <h4 class="card-title text-dark">
-                <b>
+          <div class="row">
+            <h4 class="card-title text-dark">
+              <b>
                 {{Title}}
-                </b>
-              </h4>
-            </div>
+              </b>
+            </h4>
           </div>
         </div>
-      </a>
-      {{/each}}
-      {{!--  --}}
+      </div>
+    </a>
+  {{/each}}
+  {{!  }}
 </div>

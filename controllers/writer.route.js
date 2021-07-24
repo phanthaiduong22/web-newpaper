@@ -16,14 +16,12 @@ router.get(
   authUser,
   authRole("writer"),
   async function (req, res) {
-    let userID = 0;
-    if (req.session.authUser) userID = req.session.authUser.UserID;
-    else res.redirect("/");
-    const papers = await paperModel.writerFindByUserId(userID);
+    const userId = req.session.authUser.UserID;
+    const papers = await paperModel.writerFindByUserId(userId);
     for (i = 0; i < papers.length; i++) {
       papers[i].CreatedAt = moment(papers[i].CreatedAt).format("Do MMMM YYYY");
+      // papers[i].Accepted = papers[i].Status === "Accepted";
     }
-    console.log(papers);
     res.render("vwWriter/management", {
       papers: papers,
       active: { writer: true },
@@ -38,7 +36,9 @@ router.get(
   async function (req, res) {
     const paperId = +req.params.id || 0;
 
-    let paper = await paperModel.findById(paperId);
+    const paper = await paperModel.findById(paperId);
+    if (paper.Status === "Accepted" || paper.Status === "Publish")
+      return res.redirect(`/writer/management/`);
     paper.CreatedAt = moment(paper.CreatedAt).format("L");
     const sub_categories = await categoryModel.getSubCategories();
 
@@ -66,9 +66,9 @@ router.post(
   async function (req, res) {
     const paperId = +req.params.id || 0;
 
-    let paper = await paperModel.findById(paperId);
+    const paper = await paperModel.findById(paperId);
     if (paper.Status === "Accepted" || paper.Status === "Publish")
-      res.redirect(`/writer/management/`);
+      return res.redirect(`/writer/management/`);
 
     const storage = multer.diskStorage({
       destination(req, file, cb) {
@@ -89,16 +89,17 @@ router.post(
         const Cat = await categoryModel.getCatbySubCatID(
           req.body.sub_categories,
         );
-        const editPaper = {
+        const updatedPaper = {
           Title: req.body.title,
           Abstract: req.body.abstract,
           Content: req.body.content,
           CatID: Cat[0].CatID,
           SubCatID: req.body.sub_categories,
           Tags: req.body.tags,
+          Avatar: paperId + ".png",
         };
 
-        await paperModel.update(paperId, editPaper);
+        await paperModel.update(paperId, updatedPaper);
         res.redirect(`/writer/management/paper/${paperId}`);
       }
     });
@@ -117,9 +118,6 @@ router.get("/upload", authUser, authRole("writer"), async function (req, res) {
 
 router.post("/upload", authUser, authRole("writer"), async function (req, res) {
   const number = (await paperModel.size()) + 1;
-  if (req.session.authUser) console.log(req.session.authUser.UserID);
-  else res.redirect("/");
-
   const storage = multer.diskStorage({
     destination(req, file, cb) {
       cb(null, "./public/imgs");
@@ -149,7 +147,7 @@ router.post("/upload", authUser, authRole("writer"), async function (req, res) {
       };
 
       paperModel.add(newPaper);
-      res.redirect("/writer/upload");
+      res.redirect("/writer/management");
     }
   });
 });

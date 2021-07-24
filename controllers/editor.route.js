@@ -16,9 +16,9 @@ router.get(
   authUser,
   authRole("editor"),
   async function (req, res) {
-    if (req.session.authUser) console.log(req.session.authUser.UserID);
-    else res.redirect("/");
-    const papers = await paperModel.editorFindByCat(4);
+    const editorId = req.session.authUser.UserID;
+    const catId = await categoryModel.findCatByEditorId(editorId);
+    const papers = await paperModel.editorFindByCat(catId[0].CatID);
     for (i = 0; i < papers.length; i++) {
       papers[i].CreatedAt = moment(papers[i].CreatedAt).format("Do MMMM YYYY");
     }
@@ -37,7 +37,7 @@ router.get(
     const paperId = +req.params.id || 0;
 
     let paper = await paperModel.findById(paperId);
-    paper.CreatedAt = moment(paper.CreatedAt).format("L");
+    paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
     const sub_categories = await categoryModel.getSubCategories();
 
     for (i = 0; i < sub_categories.length; ++i) {
@@ -49,9 +49,6 @@ router.get(
     if (paper === null) {
       return res.redirect("/");
     }
-
-    console.log(paper);
-
     res.render("vwEditor/managementPaperId", {
       paper: paper,
       sub_categories,

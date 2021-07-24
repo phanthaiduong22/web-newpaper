@@ -10,12 +10,17 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.min.css"
     crossorigin="anonymous"
   />
-  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+    rel="stylesheet"
+    type="text/css"
+  />
 {{/section}}
-
 {{#section "js"}}
   <script src="https://unpkg.com/@yaireo/tagify"></script>
-  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script
+    src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
+  ></script>
   <script
     src="https://cdn.jsdelivr.net/gh/kartik-v/bootstrap-fileinput@5.2.2/js/fileinput.min.js"
   ></script>
@@ -23,12 +28,10 @@
     $('#txtAvatar').fileinput({ allowedFileExtensions: ['jpg', 'png', 'gif'],
     dropZoneEnabled: false, });
   </script>
-
   <script
     src="https://cdn.tiny.cloud/1/gvtv7ihf6847atiz3flob6067u01hd25hmsld40h5o94kqy1/tinymce/5/tinymce.min.js"
     referrerpolicy="origin"
   ></script>
-
   <script>
     tinymce.init({
       selector: "#txtContent",
@@ -45,58 +48,104 @@
     var input = document.querySelector('input[name=tags]');
     new Tagify(input)
   </script>
-
 {{/section}}
-
-<div>
-  <div class="card">
-    <h4 class="card-header">
-      New Post
-    </h4>
-    <div class="card-body">
-      <form method="POST" enctype="multipart/form-data">
-        <input type="hidden" id="userID" name="userID" value="{{authUser.UserID}}">
-        <div class="form-group">
-          <label for="txtTitle">Title</label>
-          <input
-            type="text"
-            class="form-control"
-            id="txtTitle"
-            name="title"
-            autofocus
-            required
-          />
-        </div>
-         <div class="form-group">
-          <label for="txtAbstract">Abstract</label>
-          <textarea id="txtAbstract" name="abstract" class="p-2" rows="3" style="width: 100%" required></textarea>
-        </div>
-        <div class="form-group">
-          <label for="txtAvatar" >Avatar Photo</label>
-          <input type="file" class="form-control" id="txtAvatar" name="avatar" required/>
-        </div>
-        <div class="form-group">
-          <label for="txtContent">Content</label>
-          <textarea id="txtContent" name="content" rows="20"></textarea>
-        </div>
-        <div class="form-group">
-            <label for="sub_categories">Choose a sub categories:</label>
-            <select id="sub_categories" name="sub_categories">
-              {{#each this.sub_categories}}
-                <option value="{{SubCatID}}">{{SubCatName}}</option>
-              {{/each}}
-            </select>
-        </div>
-        <div class="form-group">
-          <label for="txtContent">Tags</label>
-          <input name='tags' value='' placeholder='write some tags' required></input>
-        </div>
-        <br/>
-        <button type="submit" class="btn btn-success">
-          <i class="fa fa-check" aria-hidden="true"></i>
+<div class="card p-5 border border-light rounded m-5">
+  <h1 class="card-header">
+    Create A New Post
+  </h1>
+  <div class="card-body">
+    <form method="POST" enctype="multipart/form-data">
+      <input
+        type="hidden"
+        id="userID"
+        name="userID"
+        value="{{authUser.UserID}}"
+      />
+      <div class="form-group">
+        <label for="txtTitle">
+          <h4>
+            Title
+          </h4>
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          id="txtTitle"
+          name="title"
+          autofocus
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="txtAbstract">
+          <h4>
+            Abstract
+          </h4>
+        </label>
+        <textarea
+          id="txtAbstract"
+          name="abstract"
+          class="p-2"
+          rows="3"
+          style="width: 100%"
+          required
+        ></textarea>
+      </div>
+      <div class="form-group">
+        <label for="txtAvatar">
+          <h4>
+            Avatar Photo
+          </h4>
+        </label>
+        <input
+          type="file"
+          class="form-control"
+          id="txtAvatar"
+          name="avatar"
+          required
+        />
+      </div>
+      <div class="form-group">
+        <label for="txtContent">
+          <h4>
+            Content
+          </h4>
+        </label>
+        <textarea id="txtContent" name="content" rows="20"></textarea>
+      </div>
+      <div class="form-group">
+        <label for="sub_categories">
+          <h4>
+            Choose a sub categories:
+          </h4>
+        </label>
+        <select
+          id="sub_categories"
+          name="sub_categories"
+          class="custom-select custom-select-lg"
+        >
+          {{#each this.sub_categories}}
+            <option value="{{SubCatID}}">
+              {{SubCatName}}
+            </option>
+          {{/each}}
+        </select>
+      </div>
+      <div class="form-group">
+        <label for="txtContent">
+          <h4>
+            Tags:
+          </h4>
+        </label>
+        <input name="tags" value="" placeholder="write some tags" required />
+      </div>
+      <br />
+      <button type="submit" class="btn btn-success d-block mx-auto w-25">
+        <i class="fa fa-upload fa-2x d-inline-block" aria-hidden="true"></i>
+        <h4 class="d-inline-block">
           Upload
-        </button>
-      </form>
-    </div>
+        </h4>
+      </button>
+    </form>
   </div>
 </div>

@@ -1,8 +1,8 @@
 const db = require("../utils/db");
 
 module.exports = {
-  all() {
-    return db("users");
+  async all() {
+    return await db("users");
   },
 
   async allWithSpecific() {
@@ -17,8 +17,8 @@ module.exports = {
       );
   },
 
-  add(user) {
-    return db("users").insert(user);
+  async add(user) {
+    return await db("users").insert(user);
   },
 
   async findByUsername(username) {
@@ -73,5 +73,9 @@ module.exports = {
       .catch((err) => {
         return err;
       });
+  },
+
+  async del(id) {
+    return await db("users").where("UserID", id).del();
   },
 };

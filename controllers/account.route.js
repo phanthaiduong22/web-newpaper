@@ -21,24 +21,18 @@ router.get("/profile/dashboard", authUser, function (req, res) {
   });
 });
 
-router.post(
-  "/profile/dashboard",
-  authUser,
-  notAdmin,
-  async function (req, res) {
-    const { name, email, dob } = req.body;
-    console.log(name, email, dob);
-    const updatedDob = moment(dob, "DD/MM/YYYY").format("YYYY-MM-DD");
-    await userModel.updateProfile(req.session.authUser.UserID, {
-      name,
-      email,
-      dob: updatedDob,
-    });
-    const user = await userModel.findByEmail(email);
-    req.session.authUser = user;
-    res.redirect("/account/profile/dashboard");
-  },
-);
+router.post("/profile/dashboard", authUser, async function (req, res) {
+  const { name, email, dob } = req.body;
+  const updatedDob = moment(dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+  await userModel.updateProfile(req.session.authUser.UserID, {
+    name,
+    email,
+    dob: updatedDob,
+  });
+  const user = await userModel.findByEmail(email);
+  req.session.authUser = user;
+  res.redirect("/account/profile/dashboard");
+});
 
 router.post("/profile/dashboard", authUser, function (req, res) {});
 
@@ -52,8 +46,6 @@ router.get("/profile/changepassword", authUser, function (req, res) {
 router.post("/profile/changepassword", authUser, async function (req, res) {
   const { oldPassword, newPassword, confirmPassword } = req.body;
   const user = await userModel.findByEmail(req.session.authUser.Email);
-  console.log(user);
-  console.log(oldPassword);
   const ret = bcrypt.compareSync(oldPassword, user.Password);
   if (ret === false) {
     return res.render("vwAccount/profile", {
@@ -152,6 +144,7 @@ router.post("/login", notAuth, async function (req, res) {
   req.session.auth = true;
   req.session.authUser = user;
   req.session.admin = user.Username === "admin";
+  req.session.writer = user.Role === "writer";
   const url = req.session.retUrl || "/";
   res.redirect(url);
 });
@@ -174,20 +167,16 @@ router.get("/otp", notAuth, async (req, res) => {
 
 router.post("/otp/verify", notAuth, async (req, res) => {
   const { email, otp } = req.body;
-  console.log(email, otp);
   const reset = await resetModel.findByEmail(email);
   const timeNow = new Date().getTime();
-  console.log(reset, timeNow);
 
   if (
     otp == reset.otp &&
     email === reset.email &&
     timeNow - reset.created_at <= reset.expiresin * 1000
   ) {
-    console.log("otp was correct.");
     return res.render("vwAccount/resetpassword", { email, otp, edit: true });
   }
-  console.log("otp was not match or expired.");
   res.render("vwAccount/otp", {
     email,
     err_message: "OTP was not match or expired.",
@@ -204,7 +193,6 @@ router.post("/resetpassword", notAuth, async (req, res) => {
   }
 
   const otp = Math.floor(Math.random() * 900000) + 100000;
-  console.log(email, otp);
   await sendEmail(email, { otp, expiresIn: 60 * 60 * 3 });
   res.render("vwAccount/otp", {
     email,
@@ -214,10 +202,8 @@ router.post("/resetpassword", notAuth, async (req, res) => {
 
 router.post("/resetpassword/change", notAuth, async (req, res) => {
   const { password, otp, email } = req.body;
-  console.log(password, otp, email);
   const user = await userModel.findByEmail(email);
   const reset = await resetModel.findByEmail(email);
-  console.log(user, reset);
   if (user.Email === email && reset.otp == otp) {
     const hash = bcrypt.hashSync(password, 10);
     userModel.changePassword(user.UserID, hash);

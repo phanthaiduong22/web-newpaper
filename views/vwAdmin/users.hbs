@@ -1,7 +1,7 @@
 {{#section "css"}}
   <link href="/public/css/admin.users.css" rel="stylesheet" type="text/css" />
 {{/section}}
-<div class="container-fluid mt-2">
+<div class="container-fluid p-5">
   <div class="row">
     <div class="col-md-12">
       <div class="card">
@@ -12,13 +12,14 @@
           <table class="table border no-wrap user-table mb-0">
             <thead>
               <tr>
-                <th scope="col" class="border-0 text-uppercase font-medium pl-4">#</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Name</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Email</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Username</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Role</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Specific</th>
-                <th scope="col" class="border-0 text-uppercase font-medium">Update Role</th>
+                <th scope="col" class="border-0 font-medium pl-4">#</th>
+                <th scope="col" class="border-0 font-medium">Name</th>
+                <th scope="col" class="border-0 font-medium">Email</th>
+                <th scope="col" class="border-0 text-center font-medium">Username</th>
+                <th scope="col" class="border-0 text-center font-medium">DoB</th>
+                <th scope="col" class="border-0 text-center font-medium">Role</th>
+                <th scope="col" class="border-0 text-center font-medium">Specification</th>
+                <th scope="col" class="border-0 text-center font-medium">Update Role</th>
               </tr>
             </thead>
             <tbody>
@@ -34,18 +35,22 @@
                     <span class="text-muted">{{Email}}</span><br>
                     {{!-- <span class="text-muted">Past : teacher</span> --}}
                 </td>
-                <td>
+                <td class="text-center">
                     <span class="text-muted">{{Username}}</span><br>
                     {{!-- <span class="text-muted">12: 55 AM</span> --}}
                 </td>
-                <td>  
-                  <span class="text-muted">{{Role}}</span><br>
+                <td class="text-center">
+                    <span class="text-muted">{{DateOfBirth}}</span><br>
+                    {{!-- <span class="text-muted">12: 55 AM</span> --}}
+                </td>
+                <td class="text-center">  
+                  <span class="text-muted text-center text-capitalize">{{Role}}</span><br>
                 </td>
                 <td> 
                   {{#eq Role "editor"}}
-                  <form method="POST" action="/admin/users/editor">
+                  <form method="POST" class="d-flex justify-content-around align-items-center" action="/admin/users/editor">
                     <input type="hidden" name="userID" value="{{UserID}}"/>
-                    <select name="category" class="form-control category-select d-inline" id="exampleFormControlSelect2">
+                    <select name="category" class="form-control category-select" id="exampleFormControlSelect2">
                       <option selected value={{CatID}}>{{CatName}}</option>
                       {{#each ../this.categories}}
                         {{#isnt CatID ../CatID}}
@@ -53,23 +58,33 @@
                         {{/isnt}}
                       {{/each}}
                     </select>
-                    <button type="submit" class="btn btn-outline-info d-inline"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="submit" class="btn btn-outline-info"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form>
                   {{/eq}}
                 </td>
                 <td>
-                  <form method="POST" action="/admin/users/">
+                  <form method="POST" class="d-flex justify-content-around" action="/admin/users/">
                     <input type="hidden" name="userID" value="{{UserID}}"/>
-                    <select name="role" class="form-control category-select d-inline" id="exampleFormControlSelect1">
-                      <option>admin</option>
-                      <option>editor</option>
-                      <option>writer</option>
-                      <option>premium</option>
-                      <option>user</option>
+                    <select name="role" class="form-control category-select" id="exampleFormControlSelect1">
+                      <option>...</option>
+                      <option>Editor</option>
+                      <option>Writer</option>
+                      <option>Premium</option>
+                      <option>User</option>
                     </select>
-                    <button type="submit" class="btn btn-outline-info d-inline"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="submit" class="btn btn-outline-info"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form> 
                 </td>
+                <td><form method="POST" action="/admin/users/del">
+                  <input type="hidden" name="userId" value={{UserID}}>
+                  <button
+                    type="submit"
+                    class="btn btn-danger"
+                  >
+                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    
+                  </button>
+                </form></td>
               </tr>
               {{/each}}
             {{!--  --}}

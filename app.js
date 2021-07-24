@@ -7,7 +7,7 @@ app.use(morgan("dev"));
 app.use(
   express.urlencoded({
     extended: true,
-  })
+  }),
 );
 app.use("/public", express.static("public"));
 
@@ -15,6 +15,10 @@ require("./middlewares/session.mdw")(app);
 require("./middlewares/view.mdw")(app);
 require("./middlewares/locals.mdw")(app);
 require("./middlewares/routes.mdw.js")(app);
+
+app.use("/", (req, res) => {
+  res.render("404");
+});
 
 const PORT = 3001;
 app.listen(PORT, function () {
