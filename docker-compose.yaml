@@ -1,0 +1,21 @@
+version: "3.9"
+services:
+  db:
+    image: mysql
+    restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_USER=bietdoibancuoi
+      - MYSQL_PASSWORD=BDbc@123
+      - MYSQL_DATABASE=newspapers
+  web:
+    depends_on:
+      - db
+    build: .
+    command: bash -c 'while !</dev/tcp/db/3306; do sleep 1; done; yarn start'
+    ports:
+      - "3001:3001"
+    volumes:
+      - .:/code
+    environment:
+      FLASK_ENV: development
