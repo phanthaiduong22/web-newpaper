@@ -11,9 +11,7 @@ const paperModel = require("../models/paper.model");
 router.get("/users", authUser, authRole("admin"), async function (req, res) {
   const users = await userModel.allWithSpecific();
   let categories = await categoryModel.all();
-  for (let i = 0; i < users.length; i += 1) {
-    users[i].DateOfBirth = moment(users[i].Dob).format("DD/MM/YYYY");
-  }
+
   res.render("vwAdmin/users", {
     users: users.slice(1), // excludes admin
     categories,
@@ -27,7 +25,8 @@ router.post("/users", authUser, authRole("admin"), async function (req, res) {
   let userID = req.body.userID;
 
   await userModel.updateUserRole(userID, role);
-
+  if (req.session.authUser.Role !== "user")
+    await userModel.activePremium(userID, 60 * 60 * 24 * 365 * 1000);
   res.redirect("/admin/users");
 });
 
@@ -63,11 +62,11 @@ router.post("/users/del", authUser, authRole("admin"), async (req, res) => {
 });
 
 router.post(
-  "/papers/publish",
+  "/papers/publish/:id",
   authUser,
   authRole("admin"),
   async (req, res) => {
-    const { paperId } = req.body;
+    const paperId = req.params.id;
     const paper = await paperModel.findById(paperId);
     if (
       new Date().getTime() >= paper.PublishDate.getTime() &&
@@ -107,4 +106,16 @@ router.post("/users/edit", authUser, authRole("admin"), async (req, res) => {
   });
   res.redirect("/admin/users");
 });
+
+router.post(
+  "/papers/activepremium/:id",
+  authUser,
+  authRole("admin"),
+  async (req, res) => {
+    const paperId = req.params.id;
+    await paperModel.activePremium(paperId);
+    res.redirect("/admin/papers");
+  },
+);
+
 module.exports = router;

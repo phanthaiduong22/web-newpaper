@@ -65,7 +65,11 @@ router.get("/byCat/:id", async function (req, res) {
 router.get("/details/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
   const paper = await paperModel.findById(paperId);
-  if (paper.Premium && !req.session.authUser.Premium) {
+  if (
+    paper.Premium &&
+    !req.session.authUser.Premium &&
+    req.session.authUser.Role !== "admin"
+  ) {
     return res.render("home", { err_message: "This paper is premium!" });
   }
   const relatedNews = await paperModel.findByCatID(paper.CatID);

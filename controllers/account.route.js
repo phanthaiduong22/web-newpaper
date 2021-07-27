@@ -29,8 +29,6 @@ router.post("/profile/dashboard", authUser, async function (req, res) {
     email,
     dob: updatedDob,
   });
-  const user = await userModel.findByEmail(email);
-  req.session.authUser = user;
   res.redirect("/account/profile/dashboard");
 });
 
@@ -94,25 +92,19 @@ router.post("/register", notAuth, async function (req, res) {
 
 router.get("/is-valid-username", async function (req, res) {
   const username = req.query.username;
-
   const user = await userModel.findByUsername(username);
-
   if (user !== null) {
     return res.json(false);
   }
-
   res.json(true);
 });
 
 router.get("/is-valid-email", async function (req, res) {
   const email = req.query.email;
-
   const user = await userModel.findByEmail(email);
-
   if (user !== null) {
     return res.json(false);
   }
-
   res.json(true);
 });
 
@@ -145,16 +137,12 @@ router.post("/login", notAuth, async function (req, res) {
   req.session.authUser = user;
   req.session.admin = user.Username === "admin";
   req.session.writer = user.Role === "writer";
-  const url = req.session.retUrl || "/";
-  res.redirect(url);
+  res.redirect("/");
 });
 
 router.post("/logout", authUser, async function (req, res) {
-  req.session.auth = false;
-  req.session.authUser = undefined;
-  req.session.admin = undefined;
-  const url = req.headers.referer || "/";
-  res.redirect(url);
+  req.session.destroy();
+  res.redirect("/");
 });
 
 router.get("/resetpassword", notAuth, async (req, res) => {
@@ -233,7 +221,6 @@ router.post("/profile/extend", authUser, async (req, res) => {
   const used = new Date().getTime() - user.GetPremiumAt;
   let { extend } = req.body;
   extend = extend * 60 * 1000;
-  console.log(used, extend);
   const Time = used > 0 ? user.Time - used + extend : extend;
   await userModel.activePremium(userId, Time);
   res.redirect("/");
@@ -243,8 +230,6 @@ router.get("/profile/getpremium/time", authUser, async (req, res) => {
   const user = await userModel.findByUserID(req.session.authUser.UserID);
   if (user.GetPremiumAt + user.Time < new Date().getTime()) {
     userModel.deactivePremium(user.UserID);
-    const newUser = await userModel.findByUserID(req.session.authUser.UserID);
-    req.session.authUser = newUser;
     return res.json({ message: "End of premium." });
   }
   return res.json({ GetPremiumAt: user.GetPremiumAt, Time: user.Time });

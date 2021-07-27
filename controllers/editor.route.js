@@ -83,7 +83,8 @@ router.post(
     } else if (reject) {
       await paperModel.editorRejectPaper(paperId, editorComment);
     }
-
+    if (req.session.authUser.Role === "admin")
+      return res.redirect("/admin/papers");
     res.redirect("/editor/management");
   },
 );

@@ -99,21 +99,42 @@
                   <td>
                     {{#if PublishDate}}
                       {{#eq Status "Accepted"}}
-                      <form method="POST" action="/admin/papers/publish">
-                        <input type="hidden" name="paperId" value={{PaperID}}>
+                      <form method="POST" action="/admin/papers/publish/{{PaperID}}">
                         <button
                           type="submit"
                           class="btn btn-success"
                         >
                         
-                          <i class="fa fa-paper-plane" aria-hidden="true"></i>
+                          <i class="fa fa-paper-plane w-100" aria-hidden="true"></i>
                           
                           
                         </button>
                       </form>
 
                       {{/eq}}
-           
+                      {{#eq Status "Published"}}
+                        <form method="POST" action="/admin/papers/activepremium/{{PaperID}}">
+                          <button
+                            type="submit"
+                            class="btn btn-primary"
+                          >
+                          
+                            <i class="fa fa-star w-100" aria-hidden="true"></i>
+                            
+                            
+                          </button>
+                        </form>
+                      {{/eq}}
+                     
+                    {{else}}
+                    <form action="/editor/management/paper/{{PaperID}}">
+                          <button
+                            type="submit"
+                            class="btn btn-info"
+                          >
+                            <i class="fa fa-edit w-100" aria-hidden="true"></i> 
+                        </button>
+                    </form>
                     {{/if}}
                 </td>
                 </tr>

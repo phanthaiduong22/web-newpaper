@@ -97,6 +97,7 @@ router.post(
         const Cat = await categoryModel.getCatbySubCatID(
           req.body.sub_categories,
         );
+
         const updatedPaper = {
           Title: req.body.title,
           Abstract: req.body.abstract,
@@ -155,6 +156,8 @@ router.post("/upload", authUser, authRole("writer"), async function (req, res) {
       };
 
       await paperModel.add(newPaper);
+      if (req.session.authUser.Role === "admin")
+        return res.redirect("/admin/papers");
       res.redirect("/writer/management");
     }
   });

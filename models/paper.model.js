@@ -18,7 +18,7 @@ module.exports = {
       ])
       .where("Status", "Published")
       .join("categories", "papers.PaperID", "=", "categories.catID")
-      .orderBy("Views", "desc")
+      .orderBy([{ column: "Views", order: "desc" }])
       .limit(limit);
   },
 
@@ -193,5 +193,9 @@ module.exports = {
 
   async del(id) {
     return await db("papers").where("PaperID", id).del();
+  },
+
+  async activePremium(id) {
+    return await db("papers").where("PaperID", id).update("Premium", 1);
   },
 };
