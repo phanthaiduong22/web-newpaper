@@ -38,7 +38,9 @@
         <a href="/account/profile/changepassword" class="list-group-item list-group-item-action {{#if changepassword}}active{{/if}}">
           Change Password
         </a>
-       
+        <a href="/account/profile/getpremium" class="list-group-item list-group-item-action {{#if getpremium}}active{{/if}}">
+          Get Premium
+        </a>
       </div>
     </div>
     {{#if dashboard}}
@@ -129,6 +131,28 @@
         </div>
       </div>
     </div>
+    {{else if getpremium}}
+    <div class="col-md-9">
+      <div class="card pl-3">
+        <div class="card-body">
+          <div class="row">
+            {{#eq authUser.Premium 0}}
+              <form method="POST" action="">
+                <button class="btn btn-success">Buy Premimum in 7 days</button>
+              </form>     
+            {{/eq}}
+          </div>
+          <div class="mt-2 row">
+            <form method="POST" action="/account/profile/extend">
+              <label class="text-primary" for="time">Extend Premimum in (minutes): </label>
+              <input type="number" id="time" name="extend">
+              <button class="btn btn-success">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+   
     {{else}}
       <div class="col-md-9">
       <div class="card">

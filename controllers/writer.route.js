@@ -19,8 +19,10 @@ router.get(
     const userId = req.session.authUser.UserID;
     const papers = await paperModel.writerFindByUserId(userId);
     for (i = 0; i < papers.length; i++) {
-      papers[i].CreatedAt = moment(papers[i].CreatedAt).format("Do MMMM YYYY");
-      // papers[i].Accepted = papers[i].Status === "Accepted";
+      if (papers[i].PublishDate !== null)
+        papers[i].PublishDate = moment(papers[i].PublishDate).format(
+          "Do MMMM YYYY",
+        );
     }
     res.render("vwWriter/management", {
       papers: papers,
@@ -37,7 +39,10 @@ router.get(
     const paperId = +req.params.id || 0;
 
     const paper = await paperModel.findById(paperId);
-    if (paper.Status === "Accepted" || paper.Status === "Publish")
+    if (
+      (paper.Status === "Accepted" || paper.Status === "Published") &&
+      req.session.authUser.Role !== "admin"
+    )
       return res.redirect(`/writer/management/`);
     paper.CreatedAt = moment(paper.CreatedAt).format("L");
     const sub_categories = await categoryModel.getSubCategories();
@@ -67,7 +72,10 @@ router.post(
     const paperId = +req.params.id || 0;
 
     const paper = await paperModel.findById(paperId);
-    if (paper.Status === "Accepted" || paper.Status === "Publish")
+    if (
+      (paper.Status === "Accepted" || paper.Status === "Published") &&
+      req.session.authUser.Role !== "admin"
+    )
       return res.redirect(`/writer/management/`);
 
     const storage = multer.diskStorage({
@@ -146,7 +154,7 @@ router.post("/upload", authUser, authRole("writer"), async function (req, res) {
         UserID: req.body.userID,
       };
 
-      paperModel.add(newPaper);
+      await paperModel.add(newPaper);
       res.redirect("/writer/management");
     }
   });

@@ -15,8 +15,8 @@ router.get("/", async function (req, res) {
 
   res.render("home", {
     layout: "main.hbs",
-    hotNews: hotNews,
-    mostWatched: mostWatched,
+    hotNews,
+    mostWatched,
     latestNews,
     carousels: [
       { id: 1, active: "active" },

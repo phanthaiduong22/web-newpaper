@@ -4,7 +4,7 @@ const moment = require("moment");
 
 const userModel = require("../models/user.model");
 const resetModel = require("../models/reset.model");
-const { authUser, notAuth, notAdmin } = require("../middlewares/auth.mdw");
+const { authUser, notAuth } = require("../middlewares/auth.mdw");
 
 const sendEmail = require("../utils/sendEmail");
 
@@ -210,6 +210,44 @@ router.post("/resetpassword/change", notAuth, async (req, res) => {
     return res.redirect("/account/login");
   }
   return res.redirect("/");
+});
+
+router.get("/profile/getpremium", authUser, async (req, res) => {
+  res.render("vwAccount/profile", {
+    getpremium: true,
+    active: { profile: true },
+  });
+});
+
+router.post("/profile/getpremium", authUser, async (req, res) => {
+  const userId = req.session.authUser.UserID;
+
+  const Time = 60 * 60 * 24 * 7 * 1000;
+  await userModel.activePremium(userId, Time);
+  res.redirect("/");
+});
+
+router.post("/profile/extend", authUser, async (req, res) => {
+  const userId = req.session.authUser.UserID;
+  const user = await userModel.findByUserID(userId);
+  const used = new Date().getTime() - user.GetPremiumAt;
+  let { extend } = req.body;
+  extend = extend * 60 * 1000;
+  console.log(used, extend);
+  const Time = used > 0 ? user.Time - used + extend : extend;
+  await userModel.activePremium(userId, Time);
+  res.redirect("/");
+});
+
+router.get("/profile/getpremium/time", authUser, async (req, res) => {
+  const user = await userModel.findByUserID(req.session.authUser.UserID);
+  if (user.GetPremiumAt + user.Time < new Date().getTime()) {
+    userModel.deactivePremium(user.UserID);
+    const newUser = await userModel.findByUserID(req.session.authUser.UserID);
+    req.session.authUser = newUser;
+    return res.json({ message: "End of premium." });
+  }
+  return res.json({ GetPremiumAt: user.GetPremiumAt, Time: user.Time });
 });
 
 module.exports = router;

@@ -36,8 +36,9 @@ router.get(
   async function (req, res) {
     const paperId = +req.params.id || 0;
 
-    let paper = await paperModel.findById(paperId);
-    paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
+    const paper = await paperModel.findById(paperId);
+    if (paper.PublishDate)
+      paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
     const sub_categories = await categoryModel.getSubCategories();
 
     for (i = 0; i < sub_categories.length; ++i) {
@@ -50,7 +51,7 @@ router.get(
       return res.redirect("/");
     }
     res.render("vwEditor/managementPaperId", {
-      paper: paper,
+      paper,
       sub_categories,
     });
   },
@@ -62,6 +63,12 @@ router.post(
   authRole("editor"),
   async function (req, res) {
     const paperId = +req.params.id || 0;
+    const paper = await paperModel.findById(paperId);
+    if (
+      (paper.Status === "Accepted" || paper.Status === "Published") &&
+      req.session.authUser.Role !== "admin"
+    )
+      return res.redirect("/editor/management");
     const { accept, reject, editorComment } = req.body;
     if (accept) {
       let { raw_dob, sub_categories, tags } = req.body;
@@ -77,7 +84,7 @@ router.post(
       await paperModel.editorRejectPaper(paperId, editorComment);
     }
 
-    res.redirect(`/editor/management/paper/${paperId}`);
+    res.redirect("/editor/management");
   },
 );
 

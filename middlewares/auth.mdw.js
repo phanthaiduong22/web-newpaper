@@ -8,7 +8,10 @@ function authUser(req, res, next) {
 
 function authRole(role) {
   return (req, res, next) => {
-    if (!role.includes(req.session.authUser.Role)) {
+    if (
+      !role.includes(req.session.authUser.Role) &&
+      req.session.authUser.Role !== "admin"
+    ) {
       req.session.retUrl = req.originalUrl;
       return res.redirect("/");
     }

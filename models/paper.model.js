@@ -13,8 +13,10 @@ module.exports = {
         "papers.Title",
         "papers.Views",
         "papers.CreatedAt",
+        "papers.Premium",
         "categories.CatName",
       ])
+      .where("Status", "Published")
       .join("categories", "papers.PaperID", "=", "categories.catID")
       .orderBy("Views", "desc")
       .limit(limit);
@@ -28,8 +30,10 @@ module.exports = {
         "papers.Title",
         "papers.Views",
         "papers.CreatedAt",
+        "papers.Premium",
         "categories.CatName",
       ])
+      .where("Status", "Published")
       .join("categories", "papers.CatID", "=", "categories.CatID")
       .orderBy("CreatedAt", "desc")
       .limit(limit);
@@ -56,8 +60,9 @@ module.exports = {
         "papers.CreatedAt",
         "papers.Status",
         "papers.Tags",
+        "papers.Premium",
       ])
-      .where({ CatId: catId })
+      .where({ CatId: catId, Status: "Draft" })
       .whereNot({ Status: "Accepted" });
   },
 
@@ -67,8 +72,10 @@ module.exports = {
         "papers.PaperID",
         "papers.Title",
         "papers.CreatedAt",
+        "papers.PublishDate",
         "papers.Status",
         "papers.EditorComment",
+        "papers.Premium",
       ])
       .where("UserID", userID);
   },
@@ -86,7 +93,7 @@ module.exports = {
 
     if (dateRelease != "Invalid date") {
       await db("papers").where("PaperID", paperID).update({
-        createdAt: dateRelease,
+        PublishDate: dateRelease,
       });
     }
   },
@@ -118,11 +125,11 @@ module.exports = {
   },
 
   async add(paper) {
-    await db("papers").insert(paper);
+    return await db("papers").insert(paper);
   },
 
   async update(paperID, paper) {
-    await db("papers").where("PaperID", paperID).update({
+    return await db("papers").where("PaperID", paperID).update({
       Title: paper.Title,
       Abstract: paper.Abstract,
       Content: paper.Content,
@@ -131,6 +138,12 @@ module.exports = {
       Tags: paper.Tags,
       Avatar: paper.Avatar,
     });
+  },
+
+  async publish(paperId) {
+    return await db("papers")
+      .where("PaperID", paperId)
+      .update({ Status: "Published" });
   },
 
   async findById(id) {
@@ -166,11 +179,11 @@ module.exports = {
       .catch((err) => console.log(err));
   },
 
-  patch(paper) {
+  async patch(paper) {
     const id = paper.ProID;
     delete paper.ProID;
 
-    return db("papers").where("PaperID", id).update(paper);
+    return await db("papers").where("PaperID", id).update(paper);
   },
 
   async size() {

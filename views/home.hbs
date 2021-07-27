@@ -103,6 +103,12 @@
                   <div class="col card-title text-secondary">
                     <b>
                       {{CatName}}
+                      {{#if Premium}}
+                        <i
+                          class="fa fa-star text-primary"
+                          aria-hidden="true"
+                        ></i>
+                      {{/if}}
                     </b>
                   </div>
                   <div class="card-title text-secondary small float-right">
@@ -163,6 +169,14 @@
                 <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
                 {{Views}}
               </div>
+              {{#if Premium}}
+                <div class="badge">
+                  <i
+                    class="fa fa-2x fa-star text-primary"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              {{/if}}
             </div>
             <div class="row">
               <h4 class="card-title text-dark">
@@ -200,6 +214,9 @@
               <h5 class="card-title text-dark">
                 <b>
                   {{Title}}
+                  {{#if Premium}}
+                    <i class="fa fa-star text-primary" aria-hidden="true"></i>
+                  {{/if}}
                 </b>
               </h5>
             </a>

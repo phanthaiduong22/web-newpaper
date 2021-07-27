@@ -20,6 +20,12 @@ module.exports = {
   async add(user) {
     return await db("users").insert(user);
   },
+  async findByUserID(id) {
+    const rows = await db("users").where("UserID", id);
+    if (rows.length === 0) return null;
+
+    return rows[0];
+  },
 
   async findByUsername(username) {
     const rows = await db("users").where("Username", username);
@@ -77,5 +83,21 @@ module.exports = {
 
   async del(id) {
     return await db("users").where("UserID", id).del();
+  },
+
+  async activePremium(id, Time) {
+    return await db("users").where("UserID", id).update({
+      Premium: 1,
+      Time,
+      GetPremiumAt: new Date().getTime(),
+    });
+  },
+
+  async deactivePremium(id) {
+    return await db("users").where("UserID", id).update({
+      Premium: 0,
+      Time: 0,
+      GetPremiumAt: new Date().getTime(),
+    });
   },
 };

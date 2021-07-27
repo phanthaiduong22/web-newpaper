@@ -64,14 +64,18 @@ router.get("/byCat/:id", async function (req, res) {
 
 router.get("/details/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
-
-  let paper = await paperModel.findById(paperId);
-  let relatedNews = await paperModel.findByCatID(paper.CatID);
+  const paper = await paperModel.findById(paperId);
+  if (paper.Premium && !req.session.authUser.Premium) {
+    return res.render("home", { err_message: "This paper is premium!" });
+  }
+  const relatedNews = await paperModel.findByCatID(paper.CatID);
 
   paperModel.increaseView(paperId, paper.Views);
   paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
-  for(i = 0;i<relatedNews.length; i++){
-    relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format("Do MMMM YYYY");
+  for (i = 0; i < relatedNews.length; i++) {
+    relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format(
+      "Do MMMM YYYY",
+    );
   }
 
   if (paper === null) {
