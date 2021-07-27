@@ -4,9 +4,9 @@ services:
     image: mysql
     restart: always
     environment:
-      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=123456
       - MYSQL_USER=bietdoibancuoi
-      - MYSQL_PASSWORD=BDbc@123
+      - MYSQL_PASSWORD=bietdoibancuoi
       - MYSQL_DATABASE=newspapers
   web:
     depends_on:
