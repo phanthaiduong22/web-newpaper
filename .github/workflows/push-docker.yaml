@@ -1,0 +1,33 @@
+name: push-docker
+on:
+  push:
+    branches: [master]
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Login Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+      
+      - name: Setup Docker Buildx
+        uses: docker/setup-buildx-action@v1
+        id: buildx
+      
+      - name: Build and Push Docker Image
+        uses: docker/build-push-action@v2
+        id: docker_build
+        with:
+          context: ./
+          file: ././Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
+          tags: ${{ secrets.DOCKER_HUB_USERNAME }}/newspapers
+      
+      - name: Verify
+        run: echo ${{ steps.docker_build.outputs.digest }}
