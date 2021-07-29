@@ -5,8 +5,9 @@ module.exports = {
   all() {
     return db("papers");
   },
-  hotNews(limit) {
-    return db("papers")
+
+  async hotNews(limit) {
+    return await db("papers")
       .select([
         "papers.PaperID",
         "papers.Avatar",
@@ -22,8 +23,8 @@ module.exports = {
       .limit(limit);
   },
 
-  latestNews(limit) {
-    return db("papers")
+  async latestNews(limit) {
+    return await db("papers")
       .select([
         "papers.PaperID",
         "papers.Avatar",

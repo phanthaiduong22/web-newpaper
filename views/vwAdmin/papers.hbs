@@ -64,7 +64,6 @@
             <tbody>
               {{!--  --}}
               {{#each this.papers}}
-              
                 <tr>
                   <td class="text-center pl-4">{{@index}}</td>
                   <td class="col-md-6">
@@ -90,8 +89,7 @@
                   <td class="text-center col-md-2">  
                       
                         <span class="text-muted">{{PublishDate}}</span><br>
-                      
-
+                    
                   </td>
                   <td class="col-md-3"> 
                     <span class="text-muted">{{EditorComment}}</span><br>
@@ -104,35 +102,35 @@
                           type="submit"
                           class="btn btn-success"
                         >
-                        
-                          <i class="fa fa-paper-plane w-100" aria-hidden="true"></i>
-                          
-                          
+                          Publish
                         </button>
                       </form>
 
                       {{/eq}}
-                      {{#eq Status "Published"}}
-                        <form method="POST" action="/admin/papers/activepremium/{{PaperID}}">
-                          <button
-                            type="submit"
-                            class="btn btn-primary"
-                          >
-                          
-                            <i class="fa fa-star w-100" aria-hidden="true"></i>
-                            
-                            
-                          </button>
-                        </form>
+                      {{#eq Premium 0}}
+                        {{#eq Status "Published"}}
+                          <form method="POST" action="/admin/papers/activepremium/{{PaperID}}">
+                            <button
+                              type="submit"
+                              class="btn btn-primary"
+                            >
+                              Mark Premium           
+                            </button>
+                          </form>
+                        {{/eq}}
+                        
                       {{/eq}}
-                     
+                      {{#if Premium}}
+                        <i class="fa fa-star w-100 text-primary" aria-hidden="true"></i>
+                      {{/if}}
                     {{else}}
-                    <form action="/editor/management/paper/{{PaperID}}">
+                    <form method="GET" action="/editor/management/paper/{{PaperID}}">
                           <button
                             type="submit"
                             class="btn btn-info"
                           >
-                            <i class="fa fa-edit w-100" aria-hidden="true"></i> 
+                          Edit
+                            
                         </button>
                     </form>
                     {{/if}}

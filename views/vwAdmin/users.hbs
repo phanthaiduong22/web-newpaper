@@ -59,15 +59,13 @@
               {{#each this.users}}
               <tr>
                 <td class="pl-4">{{@index}}</td>
-                <td>
+                <td class="col-4">
                   <button name="username" type="button" class="w-100 font-medium mb-0 btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                   {{Username}}
                 </button>
                     
                     {{!-- <span class="text-muted">Texas, Unitedd states</span> --}}
-                </td>
-               
-               
+                </td>  
                 <td class="text-center">  
                   <span class="text-muted text-center text-capitalize">{{Role}}</span><br>
                 </td>
@@ -100,13 +98,14 @@
                     <button type="submit" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form> 
                 </td>
-                <td><form method="POST" action="/admin/users/del">
+                <td class="col-1"><form method="POST" action="/admin/users/del">
                   <input type="hidden" name="userId" value={{UserID}}>
                   <button
                     type="submit"
                     class="btn btn-danger"
                   >
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  
+                    <i class="fa fa-trash-o w-100" aria-hidden="true"></i>
                     
                   </button>
                 </form></td>

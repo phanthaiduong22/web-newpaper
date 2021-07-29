@@ -1,8 +1,11 @@
 const express = require("express");
 const morgan = require("morgan");
+const cookieParser = require("cookie-parser");
+
 require("dotenv").config();
 const app = express();
 app.use(morgan("dev"));
+app.use(cookieParser());
 
 app.use(
   express.urlencoded({

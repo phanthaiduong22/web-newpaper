@@ -1,48 +1,69 @@
 <div class="card">
-  <h4 class="card-header">
-    Papers
-  </h4>
   <div class="card-body">
     {{#if this.empty}}
-    <h5 class="card-title">Không có dữ liệu!</h5>
-    <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+      <h5 class="card-title">
+        Không có dữ liệu!
+      </h5>
+      <p class="card-text">
+        With supporting text below as a natural lead-in to additional content.
+      </p>
     {{else}}
-    <div class="row">
-      {{#each this.papers}}
-      <div class="col-sm-4 mb-3">
-        <button class="card h-100 link-secondary zoom">
-          <a  href="/papers/details/{{PaperID}}" style="color: inherit; text-decoration:none;">
-            <img src="/public/imgs/{{Avatar}}" class="card-img-top" alt="{{Avatar}}" 
-              title="{{PaperTitle}}">
-            <div class="card-body">
-              <h5 class="card-title">{{Title}}</h5>
-            </div>
-          </a>
-        </button>
-      </div>
-      {{/each}}
-    </div>
-    <nav aria-label="...">
-      <ul class="pagination">
-        <li class="page-item disabled">
-          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-        </li>
-        {{#each this.page_numbers}}
-        {{#if isCurrent}}
-        <li class="page-item active">
-          <a class="page-link" href="javascript:;">{{value}}</a>
-        </li>
-        {{else}}
-        <li class="page-item">
-          <a class="page-link" href="?page={{value}}">{{value}}</a>
-        </li>
-        {{/if}}
+      <div class="row">
+        {{#each this.papers}}
+          <div class="col-sm-4 mb-3">
+            <button class="card h-100 link-secondary zoom">
+              <a
+                href="/papers/details/{{PaperID}}"
+                style="color: inherit; text-decoration:none;"
+              >
+                <img
+                  src="/public/imgs/{{Avatar}}"
+                  class="card-img-top"
+                  alt="{{Avatar}}"
+                  title="{{PaperTitle}}"
+                />
+                <div class="card-body">
+                  <h5 class="card-title">
+                    {{Title}}
+                    {{#if Premium}}
+                      <i class="fa fa-star text-primary" aria-hidden="true"></i>
+                    {{/if}}
+                  </h5>
+                </div>
+              </a>
+            </button>
+          </div>
         {{/each}}
-        <li class="page-item">
-          <a class="page-link" href="?page=">Next</a>
-        </li>
-      </ul>
-    </nav>
+      </div>
+      <nav aria-label="...">
+        <ul class="pagination">
+          <li class="page-item disabled">
+            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+              Previous
+            </a>
+          </li>
+          {{#each this.page_numbers}}
+            {{#if isCurrent}}
+              <li class="page-item active">
+                <a class="page-link" href="javascript:;">
+                  {{value}}
+                </a>
+              </li>
+            {{else}}
+              <li class="page-item">
+                <a class="page-link" href="?page={{value}}">
+                  {{value}}
+                </a>
+              </li>
+            {{/if}}
+          {{/each}}
+          <li class="page-item">
+            <a class="page-link" href="?page=">
+              Next
+            </a>
+          </li>
+        </ul>
+      </nav>
     {{/if}}
   </div>
 </div>
