@@ -15,9 +15,6 @@
       <h5 class="card-title">
         No data!
       </h5>
-      <p class="card-text">
-        With supporting text below as a natural lead-in to additional content.
-      </p>
     {{else}}
       <table class="table table-hover">
         <thead>
@@ -38,7 +35,21 @@
                 {{@index}}
               </th>
               <td>
-                {{CatName}}
+                <a href="/papers/byCat/{{CatID}}">
+                  {{CatName}}
+                </a>
+              </td>
+              <td class="text-right">
+                <a
+                  class="btn btn-primary btn-sm"
+                  href="/admin/categories/{{CatID}}/addSubCategory"
+                  role="button"
+                  title="Add Sub Category"
+                >
+                  <i class="fa fa-plus w-100" aria-hidden="true">
+                    Add Sub Category
+                  </i>
+                </a>
               </td>
               <td class="text-right">
                 <a
@@ -47,7 +58,9 @@
                   role="button"
                   title="Edit"
                 >
-                  <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <i class="fa fa-pencil w-100" aria-hidden="true">
+                    Edit
+                  </i>
                 </a>
               </td>
             </tr>

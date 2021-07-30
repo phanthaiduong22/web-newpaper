@@ -81,7 +81,7 @@
                         {{/isnt}}
                       {{/each}}
                     </select>
-                    <button type="submit" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="submit" title="update" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form>
                   {{/eq}}
                 </td>
@@ -95,7 +95,7 @@
                       <option>Premium</option>
                       <option>User</option>
                     </select>
-                    <button type="submit" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="submit" title="update" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form> 
                 </td>
                 <td class="col-1"><form method="POST" action="/admin/users/del">
@@ -103,6 +103,7 @@
                   <button
                     type="submit"
                     class="btn btn-danger"
+                    title="Delete account"
                   >
                   
                     <i class="fa fa-trash-o w-100" aria-hidden="true"></i>
