@@ -119,14 +119,14 @@ router.post("/login", notAuth, async function (req, res) {
     return res.redirect("/");
   }
   const user = await userModel.findByUsername(req.body.username);
-  if (user === null) {
+  if (!user) {
     return res.render("vwAccount/login", {
       err_message: "No account with that username!",
     });
   }
 
   const ret = bcrypt.compareSync(req.body.password, user.Password);
-  if (ret === false) {
+  if (!ret) {
     return res.render("vwAccount/login", {
       err_message: "Incorrect password!",
     });

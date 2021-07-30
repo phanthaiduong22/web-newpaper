@@ -29,6 +29,7 @@
     "nodemon": "^2.0.7",
     "numeral": "^2.0.6",
     "pdfkit": "^0.12.1",
-    "puppeteer": "^10.1.0"
+    "puppeteer": "^10.1.0",
+    "uuid": "^8.3.2"
   }
 }

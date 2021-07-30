@@ -4,6 +4,7 @@ const moment = require("moment");
 const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
+const { v4: uuidv4 } = require("uuid");
 
 // const fs = require("fs");
 
@@ -78,18 +79,20 @@ router.post(
     )
       return res.redirect(`/writer/management/`);
 
+    let imgFilename = uuidv4() + ".png";
     const storage = multer.diskStorage({
       destination(req, file, cb) {
         cb(null, "./public/imgs");
       },
       filename(req, file, cb) {
-        cb(null, paperId + ".png");
+        cb(null, imgFilename);
       },
     });
     const upload = multer({
       storage,
     });
 
+    if (!req.body.file) imgFilename = paper.Avatar;
     upload.single("avatar")(req, res, async function (err) {
       if (err) {
         console.log(err);
@@ -105,7 +108,7 @@ router.post(
           CatID: Cat[0].CatID,
           SubCatID: req.body.sub_categories,
           Tags: req.body.tags,
-          Avatar: paperId + ".png",
+          Avatar: imgFilename,
         };
 
         await paperModel.update(paperId, updatedPaper);
@@ -126,13 +129,13 @@ router.get("/upload", authUser, authRole("writer"), async function (req, res) {
 });
 
 router.post("/upload", authUser, authRole("writer"), async function (req, res) {
-  const number = (await paperModel.size()) + 1;
+  const imgFilename = uuidv4() + ".png";
   const storage = multer.diskStorage({
     destination(req, file, cb) {
       cb(null, "./public/imgs");
     },
     filename(req, file, cb) {
-      cb(null, number + ".png");
+      cb(null, imgFilename);
     },
   });
   const upload = multer({
@@ -150,7 +153,7 @@ router.post("/upload", authUser, authRole("writer"), async function (req, res) {
         Content: req.body.content,
         CatID: Cat[0].CatID,
         SubCatID: req.body.sub_categories,
-        Avatar: number + ".png",
+        Avatar: imgFilename,
         Tags: req.body.tags,
         UserID: req.body.userID,
       };

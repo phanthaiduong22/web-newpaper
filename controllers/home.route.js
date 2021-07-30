@@ -15,6 +15,16 @@ router.get("/", async function (req, res) {
     i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
   }
 
+  for (let i of mostWatched) {
+    i.CreatedAt = moment(i.CreatedAt).format("Do MMMM YYYY");
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
+  }
+
+  for (let i of latestNews) {
+    i.CreatedAt = moment(i.CreatedAt).format("Do MMMM YYYY");
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
+  }
+
   res.render("home", {
     layout: "main.hbs",
     hotNews,

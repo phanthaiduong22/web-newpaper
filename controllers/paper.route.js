@@ -56,6 +56,10 @@ router.get("/byCat/:id", async function (req, res) {
     }
   }
 
+  for (let i of list) {
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
+  }
+
   res.render("vwPapers/byCat", {
     papers: list,
     categories: categories,
@@ -75,7 +79,9 @@ router.get("/details/:id", async function (req, res) {
 
   if (paper.Premium) {
     if (!req.session.authUser || !req.session.authUser.Premium) {
-      return res.render("home", { err_message: "This paper is premium!" });
+      return res.render("vwPapers/details", {
+        err_message: "This paper is premium!",
+      });
     }
   }
   const relatedNews = await paperModel.findByCatID(paper.CatID);
@@ -140,6 +146,10 @@ router.get("/bySubCat/:subcatid", async function (req, res) {
         categories[i].SubCategory.push(obj);
       }
     }
+  }
+
+  for (let i of list) {
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
   }
 
   res.render("vwPapers/byCat", {

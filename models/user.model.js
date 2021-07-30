@@ -68,7 +68,7 @@ module.exports = {
         return 0;
       });
   },
-  async upsertEditorCategory(userID, catID) {
+  async updateEditorCategory(userID, catID) {
     return await db
       .raw(
         `REPLACE INTO category_editors (EditorID, CatID) VALUES (${userID}, ${catID})`,

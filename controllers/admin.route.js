@@ -38,7 +38,7 @@ router.post(
     let userID = req.body.userID;
     let catID = req.body.category;
 
-    await userModel.upsertEditorCategory(userID, catID);
+    await userModel.updateEditorCategory(userID, catID);
 
     res.redirect("/admin/users");
   },

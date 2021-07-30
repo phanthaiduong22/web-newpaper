@@ -11,16 +11,18 @@ module.exports = {
     return await db("papers")
       .select([
         "papers.PaperID",
+        "papers.Abstract",
         "papers.Avatar",
         "papers.Title",
         "papers.Views",
         "papers.CreatedAt",
         "papers.PublishDate",
         "papers.Premium",
+        "papers.Status",
         "categories.CatName",
       ])
-      .where("Status", "Published")
-      .join("categories", "papers.PaperID", "=", "categories.catID")
+      .join("categories", "papers.CatID", "=", "categories.catID")
+      .where({ Status: "Published" })
       .orderBy([{ column: "Views", order: "desc" }])
       .limit(limit);
   },
@@ -31,15 +33,17 @@ module.exports = {
         "papers.PaperID",
         "papers.Avatar",
         "papers.Title",
+        "papers.Abstract",
         "papers.Views",
         "papers.CreatedAt",
         "papers.PublishDate",
         "papers.Premium",
+        "papers.Status",
         "categories.CatName",
       ])
       .where("Status", "Published")
       .join("categories", "papers.CatID", "=", "categories.CatID")
-      .orderBy("CreatedAt", "desc")
+      .orderBy("PublishDate", "desc")
       .limit(limit);
   },
 
@@ -67,8 +71,9 @@ module.exports = {
         "papers.Tags",
         "papers.Premium",
       ])
-      .where({ CatId: catId, Status: "Draft" })
-      .whereNot({ Status: "Accepted" });
+      .whereRaw(`CatId = ${catId} AND Status = "Draft" OR Status = "Rejected"`);
+    // .where({ CatId: catId })
+    // .whereNot({ Status: "Accepted" });
   },
 
   async writerFindByUserId(userID) {
