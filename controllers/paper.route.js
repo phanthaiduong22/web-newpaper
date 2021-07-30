@@ -176,7 +176,7 @@ router.get(
     }
 
     paperModel.increaseView(paperId, paper.Views);
-    paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
+    paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
 
     res.render("vwPapers/premium", { paper });
   },

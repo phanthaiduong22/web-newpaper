@@ -1,11 +1,16 @@
 {{#section "css"}}
-  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+    rel="stylesheet"
+    type="text/css"
+  />
   <link rel="stylesheet" href="/public/css/details.css" />
 {{/section}}
-
 {{#section "js"}}
   <script src="https://unpkg.com/@yaireo/tagify"></script>
-  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script
+    src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
+  ></script>
   <script>
     var input = document.querySelector('input[name=tags]');
     new Tagify(input)
@@ -32,18 +37,21 @@
     }
   </script>
 {{/section}}
-<div class="container card mt-3 p-2">
-  <div class="row">
-    <div class="col-3">
+<h1 class="text-center text-primary">
+  Premium Only
+</h1>
+<div class="container mt-3 p-2 d-block">
+  <div class="row d-block" style="break-inside: avoid;">
+    <div class="col">
       <img
         src="/public/imgs/{{this.paper.Avatar}}"
-        class="
-          img-thumbnail
-          ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-        "
-        alt="image-paper"
+        class="img-thumbnail"
+        alt="Image"
+        style="width: 100%; max-height: 100%;"
       />
     </div>
+  </div>
+  <div class="row ml-4 mt-2">
     <div class="col">
       <h2 class="card-title">
         <b>
@@ -51,18 +59,32 @@
         </b>
       </h2>
       <p>
-        <i class="fa fa-clock-o" aria-hidden="true"></i>{{this.paper.CreatedAt}}
+        <i class="fa fa-clock-o" aria-hidden="true"></i>
+        {{this.paper.PublishDate}}
       </p>
-      <a href="/papers/byCat/{{this.paper.CatID}}" class="badge badge-primary mb-2  ">
-        <i class="fa fa-list-alt" aria-hidden="true"></i>{{this.paper.CatName}}
+      <a
+        href="/papers/byCat/{{this.paper.CatID}}"
+        class="badge badge-primary mb-2"
+      >
+        <i class="fa fa-2x fa-list-alt" aria-hidden="true"></i>
+        <span style="font-size: 1.5rem;">
+          {{this.paper.CatName}}
+        </span>
       </a>
-      <div class="">
-        <i class="fa fa-tags" aria-hidden="true"></i><input class="d-inline-block"name="tags" value='{{this.paper.Tags}}' readonly />
+      <div class="mt-2">
+        <i class="fa fa-tags fa-2x" aria-hidden="true"></i>
+        <input
+          class="d-inline-block"
+          name="tags"
+          value="{{this.paper.Tags}}"
+          readonly
+        />
       </div>
-    </div>  
+    </div>
   </div>
   <div class="row m-3 border-top p-1">
     <div class="card-body">
       {{{this.paper.Content}}}
     </div>
   </div>
+</div>
