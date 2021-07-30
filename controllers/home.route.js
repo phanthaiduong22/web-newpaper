@@ -11,7 +11,8 @@ router.get("/", async function (req, res) {
   const latestNews = await paperModel.latestNews(10);
 
   for (let i of hotNews) {
-    i.CreatedAt = moment(i).format("Do MMMM YYYY");
+    i.CreatedAt = moment(i.CreatedAt).format("Do MMMM YYYY");
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
   }
 
   res.render("home", {

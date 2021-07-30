@@ -2,26 +2,29 @@
   <div class="card-body">
     {{#if this.empty}}
       <h5 class="card-title">
-        Không có dữ liệu!
+        Empty
       </h5>
-      <p class="card-text">
-        With supporting text below as a natural lead-in to additional content.
-      </p>
     {{else}}
       <div class="row">
         {{#each this.papers}}
-          <div class="col-sm-4 mb-3">
-            <button class="card h-100 link-secondary zoom">
+          <div class="col-sm-4 mb-5">
+            <button
+              class="card link-secondary zoom"
+              style="width: 18rem; height: 18rem"
+            >
               <a
                 href="/papers/details/{{PaperID}}"
                 style="color: inherit; text-decoration:none;"
               >
-                <img
-                  src="/public/imgs/{{Avatar}}"
-                  class="card-img-top"
-                  alt="{{Avatar}}"
-                  title="{{PaperTitle}}"
-                />
+                <div>
+                  <img
+                    src="/public/imgs/{{Avatar}}"
+                    class="img-thumbnail"
+                    alt="{{Avatar}}"
+                    title="{{PaperTitle}}"
+                    style="height: 12rem; width: 18rem;"
+                  />
+                </div>
                 <div class="card-body">
                   <h5 class="card-title">
                     {{Title}}

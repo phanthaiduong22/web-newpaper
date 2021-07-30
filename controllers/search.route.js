@@ -12,7 +12,7 @@ router.post("/", async function (req, res) {
   const searchList = await paperModel.search(req.body.search);
 
   for (let i of searchList) {
-    i.CreatedAt = moment(i).format("Do MMMM YYYY");
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
   }
   res.render("search", {
     searchList,

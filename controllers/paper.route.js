@@ -5,6 +5,7 @@ const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
 const moment = require("moment");
 const puppeteer = require("puppeteer");
+const { authUser, authRole, authPremium } = require("../middlewares/auth.mdw");
 
 const router = express.Router();
 
@@ -150,9 +151,8 @@ router.get("/details/:id", async function (req, res) {
     return res.redirect("/");
   }
   if (paper.Premium) {
-    if (!req.session.authUser || !req.session.authUser.Premium) {
+    if (!req.session.authUser.Premium)
       return res.render("home", { err_message: "This paper is premium!" });
-    }
   }
   paperModel.increaseView(paperId, paper.Views);
   paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
@@ -162,49 +162,49 @@ router.get("/details/:id", async function (req, res) {
   });
 });
 
-router.get("/details/:id/premium", async function (req, res) {
-  const paperId = +req.params.id || 0;
-  let paper = await paperModel.findById(paperId);
-  if (!paper) {
-    return res.redirect("/");
-  }
-  if (paper.Premium) {
-    if (!req.session.authUser || !req.session.authUser.Premium) {
-      return res.render("home", { err_message: "This paper is premium!" });
+router.get(
+  "/details/:id/premium",
+  authUser,
+  authPremium,
+  async function (req, res) {
+    const paperId = +req.params.id || 0;
+    let paper = await paperModel.findById(paperId);
+    if (!paper) {
+      return res.redirect("/");
     }
-  }
-  paperModel.increaseView(paperId, paper.Views);
-  paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
 
-  res.render("vwPapers/premium", {
-    paper: paper,
-  });
-});
+    paperModel.increaseView(paperId, paper.Views);
+    paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
 
-router.get("/details/:id/download", async function (req, res) {
-  const paperId = req.params.id;
-  const browser = await puppeteer.launch();
+    res.render("vwPapers/premium", {
+      paper: paper,
+    });
+  },
+);
 
-  const url = `http://localhost:3001/papers/details/${paperId}/premium`;
-  const page = await browser.newPage();
-  await page.setCookie({
-    name: "connect.sid",
-    value: req.cookies["connect.sid"],
-    url,
-  });
-  await page.goto(url, { waitUntil: "networkidle2" });
-  await page.pdf({ path: `pdf/test-${paperId}.pdf`, format: "a4" });
-  await browser.close();
+router.get(
+  "/details/:id/download",
+  authUser,
+  authPremium,
+  async function (req, res) {
+    const paperId = req.params.id;
+    const browser = await puppeteer.launch();
 
-  const file = path.join(__dirname, "..", `pdf/test-${paperId}.pdf`);
+    const url = `http://localhost:3001/papers/details/${paperId}/premium`;
+    const page = await browser.newPage();
+    await page.setCookie({
+      name: "connect.sid",
+      value: req.cookies["connect.sid"],
+      url,
+    });
 
-  const filename = path.basename(file);
+    const filePath = path.join(__dirname, "..", `pdf/test-${paperId}.pdf`);
+    await page.goto(url, { waitUntil: "networkidle2" });
+    await page.pdf({ path: filePath, format: "a4" });
+    await browser.close();
 
-  res.setHeader("Content-disposition", "attachment; filename=" + filename);
-  res.setHeader("Content-type", "application/pdf");
-
-  const fileStream = fs.createReadStream(file);
-  fileStream.pipe(res);
-});
+    res.download(filePath);
+  },
+);
 
 module.exports = router;

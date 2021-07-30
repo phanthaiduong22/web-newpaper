@@ -95,9 +95,8 @@
                     <span class="text-muted">{{EditorComment}}</span><br>
                   </td> 
                   <td>
-                    {{#if PublishDate}}
-                      {{#eq Status "Accepted"}}
-                      <form method="POST" action="/admin/papers/publish/{{PaperID}}">
+                    {{#isnt Status "Published"}}
+                    <form method="POST" action="/admin/papers/publish/{{PaperID}}">
                         <button
                           type="submit"
                           class="btn btn-success"
@@ -105,8 +104,8 @@
                           Publish
                         </button>
                       </form>
+                    {{/isnt}}
 
-                      {{/eq}}
                       {{#eq Premium 0}}
                         {{#eq Status "Published"}}
                           <form method="POST" action="/admin/papers/activepremium/{{PaperID}}">
@@ -123,17 +122,7 @@
                       {{#if Premium}}
                         <i class="fa fa-star w-100 text-primary" aria-hidden="true"></i>
                       {{/if}}
-                    {{else}}
-                    <form method="GET" action="/editor/management/paper/{{PaperID}}">
-                          <button
-                            type="submit"
-                            class="btn btn-info"
-                          >
-                          Edit
-                            
-                        </button>
-                    </form>
-                    {{/if}}
+                    
                 </td>
                 </tr>
               {{/each}}

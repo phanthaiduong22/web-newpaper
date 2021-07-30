@@ -19,6 +19,12 @@ function authRole(role) {
   };
 }
 
+function authPremium(req, res, next) {
+  if (!req.session.authUser.Premium)
+    return res.render("home", { err_message: "This paper is premium!" });
+  next();
+}
+
 function notAuth(req, res, next) {
   if (req.session.auth === true) {
     return res.redirect("/");
@@ -39,4 +45,5 @@ module.exports = {
   authRole,
   notAuth,
   notAdmin,
+  authPremium,
 };

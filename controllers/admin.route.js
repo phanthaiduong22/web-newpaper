@@ -68,9 +68,15 @@ router.post(
   async (req, res) => {
     const paperId = req.params.id;
     const paper = await paperModel.findById(paperId);
+    if (paper.Status === "Published" || paper.Status === "Rejected")
+      return res.render("vwAdmin/papers", {
+        err_message: "This paper has been published or rejected",
+      });
+
     if (
-      new Date().getTime() >= paper.PublishDate.getTime() &&
-      paper.Status === "Accepted"
+      paper.Status === "Draft" ||
+      (new Date().getTime() >= paper.PublishDate.getTime() &&
+        paper.Status === "Accepted")
     ) {
       await paperModel.publish(paperId);
       return res.redirect("/admin/papers");

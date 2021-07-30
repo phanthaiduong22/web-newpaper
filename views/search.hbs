@@ -16,21 +16,25 @@
       class="border-bottom"
     >
       <div class="row mb-1 zoom">
-        <div class="col-4">
+        <div class="col-4" style="height: 18rem;">
           <img
             src="/public/imgs/{{Avatar}}"
-            class="img-thumbnail
-                ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
-            alt="image-paper"
+            class="img-thumbnail"
+            alt="Image"
+            style="width: 100%; max-height: 100%;"
           />
         </div>
         <div class="col">
-          <div class="row">
-            {{CreatedAt}}
-            -
-            <i class="fa fa-comment" aria-hidden="true"></i>
-            71
-          </div>
+          {{PublishDate}}
+          <i class="fa fa-eye fa-lg ml-2" aria-hidden="true">
+            {{Views}}
+          </i>
+          {{#if Premium}}
+            <i
+              class="fa fa-star fa-lg ml-2 text-primary"
+              aria-hidden="true"
+            ></i>
+          {{/if}}
           <div class="row">
             <h4 class="card-title text-dark">
               <b>
