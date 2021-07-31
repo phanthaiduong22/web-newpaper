@@ -64,6 +64,7 @@ router.get(
     res.render("vwWriter/managementPaperId", {
       paper: paper,
       sub_categories,
+      active: { paperManagement: true },
     });
   },
 );
@@ -185,7 +186,7 @@ router.get("/upload", authUser, authRole("writer"), async function (req, res) {
 
   res.render("vwWriter/upload", {
     sub_categories,
-    active: { upload: true },
+    active: { upload: true, paperManagement: true },
     empty: sub_categories.length === 0,
   });
 });

@@ -46,6 +46,16 @@ router.get("/", async (req, res) => {
   });
 });
 
+router.get("/add", authUser, authRole("admin"), async (req, res) => {
+  res.render("vwTags/add");
+});
+
+router.post("/add", authUser, authRole("admin"), async (req, res) => {
+  const tagName = req.body.txtTagName;
+  await tagModel.addTag({ TagName: tagName });
+  res.redirect("/tags");
+});
+
 router.get("/edit", authUser, authRole("admin"), async (req, res) => {
   const tagId = +req.query.id || 1;
   const tag = await tagModel.findTagById(tagId);

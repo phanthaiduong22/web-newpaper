@@ -1,0 +1,30 @@
+<div class="card p-5">
+  <h4 class="card-header">
+    Create A New Tag
+  </h4>
+  <div class="card-body">
+    <form method="POST">
+      <div class="form-group">
+        <label for="txtTagName">
+          Tag
+        </label>
+        <input
+          type="text"
+          class="form-control"
+          id="txtTagName"
+          name="txtTagName"
+          required
+          autofocus
+        />
+      </div>
+      <button type="submit" class="btn btn-success">
+        <i class="fa fa-check" aria-hidden="true"></i>
+        Save
+      </button>
+      <a class="btn btn-primary" href="/tags" role="button">
+        <i class="fa fa-backward" aria-hidden="true"></i>
+        Back to List
+      </a>
+    </form>
+  </div>
+</div>

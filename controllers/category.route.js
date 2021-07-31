@@ -15,7 +15,7 @@ router.get("/", authUser, authRole("admin"), async function (req, res) {
 });
 
 router.get("/add", authUser, authRole("admin"), function (req, res) {
-  res.render("vwCategories/add");
+  res.render("vwCategories/add", { active: { categories: true } });
 });
 
 router.post("/add", authUser, authRole("admin"), async function (req, res) {
@@ -35,6 +35,7 @@ router.get("/edit", authUser, authRole("admin"), async function (req, res) {
   }
 
   res.render("vwCategories/edit", {
+    active: { categories: true },
     category,
   });
 });
@@ -54,7 +55,7 @@ router.get(
   authUser,
   authRole("admin"),
   async function (req, res) {
-    res.render("vwCategories/addSubCat");
+    res.render("vwCategories/addSubCat", { active: { categories: true } });
   },
 );
 
