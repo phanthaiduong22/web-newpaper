@@ -1,82 +1,102 @@
+{{#section "css"}}
+  <link
+    href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link rel="stylesheet" href="/public/css/details.css" />
+{{/section}}
+{{#section "js"}}
+  <script src="https://unpkg.com/@yaireo/tagify"></script>
+  <script
+    src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
+  ></script>
+  <script>
+    var input = document.querySelectorAll('input[name=tags]');
+    for(let i of input) {
+      new Tagify(i);
+    }
+  </script>
+{{/section}}
 <div class="card">
   <div class="card-body">
-    {{#if this.empty}}
-      <h5 class="card-title">
-        Empty
-      </h5>
-    {{else}}
-      <div class="row">
-        {{#each this.papers}}
-          <div class="col-md-4 mb-5 zoom" style="width: 18rem; height: 20rem">
-            <div>
-              <a href="/papers/details/{{PaperID}}">
-                <img
-                  src="/public/imgs/{{Avatar}}"
-                  class="img-thumbnail"
-                  alt="{{Avatar}}"
-                  title="{{PaperTitle}}"
-                  style="height: 12rem; width: 100%;"
-                />
-              </a>
+    {{#each this.papers}}
+      <a href="/papers/details/{{PaperID}}">
+        <div class="row border-bottom pt-3" style="height: 15rem;">
+          <div class="col-md-4 zoom" style="width: 18rem;">
+            <img
+              src="/public/imgs/{{Avatar}}"
+              class="img-thumbnail"
+              alt="{{Avatar}}"
+              title="{{PaperTitle}}"
+              style="height: 12rem; width: 100%;"
+            />
+          </div>
+          <div class="col-md-8 mt-3 pr-5">
+            <div class="row">
+              <div class="badge">
+                Explore
+              </div>
+              <div class="badge">
+                <i class="fa fa-calendar" aria-hidden="true"></i>
+                {{PublishDate}}
+              </div>
+              {{#if Premium}}
+                <div class="badge">
+                  <i class="fa fa-star text-primary" aria-hidden="true"></i>
+                </div>
+              {{/if}}
             </div>
-            <div class="card-body">
-              <div class="row ml-1">
-                <div class="badge">
-                  Explore
-                </div>
-                <div class="badge">
-                  <i class="fa fa-calendar" aria-hidden="true"></i>
-                  {{PublishDate}}
-                </div>
-                {{#if Premium}}
-                  <div class="badge">
-                    <i class="fa fa-star text-primary" aria-hidden="true"></i>
-                  </div>
-                {{/if}}
-              </div>
-              <div class="row">
-                <h5 class="card-title text-truncate mt-2">
-                  {{Title}}
-                </h5>
-              </div>
-              <div class="row">
-                <p class="text-truncate">
-                  {{Abstract}}
-                </p>
-              </div>
+            <div class="row">
+              <h5 class="card-title text-truncate text-dark mt-2">
+                {{Title}}
+              </h5>
+            </div>
+            <div class="row">
+              <p class="text-truncate text-muted">
+                {{Abstract}}
+              </p>
+            </div>
+            <div class="row">
+              <input
+                class="d-inline-block"
+                name="tags"
+                value="{{Tags}}"
+                readonly
+              />
             </div>
           </div>
+        </div>
+      </a>
+    {{/each}}
+    <nav class="mt-4" aria-label="...">
+      <ul class="pagination">
+        <li class="page-item disabled">
+          <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+            Previous
+          </a>
+        </li>
+        {{#each this.page_numbers}}
+          {{#if isCurrent}}
+            <li class="page-item active">
+              <a class="page-link" href="javascript:;">
+                {{value}}
+              </a>
+            </li>
+          {{else}}
+            <li class="page-item">
+              <a class="page-link" href="?page={{value}}">
+                {{value}}
+              </a>
+            </li>
+          {{/if}}
         {{/each}}
-      </div>
-      <nav aria-label="...">
-        <ul class="pagination">
-          <li class="page-item disabled">
-            <a class="page-link" href="#" tabindex="-1" aria-disabled="true">
-              Previous
-            </a>
-          </li>
-          {{#each this.page_numbers}}
-            {{#if isCurrent}}
-              <li class="page-item active">
-                <a class="page-link" href="javascript:;">
-                  {{value}}
-                </a>
-              </li>
-            {{else}}
-              <li class="page-item">
-                <a class="page-link" href="?page={{value}}">
-                  {{value}}
-                </a>
-              </li>
-            {{/if}}
-          {{/each}}
-          <li class="page-item">
-            <a class="page-link" href="?page=">
-              Next
-            </a>
-          </li>
-        </ul>
-      </nav>
-    {{/if}}
+        <li class="page-item">
+          <a class="page-link" href="?page=">
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
 </div>
