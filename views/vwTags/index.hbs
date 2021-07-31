@@ -1,7 +1,7 @@
 <div class="card p-5">
   <h4 class="card-header d-flex justify-content-between">
     Tags
-    <a class="btn btn-outline-success" href="/admin/tags/add" role="button">
+    <a class="btn btn-outline-success" href="/tags/add" role="button">
       <i class="fa fa-plus" aria-hidden="true"></i>
       Add a tag
     </a>
@@ -21,8 +21,6 @@
             <th scope="col">
               Tag
             </th>
-            <th scope="col"></th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
@@ -32,14 +30,14 @@
                 {{@index}}
               </th>
               <td>
-                <a href="tags/{{TagId}}">
+                <a href="/tags?id={{TagId}}">
                   {{TagName}}
                 </a>
               </td>
               <td class="text-right">
                 <a
                   class="btn btn-primary btn-sm"
-                  href="/admin/tags/edit?id={{TagId}}"
+                  href="/tags/edit?id={{TagId}}"
                   role="button"
                   title="Edit"
                 >

@@ -57,6 +57,7 @@
                   <th scope="col" class="text-center col-1 border-0  font-medium">Status</th>
                   <th scope="col" class="text-center col-1 border-0  font-medium">Publish Date</th>
                   <th scope="col" class="text-center col-6 border-1  font-medium">Comment</th>
+                  <th scope="col" class="text-center col-6 border-1  font-medium">Premium</th>
                 </div>
                 
               </tr>
@@ -112,17 +113,22 @@
                             <button
                               type="submit"
                               class="btn btn-primary"
+                              title="Mark as premium paper"
                             >
-                              Mark Premium           
+                              Make premium           
                             </button>
                           </form>
                         {{/eq}}
                         
                       {{/eq}}
                       {{#if Premium}}
-                        <i class="fa fa-star w-100 text-primary" aria-hidden="true"></i>
+                        <i class="fa fa-star w-100 text-primary text-center" aria-hidden="true"></i>
                       {{/if}}
-                    
+                     
+                </td>
+                <td>
+                  <a class="btn btn-primary" href="/writer/management/paper/{{PaperID}}"><i class="fa fa-pencil-square-o w-100" aria-hidden="true">Edit</i>
+</a>
                 </td>
                 </tr>
               {{/each}}

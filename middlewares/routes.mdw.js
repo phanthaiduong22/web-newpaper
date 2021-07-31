@@ -5,7 +5,7 @@ module.exports = function (app) {
 
   app.use("/admin/categories/", require("../controllers/category.route"));
 
-  app.use("/admin/tags/", require("../controllers/tag.route"));
+  app.use("/tags/", require("../controllers/tag.route"));
 
   app.use("/admin/", require("../controllers/admin.route"));
 

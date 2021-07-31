@@ -92,13 +92,13 @@
                     </a>
                 </li> 
                 {{!--  --}}
-                {{#if auth}}
-                  {{#eq authUser.Role "admin"}}
                    <li class="nav-item {{#if active.tagManagement}}active{{/if}}">
-                      <a class="nav-link" href="/admin/tags">
+                      <a class="nav-link" href="/tags">
                         <i class="fa-lg fa fa-tags" aria-hidden="true"></i> Tags
                       </a>
                   </li>
+                {{#if auth}}
+                  {{#eq authUser.Role "admin"}}
                   <li class="nav-item {{#if active.adminUser}}active{{/if}}">
                       <a class="nav-link" href="/admin/users">
                         <i class="fa-lg fa fa-user" aria-hidden="true"></i> User Management

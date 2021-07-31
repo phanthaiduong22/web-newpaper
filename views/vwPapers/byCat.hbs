@@ -16,14 +16,23 @@
     for(let i of input) {
       new Tagify(i);
     }
+    const tags = document.querySelectorAll(".tagify__tag-text");
+    for(let tag of tags) {
+      tag.addEventListener('click', (e) => {
+        e.preventDefault();
+        const tagName = tag.innerHTML;
+        const url = "http://localhost:3001/tags?name=" + encodeURIComponent(`${tagName}`);
+        window.location.href = url;
+      })
+    }
   </script>
 {{/section}}
 <div class="card">
   <div class="card-body">
     {{#each this.papers}}
-      <a href="/papers/details/{{PaperID}}">
-        <div class="row border-bottom pt-3" style="height: 15rem;">
-          <div class="col-md-4 zoom" style="width: 18rem;">
+      <div class="row border-bottom pt-3" style="height: 15rem;">
+        <div class="col-md-4 zoom" style="width: 18rem;">
+          <a href="/papers/details/{{PaperID}}">
             <img
               src="/public/imgs/{{Avatar}}"
               class="img-thumbnail"
@@ -31,46 +40,53 @@
               title="{{PaperTitle}}"
               style="height: 12rem; width: 100%;"
             />
-          </div>
-          <div class="col-md-8 mt-3 pr-5">
-            <div class="row">
-              <div class="badge">
+          </a>
+        </div>
+        <div class="col-md-8 mt-3 pr-5">
+          <div class="row">
+            <div class="badge">
+              <a href="/papers/byCat/{{CatID}}">
                 {{CatName}}
                 <i class="fa fa-long-arrow-right" aria-hidden="true">
                   {{SubCatName}}
                 </i>
-              </div>
-              <div class="badge">
-                <i class="fa fa-calendar" aria-hidden="true"></i>
-                {{PublishDate}}
-              </div>
-              {{#if Premium}}
-                <div class="badge">
-                  <i class="fa fa-star text-primary" aria-hidden="true"></i>
-                </div>
-              {{/if}}
+              </a>
             </div>
-            <div class="row">
+            <div class="badge">
+              <i class="fa fa-calendar" aria-hidden="true"></i>
+              {{PublishDate}}
+            </div>
+            {{#if Premium}}
+              <div class="badge">
+                <i class="fa fa-star text-primary" aria-hidden="true"></i>
+              </div>
+            {{/if}}
+          </div>
+          <div class="row">
+            <a
+              class="text-decoration-none zoom"
+              href="/papers/details/{{PaperID}}"
+            >
               <h5 class="card-title text-truncate text-dark mt-2">
                 {{Title}}
               </h5>
-            </div>
-            <div class="row">
-              <p class="text-truncate text-muted">
-                {{Abstract}}
-              </p>
-            </div>
-            <div class="row">
-              <input
-                class="d-inline-block"
-                name="tags"
-                value="{{Tags}}"
-                readonly
-              />
-            </div>
+            </a>
+          </div>
+          <div class="row">
+            <p class="text-truncate text-muted">
+              {{Abstract}}
+            </p>
+          </div>
+          <div class="row">
+            <input
+              class="d-inline-block"
+              name="tags"
+              value="{{Tags}}"
+              readonly
+            />
           </div>
         </div>
-      </a>
+      </div>
     {{/each}}
     <nav class="mt-4" aria-label="...">
       <ul class="pagination">

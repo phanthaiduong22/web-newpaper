@@ -21,7 +21,7 @@ router.get("/byCat/:id", async function (req, res) {
     }
   }
 
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -38,7 +38,7 @@ router.get("/byCat/:id", async function (req, res) {
   }
 
   const offset = (page - 1) * limit;
-  const list = await paperModel.findByCatID(catId, offset);
+  const list = await paperModel.findByCatID(catId, limit, offset);
   const raw_data = await categoryModel.allWithDetails();
   const categories = raw_data[0];
   const subcategories = await categoryModel.getSubCategories();
@@ -114,7 +114,7 @@ router.get("/details/:id", async function (req, res) {
 router.get("/bySubCat/:subcatid", async function (req, res) {
   const subCatId = +req.params.subcatid || 0;
   const cat = await categoryModel.getCatbySubCatID(subCatId);
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
   const total = await paperModel.countByCatID(cat[0].CatID);
@@ -130,7 +130,7 @@ router.get("/bySubCat/:subcatid", async function (req, res) {
   }
 
   const offset = (page - 1) * limit;
-  const list = await paperModel.findBySubCatID(subCatId, offset);
+  const list = await paperModel.findBySubCatID(subCatId, limit, offset);
   const raw_data = await categoryModel.allWithDetails();
   const categories = raw_data[0];
   const subcategories = await categoryModel.getSubCategories();

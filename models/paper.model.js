@@ -20,6 +20,7 @@ module.exports = {
         "papers.Premium",
         "papers.Status",
         "categories.CatName",
+        "categories.CatID",
         "sub_categories.SubCatName",
       ])
       .join("categories", "papers.CatID", "=", "categories.catID")
@@ -42,6 +43,7 @@ module.exports = {
         "papers.Premium",
         "papers.Status",
         "categories.CatName",
+        "categories.CatID",
         "sub_categories.SubCatName",
       ])
       .where("Status", "Published")
@@ -119,29 +121,39 @@ module.exports = {
     });
   },
 
-  async findByCatID(catId, offset) {
+  async findByCatID(catId, limit, offset) {
     return await db("papers")
       .where({ "papers.CatID": catId, Status: "Published" })
       .join("categories", "papers.CatID", "=", "categories.CatID")
       .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
       .orderBy("Premium", "desc")
-      .limit(6)
+      .limit(limit)
       .offset(offset);
   },
 
-  async findBySubCatID(subCatId, offset) {
+  async findBySubCatID(subCatId, limit, offset) {
     return await db("papers")
       .where({ "papers.SubCatID": subCatId, Status: "Published" })
       .join("categories", "papers.CatID", "=", "categories.CatID")
       .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
       .orderBy("Premium", "desc")
-      .limit(6)
+      .limit(limit)
       .offset(offset);
   },
 
   async countByCatID(catId) {
     const rows = await db("papers")
       .where("CatID", catId)
+      .count("*", { as: "total" });
+
+    return rows[0].total;
+  },
+
+  async countByTagId(tagId) {
+    const tag = await tagModel.findTagById(tagId);
+    const pattern = tag.TagName;
+    const rows = await db("papers")
+      .where("Tags", "like", `%${pattern}%`)
       .count("*", { as: "total" });
 
     return rows[0].total;
@@ -223,10 +235,16 @@ module.exports = {
     return await db("papers").where("PaperID", id).update("Premium", 1);
   },
 
-  async findPapersByTag(tagId) {
+  async findPapersByTagId(tagId, limit, offset) {
     const tag = await tagModel.findTagById(tagId);
     const pattern = `"value":"${tag.TagName}"`;
-    console.log(pattern);
-    return await db("papers").where("Tags", "like", `%${pattern}%`);
+    return await db("papers")
+      .where("Tags", "like", `%${pattern}%`)
+      .andWhere("Status", "Published")
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
+      .orderBy("Premium", "desc")
+      .limit(limit)
+      .offset(offset);
   },
 };

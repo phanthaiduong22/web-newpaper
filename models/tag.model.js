@@ -10,6 +10,13 @@ module.exports = {
     return await db("tag").insert(tag);
   },
 
+  async findTagIdByTagName(tagName) {
+    const rows = await db("tag").where("TagName", tagName);
+    if (rows.length === 0) return null;
+
+    return rows[0];
+  },
+
   async findTagById(tagId) {
     const rows = await db("tag").where("TagId", tagId);
     if (rows.length === 0) return null;
