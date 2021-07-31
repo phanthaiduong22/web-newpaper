@@ -50,14 +50,19 @@
                 {{!--  --}}
                 {{#if auth}}
                   {{#eq authUser.Role "admin"}}
-                  <li class="nav-item {{#if active.adminUser}}active{{/if}}">
-                      <a class="nav-link" href="/admin/users">
-                        <i class="fa-lg fa fa-user " aria-hidden="true"></i> User Management
+                  <li class="nav-item {{#if active.tagManagement}}active{{/if}}">
+                      <a class="nav-link" href="/admin/tags">
+                        <i class="fa-lg fa fa-tags" aria-hidden="true"></i> Tags
                       </a>
                   </li>
-                   <li class="nav-item {{#if active.paperManagement}}active{{/if}}">
+                  <li class="nav-item {{#if active.adminUser}}active{{/if}}">
+                      <a class="nav-link" href="/admin/users">
+                        <i class="fa-lg fa fa-user" aria-hidden="true"></i> User Management
+                      </a>
+                  </li>
+                  <li class="nav-item {{#if active.paperManagement}}active{{/if}}">
                       <a class="nav-link" href="/admin/papers">
-                        <i class="fa-lg fa fa-user" aria-hidden="true"></i> Paper Management
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Paper Management
                       </a>
                   </li>
                   {{/eq}}

@@ -5,8 +5,8 @@ const moment = require("moment");
 const userModel = require("../models/user.model");
 const categoryModel = require("../models/category.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
-const { route } = require("./editor.route");
 const paperModel = require("../models/paper.model");
+const tagModel = require("../models/tag.model");
 
 router.get("/users", authUser, authRole("admin"), async function (req, res) {
   const users = await userModel.allWithSpecific();

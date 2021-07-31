@@ -1,6 +1,6 @@
 const db = require("../utils/db");
 const categoryModel = require("./category.model");
-const moment = require("moment");
+const tagModel = require("../models/tag.model");
 
 module.exports = {
   all() {
@@ -20,8 +20,10 @@ module.exports = {
         "papers.Premium",
         "papers.Status",
         "categories.CatName",
+        "sub_categories.SubCatName",
       ])
       .join("categories", "papers.CatID", "=", "categories.catID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
       .where({ Status: "Published" })
       .orderBy([{ column: "Views", order: "desc" }])
       .limit(limit);
@@ -40,9 +42,11 @@ module.exports = {
         "papers.Premium",
         "papers.Status",
         "categories.CatName",
+        "sub_categories.SubCatName",
       ])
       .where("Status", "Published")
       .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
       .orderBy("PublishDate", "desc")
       .limit(limit);
   },
@@ -117,7 +121,9 @@ module.exports = {
 
   async findByCatID(catId, offset) {
     return await db("papers")
-      .where("CatID", catId)
+      .where({ "papers.CatID": catId, Status: "Published" })
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
       .orderBy("Premium", "desc")
       .limit(6)
       .offset(offset);
@@ -125,7 +131,9 @@ module.exports = {
 
   async findBySubCatID(subCatId, offset) {
     return await db("papers")
-      .where("SubCatID", subCatId)
+      .where({ "papers.SubCatID": subCatId, Status: "Published" })
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
       .orderBy("Premium", "desc")
       .limit(6)
       .offset(offset);
@@ -213,5 +221,12 @@ module.exports = {
 
   async activePremium(id) {
     return await db("papers").where("PaperID", id).update("Premium", 1);
+  },
+
+  async findPapersByTag(tagId) {
+    const tag = await tagModel.findTagById(tagId);
+    const pattern = `"value":"${tag.TagName}"`;
+    console.log(pattern);
+    return await db("papers").where("Tags", "like", `%${pattern}%`);
   },
 };

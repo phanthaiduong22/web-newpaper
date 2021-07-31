@@ -1,0 +1,57 @@
+<div class="card p-5">
+  <h4 class="card-header d-flex justify-content-between">
+    Tags
+    <a class="btn btn-outline-success" href="/admin/tags/add" role="button">
+      <i class="fa fa-plus" aria-hidden="true"></i>
+      Add a tag
+    </a>
+  </h4>
+  <div class="card-body">
+    {{#if this.empty}}
+      <h5 class="card-title">
+        No data!
+      </h5>
+    {{else}}
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th class="text-center" scope="col">
+              #
+            </th>
+            <th scope="col">
+              Tag
+            </th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each this.tags}}
+            <tr>
+              <th class="text-center" scope="row">
+                {{@index}}
+              </th>
+              <td>
+                <a href="tags/{{TagId}}">
+                  {{TagName}}
+                </a>
+              </td>
+              <td class="text-right">
+                <a
+                  class="btn btn-primary btn-sm"
+                  href="/admin/tags/edit?id={{TagId}}"
+                  role="button"
+                  title="Edit"
+                >
+                  <i class="fa fa-pencil w-100" aria-hidden="true">
+                    Edit
+                  </i>
+                </a>
+              </td>
+            </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    {{/if}}
+  </div>
+</div>

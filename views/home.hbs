@@ -103,12 +103,11 @@
                   <div class="col card-title text-secondary">
                     <b>
                       {{CatName}}
-                      {{#if Premium}}
-                        <i
-                          class="fa fa-star text-primary"
-                          aria-hidden="true"
-                        ></i>
-                      {{/if}}
+                      <span style="font-size: 0.8rem;">
+                        <i class="fa fa-long-arrow-right" aria-hidden="true">
+                          {{SubCatName}}
+                        </i>
+                      </span>
                     </b>
                   </div>
                   <div class="card-title text-secondary small float-right">
@@ -129,6 +128,9 @@
                   <b>
                     {{Title}}
                   </b>
+                  {{#if Premium}}
+                    <i class="fa fa-star text-primary" aria-hidden="true"></i>
+                  {{/if}}
                 </p>
               </div>
             </a>
@@ -170,18 +172,15 @@
                 <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
                 {{Views}}
               </div>
-              {{#if Premium}}
-                <div class="badge">
-                  <i
-                    class="fa fa-2x fa-star text-primary"
-                    aria-hidden="true"
-                  ></i>
-                </div>
-              {{/if}}
             </div>
             <div class="row">
               <h5 class="text-muted">
                 {{CatName}}
+                <span style="font-size: 1rem;">
+                  <i class="fa fa-long-arrow-right" aria-hidden="true">
+                    {{SubCatName}}
+                  </i>
+                </span>
               </h5>
             </div>
             <div class="row">
@@ -189,6 +188,14 @@
                 <b>
                   {{Title}}
                 </b>
+                {{#if Premium}}
+                  <div class="badge">
+                    <i
+                      class="fa fa-2x fa-star text-primary"
+                      aria-hidden="true"
+                    ></i>
+                  </div>
+                {{/if}}
               </h5>
             </div>
             <div class="row">
@@ -233,15 +240,15 @@
               <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
               {{Views}}
             </div>
-            {{#if Premium}}
-              <div class="badge">
-                <i class="fa fa-2x fa-star text-primary" aria-hidden="true"></i>
-              </div>
-            {{/if}}
           </div>
           <div class="row">
             <h5 class="text-muted">
               {{CatName}}
+              <span style="font-size: 1rem;">
+                <i class="fa fa-long-arrow-right" aria-hidden="true">
+                  {{SubCatName}}
+                </i>
+              </span>
             </h5>
           </div>
           <div class="row">
@@ -249,7 +256,20 @@
               <b>
                 {{Title}}
               </b>
+              {{#if Premium}}
+                <div class="badge">
+                  <i
+                    class="fa fa-2x fa-star text-primary"
+                    aria-hidden="true"
+                  ></i>
+                </div>
+              {{/if}}
             </h5>
+          </div>
+          <div class="row">
+            <p class="text-muted">
+              {{Abstract}}
+            </p>
           </div>
         </div>
       </div>
