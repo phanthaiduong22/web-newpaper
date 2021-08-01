@@ -6,19 +6,18 @@ const moment = require("moment");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  let tagId = req.query.id;
-  const tagName = req.query.name;
-  if (!tagId && !tagName) {
-    const tags = await tagModel.all();
-    res.render("vwTags/index", { tags, active: { tagManagement: true } });
+  const tags = await tagModel.all();
+  for (let tag of tags) {
+    tag.count = await tagModel.countPaperByTagName(tag.TagName);
   }
+  res.render("vwTags/index", { tags, active: { tagManagement: true } });
+});
+
+router.get("/find/:id", async (req, res) => {
+  let tagId = +req.params.id;
+
   const page = +req.query.page || 1;
   if (page < 1) page = 1;
-
-  if (tagName) {
-    const tag = await tagModel.findTagIdByTagName(decodeURIComponent(tagName));
-    tagId = tag.TagId;
-  }
 
   const limit = 3;
   const total = await paperModel.countByTagId(tagId);
@@ -52,7 +51,9 @@ router.get("/add", authUser, authRole("admin"), async (req, res) => {
 
 router.post("/add", authUser, authRole("admin"), async (req, res) => {
   const tagName = req.body.txtTagName;
-  await tagModel.addTag({ TagName: tagName });
+  const result = await tagModel.addTag({ TagName: tagName });
+  if (!result)
+    return res.render("vwTags/add", { err_message: "This tag is used." });
   res.redirect("/tags");
 });
 

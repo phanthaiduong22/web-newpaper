@@ -23,6 +23,9 @@
             <th scope="col">
               Tag
             </th>
+            <th scope="col">
+              Count
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -32,10 +35,13 @@
                 {{@index}}
               </th>
               <td>
-                <a href="/tags?id={{TagId}}">
+                <a href="/tags/find/{{TagId}}">
                   {{TagName}}
                 </a>
-              </td>
+              </td>    
+              <td>
+                {{count}}
+              </td>    
               <td class="text-right">
                 {{#eq ../authUser.Role "admin"}}
                 <a
@@ -50,6 +56,7 @@
                 </a>
                 {{/eq}}
               </td>
+              
             </tr>
           {{/each}}
         </tbody>

@@ -6,6 +6,8 @@ module.exports = {
   },
 
   async addTag(tag) {
+    const t = await db("tag").where("TagName", tag.TagName);
+    if (t.length > 0) return null;
     tag.TagName = tag.TagName.toLowerCase();
     return await db("tag").insert(tag);
   },
@@ -28,7 +30,7 @@ module.exports = {
     const papers = await db("papers").where(
       "Tags",
       "like",
-      `%${tag.oldTagName}%`,
+      `%"${tag.oldTagName}"%`,
     );
     for (let paper of papers) {
       paper.Tags = paper.Tags.replace(tag.oldTagName, tag.TagName);
@@ -48,7 +50,7 @@ module.exports = {
     const papers = await db("papers").where(
       "Tags",
       "like",
-      `%${tag.oldTagName}%`,
+      `%"${tag.oldTagName}"%`,
     );
     for (let paper of papers) {
       const tags = JSON.parse(paper.Tags);
@@ -64,6 +66,18 @@ module.exports = {
     delete tag.TagId;
 
     return await db("tag").where("TagId", id).del();
+  },
+
+  async countPaperByTagName(tagName) {
+    const rows = await db("papers")
+      .where("Tags", "like", `%"${tagName}"%`)
+      .andWhere("Status", "Published")
+      .count("*", { as: "total" });
+    return rows[0].total;
+  },
+
+  async delByTagName(tagName) {
+    return await db("tag").where("TagName", tagName).del();
   },
 
   // async findAllCommentByPaperId(paperId) {

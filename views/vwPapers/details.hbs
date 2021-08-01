@@ -54,13 +54,22 @@
   </script>
 {{/section}}
 {{#if err_message}}
-  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+  <div
+    class="text-center alert alert-warning alert-dismissible fade show"
+    role="alert"
+  >
     <button type="button" class="close" data-dismiss="alert" aria-label="Close">
       <span aria-hidden="true">
         ×
       </span>
     </button>
-    {{err_message}}
+    <h1>
+      {{err_message}}
+    </h1>
+    <a class="btn btn-primary d-inline-block" href="/" role="button">
+      <i class="fa fa-backward" aria-hidden="true"></i>
+      Back to Home
+    </a>
   </div>
 {{else}}
   <div class="container card mt-3 p-2">

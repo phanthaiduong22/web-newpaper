@@ -1,6 +1,7 @@
 const db = require("../utils/db");
 const categoryModel = require("./category.model");
 const tagModel = require("../models/tag.model");
+const commentModel = require("../models/comment.model");
 
 module.exports = {
   all() {
@@ -149,11 +150,20 @@ module.exports = {
     return rows[0].total;
   },
 
+  async countBySubCatID(subCatId) {
+    const rows = await db("papers")
+      .where("SubCatID", subCatId)
+      .count("*", { as: "total" });
+
+    return rows[0].total;
+  },
+
   async countByTagId(tagId) {
     const tag = await tagModel.findTagById(tagId);
     const pattern = tag.TagName;
     const rows = await db("papers")
-      .where("Tags", "like", `%${pattern}%`)
+      .where("Tags", "like", `%"${pattern}"%`)
+      .andWhere("Status", "Published")
       .count("*", { as: "total" });
 
     return rows[0].total;
@@ -228,6 +238,7 @@ module.exports = {
   },
 
   async del(id) {
+    await commentModel.delByPaperId(id);
     return await db("papers").where("PaperID", id).del();
   },
 

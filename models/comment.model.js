@@ -22,4 +22,8 @@ module.exports = {
       .join("users", "comment.UserID", "=", "users.UserID")
       .orderBy("CreatedAt", "desc");
   },
+
+  async delByPaperId(paperId) {
+    return await db("comment").del().where("PaperID", paperId);
+  },
 };

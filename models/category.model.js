@@ -24,7 +24,7 @@ module.exports = {
   },
 
   async getSubCategories() {
-    return db("category_sub_categories")
+    return await db("category_sub_categories")
       .select([
         "categories.CatID",
         "categories.CatName",
@@ -45,14 +45,39 @@ module.exports = {
       );
   },
 
+  async getSubCategoriesByCatId(catId) {
+    return await db("category_sub_categories")
+      .select([
+        "categories.CatID",
+        "categories.CatName",
+        "sub_categories.SubCatID",
+        "sub_categories.SubCatName",
+      ])
+      .where("categories.CatID", catId)
+      .join(
+        "categories",
+        "category_sub_categories.CatID",
+        "=",
+        "categories.CatID",
+      )
+      .join(
+        "sub_categories",
+        "category_sub_categories.SubCatID",
+        "=",
+        "sub_categories.SubCatID",
+      );
+  },
+
   async getCatbySubCatID(SubCatID) {
-    return db("category_sub_categories")
+    return await db("category_sub_categories")
       .select("CatID")
       .where("SubCatID", SubCatID);
   },
 
   async add(category) {
-    return db("categories").insert(category);
+    const result = await db("categories").where("CatName", category.CatName);
+    if (result.length > 0) return null;
+    return await db("categories").insert(category);
   },
 
   async findById(id) {
@@ -66,11 +91,28 @@ module.exports = {
     const id = category.CatID;
     delete category.CatID;
 
-    return db("categories").where("CatID", id).update(category);
+    return await db("categories").where("CatID", id).update(category);
+  },
+
+  async patchSubCat(subCatId, subCatName) {
+    return await db("sub_categories")
+      .where("SubCatID", subCatId)
+      .update("SubCatName", subCatName);
   },
 
   async del(id) {
-    return db("categories").where("CatID", id).del();
+    const rows = await db("category_sub_categories").where("CatID", id);
+    for (let row of rows) {
+      await this.delSubCat(row.CatID, row.SubCatID);
+    }
+    return await db("categories").where("CatID", id).del();
+  },
+
+  async delSubCat(catId, subCatId) {
+    await db("category_sub_categories")
+      .where({ CatID: catId, SubCatID: subCatId })
+      .del();
+    return await db("sub_categories").where("SubCatID", subCatId).del();
   },
 
   async findCatByEditorId(editorId) {
@@ -80,10 +122,12 @@ module.exports = {
   },
 
   async addSubCat(subCatName, catId) {
+    const sub = await db("sub_categories").where("SubCatName", subCatName);
+    if (sub.length > 0) return null;
     const subCat = await db("sub_categories").insert({
       SubCatName: subCatName,
     });
-    await db("category_sub_categories").insert({
+    return await db("category_sub_categories").insert({
       CatID: catId,
       SubCatID: subCat[0],
     });
