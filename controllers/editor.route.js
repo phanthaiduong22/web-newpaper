@@ -3,6 +3,7 @@ const multer = require("multer");
 const moment = require("moment");
 const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
+const tagModel = require("../models/tag.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 
 // const fs = require("fs");
@@ -35,8 +36,9 @@ router.get(
   authRole("editor"),
   async function (req, res) {
     const paperId = +req.params.id || 0;
-
     const paper = await paperModel.findById(paperId);
+    if (paper.Status === "Published") return res.redirect("/editor/management");
+
     if (paper.PublishDate)
       paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
     const sub_categories = await categoryModel.getSubCategories();
@@ -64,20 +66,16 @@ router.post(
   async function (req, res) {
     const paperId = +req.params.id || 0;
     const paper = await paperModel.findById(paperId);
-    if (
-      (paper.Status === "Accepted" || paper.Status === "Published") &&
-      req.session.authUser.Role !== "admin"
-    )
+    if (paper.Status === "Published" && req.session.authUser.Role !== "admin")
       return res.redirect("/editor/management");
     const { accept, reject, editorComment } = req.body;
     if (accept) {
       let { raw_dob, sub_categories, tags } = req.body;
       const dateRelease = moment(raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
 
-      await paperModel.update(paperId, updatedPaper);
       const t = JSON.parse(req.body.tags);
+      console.log(t);
       for (let i = 0; i < t.length; i += 1) {
-        // console.log(tags[i].value);
         try {
           await tagModel.addTag({ TagName: t[i].value });
         } catch (err) {

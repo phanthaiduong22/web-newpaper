@@ -98,7 +98,7 @@ module.exports = {
   },
 
   async editorAcceptPaper(paperID, dateRelease, subCatID, tags, editorComment) {
-    cat = await categoryModel.getCatbySubCatID(subCatID);
+    const cat = await categoryModel.getCatbySubCatID(subCatID);
 
     await db("papers").where("PaperID", paperID).update({
       CatID: cat.CatID,
@@ -109,7 +109,7 @@ module.exports = {
     });
 
     if (dateRelease != "Invalid date") {
-      await db("papers").where("PaperID", paperID).update({
+      return await db("papers").where("PaperID", paperID).update({
         PublishDate: dateRelease,
       });
     }
