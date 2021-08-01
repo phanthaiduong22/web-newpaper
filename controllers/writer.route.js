@@ -104,9 +104,8 @@ router.post("/upload", authUser, authRole("writer"), async function (req, res) {
 
       const tags = JSON.parse(req.body.tags);
       for (let i = 0; i < tags.length; i += 1) {
-        // console.log(tags[i].value);
         try {
-          await tagModel.addTag({ TagName: tags[i].value });
+          const newTagId = await tagModel.addTag({ TagName: tags[i].value });
         } catch (err) {
           console.log(`${tags[i].value} is present`);
         }

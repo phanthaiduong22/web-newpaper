@@ -25,10 +25,24 @@ module.exports = {
   },
 
   async patch(tag) {
-    const id = tag.TagId;
-    delete tag.TagId;
+    const papers = await db("papers").where(
+      "Tags",
+      "like",
+      `%${tag.oldTagName}%`,
+    );
+    for (let paper of papers) {
+      paper.Tags = paper.Tags.replace(tag.oldTagName, tag.TagName);
+      console.log(paper.Tags);
+      await db("papers")
+        .where("PaperID", paper.PaperID)
+        .update({ Tags: paper.Tags });
+    }
 
-    return await db("tag").where("TagId", id).update(tag);
+    const id = +tag.TagId;
+    delete tag.TagId;
+    return await db("tag")
+      .where({ TagId: id })
+      .update({ TagName: tag.TagName });
   },
 
   async del(tagId) {

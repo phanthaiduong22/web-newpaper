@@ -115,14 +115,14 @@
                   {{#eq authUser.Role "editor"}}
                   <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
                       <a class="nav-link" href="/editor/management">
-                        <i class="fa-lg fa fa-user " aria-hidden="true"></i> Editor Management
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editor Management
                       </a>
                   </li>
                   {{/eq}}
                   {{#eq authUser.Role "writer"}}
                   <li class="nav-item {{#if active.writer}}active{{/if}}">
                       <a class="nav-link" href="/writer/management">
-                        <i class="fa-lg fa fa-user " aria-hidden="true"></i> Writer Management
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Writer Management
                       </a>
                   </li>
                   <li class="nav-item {{#if active.upload}}active{{/if}}">
