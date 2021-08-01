@@ -6,6 +6,8 @@ module.exports = {
   },
 
   async addTag(tag) {
+    const t = await db("tag").where("TagName", tag.TagName);
+    if (t.length > 0) return null;
     tag.TagName = tag.TagName.toLowerCase();
     return await db("tag").insert(tag);
   },

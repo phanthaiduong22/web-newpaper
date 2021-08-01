@@ -35,33 +35,66 @@
                 {{@index}}
               </th>
               <td>
-                <a href="/papers/byCat/{{CatID}}">
-                  {{CatName}}
-                </a>
+                <div class="dropdown">
+                  <a
+                    class="btn btn-info dropdown-toggle"
+                    href="/"
+                    role="button"
+                    id="dropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    {{CatName}}
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    {{#each SubCategory}}
+                      <a
+                        class="dropdown-item"
+                        href="/papers/bySubCat/{{SubCatID}}"
+                      >
+                        {{SubCatName}}
+                      </a>
+                    {{/each}}
+                  </div>
+                </div>
               </td>
               <td class="text-right">
-                <a
-                  class="btn btn-primary btn-sm"
-                  href="/admin/categories/{{CatID}}/addSubCategory"
-                  role="button"
-                  title="Add Sub Category"
-                >
-                  <i class="fa fa-plus w-100" aria-hidden="true">
-                    Add Sub Category
-                  </i>
-                </a>
-              </td>
-              <td class="text-right">
-                <a
-                  class="btn btn-primary btn-sm"
-                  href="/admin/categories/edit?id={{CatID}}"
-                  role="button"
-                  title="Edit"
-                >
-                  <i class="fa fa-pencil w-100" aria-hidden="true">
-                    Edit
-                  </i>
-                </a>
+                <div class="dropdown">
+                  <a
+                    class="btn btn-secondary dropdown-toggle"
+                    href="#"
+                    role="button"
+                    id="dropdownMenuLink"
+                    data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false"
+                  >
+                    <i class="fa fa-pencil w-100" aria-hidden="true">
+                      Edit
+                    </i>
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a
+                      class="dropdown-item"
+                      href="/admin/categories/edit?id={{CatID}}"
+                    >
+                      Edit Main Category
+                    </a>
+                    <a
+                      href="/admin/categories/{{CatID}}/addSubCategory"
+                      class="dropdown-item"
+                    >
+                      Add Sub Category
+                    </a>
+                    <a
+                      class="dropdown-item"
+                      href="/admin/categories/{{CatID}}/subCategories"
+                    >
+                      Edit Sub Category
+                    </a>
+                  </div>
+                </div>
               </td>
             </tr>
           {{/each}}

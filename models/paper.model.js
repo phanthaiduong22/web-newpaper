@@ -150,6 +150,14 @@ module.exports = {
     return rows[0].total;
   },
 
+  async countBySubCatID(subCatId) {
+    const rows = await db("papers")
+      .where("SubCatID", subCatId)
+      .count("*", { as: "total" });
+
+    return rows[0].total;
+  },
+
   async countByTagId(tagId) {
     const tag = await tagModel.findTagById(tagId);
     const pattern = tag.TagName;

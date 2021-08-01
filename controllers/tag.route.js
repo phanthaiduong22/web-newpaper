@@ -14,7 +14,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/find/:id", async (req, res) => {
-  const tagId = req.params.id;
+  let tagId = +req.params.id;
 
   const page = +req.query.page || 1;
   if (page < 1) page = 1;
@@ -51,7 +51,9 @@ router.get("/add", authUser, authRole("admin"), async (req, res) => {
 
 router.post("/add", authUser, authRole("admin"), async (req, res) => {
   const tagName = req.body.txtTagName;
-  await tagModel.addTag({ TagName: tagName });
+  const result = await tagModel.addTag({ TagName: tagName });
+  if (!result)
+    return res.render("vwTags/add", { err_message: "This tag is used." });
   res.redirect("/tags");
 });
 
