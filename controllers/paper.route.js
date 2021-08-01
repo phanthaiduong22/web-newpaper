@@ -91,17 +91,17 @@ router.get("/details/:id", async function (req, res) {
   paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
   for (i = 0; i < relatedNews.length; i++) {
     relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format(
-      "Do MMMM YYYY",
+      "Do MMMM YYYY"
     );
     relatedNews[i].PublishDate = moment(relatedNews[i].PublishDate).format(
-      "Do MMMM YYYY",
+      "Do MMMM YYYY"
     );
   }
 
   const comments = await commentModel.findAllCommentByPaperId(paperId);
   for (i = 0; i < comments.length; i++) {
     comments[i].CreatedAt = moment(comments[i].CreatedAt).format(
-      "Do MMMM YYYY",
+      "Do MMMM YYYY"
     );
   }
   res.render("vwPapers/details", {
@@ -179,7 +179,7 @@ router.get(
     paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
 
     res.render("vwPapers/premium", { paper });
-  },
+  }
 );
 
 router.get(
@@ -190,7 +190,7 @@ router.get(
     const paperId = +req.params.id || 0;
     const browser = await puppeteer.launch();
 
-    const url = `http://localhost:3001/papers/details/${paperId}/premium`;
+    const url = `/papers/details/${paperId}/premium`;
     const page = await browser.newPage();
     await page.setCookie({
       name: "connect.sid",
@@ -204,7 +204,7 @@ router.get(
     await browser.close();
 
     res.download(filePath);
-  },
+  }
 );
 
 router.post("/details/:id/comment", authUser, async function (req, res) {
