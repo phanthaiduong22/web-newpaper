@@ -1,0 +1,7 @@
+secretGenerator:
+- name: mysql-pass
+  literals:
+  - password=bietdoibancuoi
+resources:
+  - mysql-deployment.yaml
+  - app-deployment.yaml
