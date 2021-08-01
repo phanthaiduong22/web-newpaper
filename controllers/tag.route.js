@@ -47,7 +47,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/add", authUser, authRole("admin"), async (req, res) => {
-  res.render("vwTags/add");
+  res.render("vwTags/add", { active: { tagManagement: true } });
 });
 
 router.post("/add", authUser, authRole("admin"), async (req, res) => {
@@ -62,7 +62,7 @@ router.get("/edit", authUser, authRole("admin"), async (req, res) => {
 
   if (!tag) return res.redirect("/tags");
 
-  res.render("vwTags/edit", { tag });
+  res.render("vwTags/edit", { tag, active: { tagManagement: true } });
 });
 
 router.post("/patch", authUser, authRole("admin"), async (req, res) => {
