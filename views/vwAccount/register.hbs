@@ -17,9 +17,9 @@
     alert("Username or email must not be empty!");
     return;
   }
-  const isValidUsername = await fetch(
-    `http://localhost:3001/account/is-valid-username?username=${username}`,
-    {
+   const isValidUsername = await fetch(
+    `/account/is-valid-username?username=${username}`,
+	{
       method: "GET",
     },
   ).then((res) => res.json());
@@ -28,7 +28,7 @@
     return;
   }
   const isValidEmail = await fetch(
-    `http://localhost:3001/account/is-valid-email?email=${email}`,
+    `/account/is-valid-email?email=${email}`,
     {
       method: "GET",
     },
