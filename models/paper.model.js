@@ -154,7 +154,8 @@ module.exports = {
     const tag = await tagModel.findTagById(tagId);
     const pattern = tag.TagName;
     const rows = await db("papers")
-      .where("Tags", "like", `%${pattern}%`)
+      .where("Tags", "like", `%"${pattern}"%`)
+      .andWhere("Status", "Published")
       .count("*", { as: "total" });
 
     return rows[0].total;
