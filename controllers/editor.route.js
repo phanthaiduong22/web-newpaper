@@ -73,6 +73,18 @@ router.post(
     if (accept) {
       let { raw_dob, sub_categories, tags } = req.body;
       const dateRelease = moment(raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+
+      await paperModel.update(paperId, updatedPaper);
+      const t = JSON.parse(req.body.tags);
+      for (let i = 0; i < t.length; i += 1) {
+        // console.log(tags[i].value);
+        try {
+          await tagModel.addTag({ TagName: t[i].value });
+        } catch (err) {
+          console.log(`${t[i].value} is present`);
+        }
+      }
+
       await paperModel.editorAcceptPaper(
         paperId,
         dateRelease,

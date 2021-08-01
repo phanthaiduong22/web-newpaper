@@ -78,7 +78,7 @@ module.exports = {
         "papers.Tags",
         "papers.Premium",
       ])
-      .whereRaw(`CatId = ${catId} AND Status = "Draft" OR Status = "Rejected"`);
+      .whereRaw(`CatId = ${catId}`);
     // .where({ CatId: catId })
     // .whereNot({ Status: "Accepted" });
   },
@@ -209,7 +209,7 @@ module.exports = {
   async search(query) {
     //Full-text search
     const rows = await db.raw(
-      `SELECT * FROM papers WHERE MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`,
+      `SELECT * FROM papers WHERE Status = "Published" AND MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`,
     );
 
     return rows[0];
