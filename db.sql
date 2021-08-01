@@ -1,3 +1,20 @@
+
+DROP TABLE IF EXISTS `users`;
+CREATE TABLE `users` (
+  `UserID` int NOT NULL AUTO_INCREMENT,
+  `Username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `Dob` date NOT NULL,
+  `Role` varchar(50) NOT NULL DEFAULT 'user',
+  `Premium` tinyint NOT NULL DEFAULT '0',
+  `Time` bigint DEFAULT NULL,
+  `GetPremiumAt` bigint DEFAULT NULL,
+  PRIMARY KEY (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+
 DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `CatID` int unsigned NOT NULL AUTO_INCREMENT,
@@ -89,17 +106,4 @@ CREATE TABLE `tag` (
   UNIQUE KEY `TagId_UNIQUE` (`TagId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `UserID` int NOT NULL AUTO_INCREMENT,
-  `Username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Dob` date NOT NULL,
-  `Role` varchar(50) NOT NULL DEFAULT 'user',
-  `Premium` tinyint NOT NULL DEFAULT '0',
-  `Time` bigint DEFAULT NULL,
-  `GetPremiumAt` bigint DEFAULT NULL,
-  PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- UPDATE users SET role = 'admin' where Username='admin'
