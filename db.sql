@@ -1,9 +1,11 @@
+DROP TABLE IF EXISTS `categories`;
 CREATE TABLE `categories` (
   `CatID` int unsigned NOT NULL AUTO_INCREMENT,
   `CatName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`CatID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `category_editors`;
 CREATE TABLE `category_editors` (
   `EditorID` int NOT NULL,
   `CatID` int unsigned DEFAULT NULL,
@@ -14,6 +16,7 @@ CREATE TABLE `category_editors` (
   CONSTRAINT `category_editors_ibfk_2` FOREIGN KEY (`EditorID`) REFERENCES `users` (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `category_sub_categories`;
 CREATE TABLE `category_sub_categories` (
   `CatID` int unsigned NOT NULL,
   `SubCatID` int unsigned NOT NULL,
@@ -23,6 +26,7 @@ CREATE TABLE `category_sub_categories` (
   CONSTRAINT `category_sub_categories_ibfk_2` FOREIGN KEY (`SubCatID`) REFERENCES `sub_categories` (`SubCatID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `comment`;
 CREATE TABLE `comment` (
   `PaperID` int NOT NULL,
   `Content` text NOT NULL,
@@ -31,6 +35,7 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`PaperID`,`UserID`,`CreatedAt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `papers`;
 CREATE TABLE `papers` (
   `PaperID` int unsigned NOT NULL AUTO_INCREMENT,
   `Avatar` varchar(500) NOT NULL,
@@ -57,6 +62,8 @@ CREATE TABLE `papers` (
   CONSTRAINT `papers_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+DROP TABLE IF EXISTS `reset`;
 CREATE TABLE `reset` (
   `id` int NOT NULL AUTO_INCREMENT,
   `email` varchar(255) NOT NULL,
@@ -66,12 +73,14 @@ CREATE TABLE `reset` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `sub_categories`;
 CREATE TABLE `sub_categories` (
   `SubCatID` int unsigned NOT NULL AUTO_INCREMENT,
   `SubCatName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`SubCatID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
   `TagId` int unsigned NOT NULL AUTO_INCREMENT,
   `TagName` varchar(45) NOT NULL,
@@ -80,6 +89,7 @@ CREATE TABLE `tag` (
   UNIQUE KEY `TagId_UNIQUE` (`TagId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `UserID` int NOT NULL AUTO_INCREMENT,
   `Username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
