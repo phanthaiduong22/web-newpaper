@@ -127,8 +127,16 @@
                      
                 </td>
                 <td>
-                  <a class="btn btn-primary" href="/writer/management/paper/{{PaperID}}"><i class="fa fa-pencil-square-o w-100" aria-hidden="true">Edit</i>
+                  <a class="btn btn-primary" href="/writer/management/paper/{{PaperID}}"><i class="fa fa-pencil-square-o w-100" aria-hidden="true"></i>
 </a>
+                </td>
+                <td>
+                  <form method="POST" action="/writer/management/paper/{{PaperID}}/del">
+                  
+                    <button class="btn btn-danger" type="submit">
+                      <i class="fa fa-trash w-100" aria-hidden="true"></i>
+                    </button>
+                  </form>
                 </td>
                 </tr>
               {{/each}}

@@ -1,6 +1,7 @@
 const db = require("../utils/db");
 const categoryModel = require("./category.model");
 const tagModel = require("../models/tag.model");
+const commentModel = require("../models/comment.model");
 
 module.exports = {
   all() {
@@ -228,6 +229,7 @@ module.exports = {
   },
 
   async del(id) {
+    await commentModel.delByPaperId(id);
     return await db("papers").where("PaperID", id).del();
   },
 

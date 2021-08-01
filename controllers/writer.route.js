@@ -69,6 +69,16 @@ router.get(
   },
 );
 
+router.get("/upload", authUser, authRole("writer"), async function (req, res) {
+  const sub_categories = await categoryModel.getSubCategories();
+
+  res.render("vwWriter/upload", {
+    sub_categories,
+    active: { upload: true, paperManagement: true },
+    empty: sub_categories.length === 0,
+  });
+});
+
 // upload a new post
 router.post("/upload", authUser, authRole("writer"), async function (req, res) {
   const imgFilename = uuidv4() + ".png";
@@ -180,14 +190,15 @@ router.post(
   },
 );
 
-router.get("/upload", authUser, authRole("writer"), async function (req, res) {
-  const sub_categories = await categoryModel.getSubCategories();
-
-  res.render("vwWriter/upload", {
-    sub_categories,
-    active: { upload: true, paperManagement: true },
-    empty: sub_categories.length === 0,
-  });
-});
+router.post(
+  "/management/paper/:id/del",
+  authUser,
+  authRole("admin"),
+  async (req, res) => {
+    const paperId = req.params.id;
+    await paperModel.del(paperId);
+    return res.redirect("/admin/papers");
+  },
+);
 
 module.exports = router;
