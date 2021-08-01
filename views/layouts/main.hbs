@@ -19,13 +19,55 @@
 
     <title>GenZ</title>
     {{{_sections.css}}}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+      <script>
+        
+            $.getJSON("/account/profile/getpremium/time", function (data) {
+              const date = data;
+            
+              // Set the date we're counting down to
+              var countDownDate = (date.GetPremiumAt + date.Time) || 0;
+
+              // Update the count down every 1 second
+              var x = setInterval(function() {
+                // Get today's date and time
+                var now = new Date().getTime();
+                  
+                // Find the distance between now and the count down date
+                var distance = countDownDate - now;
+                  
+                // Time calculations for days, hours, minutes and seconds
+                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                  
+                // Output the result in an element with id="demo"b
+                document.getElementById("demo").innerHTML = "Premium: " + days + "d " + hours + "h "
+                + minutes + "m " + seconds + "s ";
+                  
+                // If the count down is over, write some text 
+                if (distance < 0) {
+                  clearInterval(x);
+                  // update 
+                  $.getJSON("/account/profile/getpremium/time", function(data) {
+                    console.log(data);
+                  });
+                  document.getElementById("demo").innerHTML = "EXPIRED";
+                }
+              }, 1000);
+            });
+          
+    </script>
+
   </head>
   <body class="pb-5">
     <!-- 
       NavBar
     -->
     <nav class="navbar navbar-expand-custom navbar-mainbg pr-2 display-1 mb-3">
-        <a class="navbar-brand navbar-logo" href="#">GenZ</a>
+        <a class="navbar-brand navbar-logo" href="/">GenZ</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <i class="fas fa-bars text-white"></i>
         </button>
@@ -50,6 +92,11 @@
                     </a>
                 </li> 
                 {{!--  --}}
+                   <li class="nav-item {{#if active.tagManagement}}active{{/if}}">
+                      <a class="nav-link" href="/tags">
+                        <i class="fa-lg fa fa-tags" aria-hidden="true"></i> Tags
+                      </a>
+                  </li>
                 {{#if auth}}
                   {{#eq authUser.Role "admin"}}
                   <li class="nav-item {{#if active.adminUser}}active{{/if}}">
@@ -59,22 +106,23 @@
                   </li>
                   <li class="nav-item {{#if active.paperManagement}}active{{/if}}">
                       <a class="nav-link" href="/admin/papers">
-                        <i class="fa-lg fa fa-user" aria-hidden="true"></i> Paper Management
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Paper Management
                       </a>
                   </li>
+                 
                   {{/eq}}
                   
                   {{#eq authUser.Role "editor"}}
                   <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
                       <a class="nav-link" href="/editor/management">
-                        <i class="fa-lg fa fa-user " aria-hidden="true"></i> Editor Management
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editor Management
                       </a>
                   </li>
                   {{/eq}}
                   {{#eq authUser.Role "writer"}}
                   <li class="nav-item {{#if active.writer}}active{{/if}}">
                       <a class="nav-link" href="/writer/management">
-                        <i class="fa-lg fa fa-user " aria-hidden="true"></i> Writer Management
+                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Writer Management
                       </a>
                   </li>
                   <li class="nav-item {{#if active.upload}}active{{/if}}">
@@ -118,8 +166,13 @@
         </div>
 
     </nav>
+    
       {{{body}}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+      <footer class="fixed-bottom text-right text-white">
+        <span id="demo" class="border rounded border-primary bg-primary"></span>
+      </footer>
+      
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"

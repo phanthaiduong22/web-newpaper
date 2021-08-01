@@ -9,14 +9,13 @@ router.get("/", async function (req, res) {
 });
 
 router.post("/", async function (req, res) {
-  let searchList = await paperModel.search(req.body.search);
-  
-  for (let i of searchList) {
-    i.CreatedAt = moment(i).format("Do MMMM YYYY");
-  }
+  const searchList = await paperModel.search(req.body.search);
 
+  for (let i of searchList) {
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
+  }
   res.render("search", {
-    searchList: searchList,
+    searchList,
   });
 });
 

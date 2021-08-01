@@ -4,7 +4,7 @@ const moment = require("moment");
 
 const userModel = require("../models/user.model");
 const resetModel = require("../models/reset.model");
-const { authUser, notAuth, notAdmin } = require("../middlewares/auth.mdw");
+const { authUser, notAuth } = require("../middlewares/auth.mdw");
 
 const sendEmail = require("../utils/sendEmail");
 
@@ -29,8 +29,6 @@ router.post("/profile/dashboard", authUser, async function (req, res) {
     email,
     dob: updatedDob,
   });
-  const user = await userModel.findByEmail(email);
-  req.session.authUser = user;
   res.redirect("/account/profile/dashboard");
 });
 
@@ -94,25 +92,19 @@ router.post("/register", notAuth, async function (req, res) {
 
 router.get("/is-valid-username", async function (req, res) {
   const username = req.query.username;
-
   const user = await userModel.findByUsername(username);
-
   if (user !== null) {
     return res.json(false);
   }
-
   res.json(true);
 });
 
 router.get("/is-valid-email", async function (req, res) {
   const email = req.query.email;
-
   const user = await userModel.findByEmail(email);
-
   if (user !== null) {
     return res.json(false);
   }
-
   res.json(true);
 });
 
@@ -127,14 +119,14 @@ router.post("/login", notAuth, async function (req, res) {
     return res.redirect("/");
   }
   const user = await userModel.findByUsername(req.body.username);
-  if (user === null) {
+  if (!user) {
     return res.render("vwAccount/login", {
       err_message: "No account with that username!",
     });
   }
 
   const ret = bcrypt.compareSync(req.body.password, user.Password);
-  if (ret === false) {
+  if (!ret) {
     return res.render("vwAccount/login", {
       err_message: "Incorrect password!",
     });
@@ -145,16 +137,12 @@ router.post("/login", notAuth, async function (req, res) {
   req.session.authUser = user;
   req.session.admin = user.Username === "admin";
   req.session.writer = user.Role === "writer";
-  const url = req.session.retUrl || "/";
-  res.redirect(url);
+  res.redirect("/");
 });
 
 router.post("/logout", authUser, async function (req, res) {
-  req.session.auth = false;
-  req.session.authUser = undefined;
-  req.session.admin = undefined;
-  const url = req.headers.referer || "/";
-  res.redirect(url);
+  req.session.destroy();
+  res.redirect("/");
 });
 
 router.get("/resetpassword", notAuth, async (req, res) => {
@@ -210,6 +198,41 @@ router.post("/resetpassword/change", notAuth, async (req, res) => {
     return res.redirect("/account/login");
   }
   return res.redirect("/");
+});
+
+router.get("/profile/getpremium", authUser, async (req, res) => {
+  res.render("vwAccount/profile", {
+    getpremium: true,
+    active: { profile: true },
+  });
+});
+
+router.post("/profile/getpremium", authUser, async (req, res) => {
+  const userId = req.session.authUser.UserID;
+
+  const Time = 60 * 60 * 24 * 7 * 1000;
+  await userModel.activePremium(userId, Time);
+  res.redirect("/");
+});
+
+router.post("/profile/extend", authUser, async (req, res) => {
+  const userId = req.session.authUser.UserID;
+  const user = await userModel.findByUserID(userId);
+  const used = new Date().getTime() - user.GetPremiumAt;
+  let { extend } = req.body;
+  extend = extend * 60 * 1000;
+  const Time = used > 0 ? user.Time - used + extend : extend;
+  await userModel.activePremium(userId, Time);
+  res.redirect("/");
+});
+
+router.get("/profile/getpremium/time", authUser, async (req, res) => {
+  const user = await userModel.findByUserID(req.session.authUser.UserID);
+  if (user.GetPremiumAt + user.Time < new Date().getTime()) {
+    userModel.deactivePremium(user.UserID);
+    return res.json({ message: "End of premium." });
+  }
+  return res.json({ GetPremiumAt: user.GetPremiumAt, Time: user.Time });
 });
 
 module.exports = router;

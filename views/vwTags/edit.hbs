@@ -1,53 +1,43 @@
 <div class="card p-5">
-  <h4 class="card-header">
-    Category
-  </h4>
   <div class="card-body">
     <form method="POST">
       <div class="form-group">
-        <label for="txtCatID">
-          Category ID
+        <label for="txtTagId">
+          Tag Id
         </label>
         <input
           type="text"
           readonly
           class="form-control"
-          id="txtCatID"
-          name="CatID"
-          value="{{this.category.CatID}}"
+          id="txtTagId"
+          name="TagId"
+          value="{{this.tag.TagId}}"
         />
       </div>
       <div class="form-group">
-        <label for="txtCatName">
-          Category Name
+        <label for="txtTagName">
+          Tag Name
         </label>
         <input
           type="text"
           class="form-control"
-          id="txtCatName"
-          name="CatName"
+          id="txtTagName"
+          name="TagName"
           required
           autofocus
-          value="{{this.category.CatName}}"
+          value="{{this.tag.TagName}}"
         />
+        <input type="hidden" value="{{this.tag.TagName}}" name="oldTagName" />
       </div>
-      <a class="btn btn-primary" href="/admin/categories/" role="button">
+      <a class="btn btn-primary" href="/tags/" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back to List
       </a>
-      <button
-        type="submit"
-        class="btn btn-success"
-        formaction="/admin/categories/patch"
-      >
+      <button type="submit" class="btn btn-success" formaction="/tags/patch">
         <i class="fa fa-check" aria-hidden="true"></i>
         Save
       </button>
-      <button
-        type="submit"
-        class="btn btn-danger"
-        formaction="/admin/categories/del"
-      >
+      <button type="submit" class="btn btn-danger" formaction="/tags/del">
         <i class="fa fa-trash-o" aria-hidden="true"></i>
         Delete
       </button>

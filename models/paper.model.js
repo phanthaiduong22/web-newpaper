@@ -1,37 +1,55 @@
 const db = require("../utils/db");
 const categoryModel = require("./category.model");
+const tagModel = require("../models/tag.model");
 
 module.exports = {
   all() {
     return db("papers");
   },
-  hotNews(limit) {
-    return db("papers")
+
+  async hotNews(limit) {
+    return await db("papers")
       .select([
         "papers.PaperID",
+        "papers.Abstract",
         "papers.Avatar",
         "papers.Title",
         "papers.Views",
         "papers.CreatedAt",
+        "papers.PublishDate",
+        "papers.Premium",
+        "papers.Status",
         "categories.CatName",
+        "categories.CatID",
+        "sub_categories.SubCatName",
       ])
-      .join("categories", "papers.PaperID", "=", "categories.catID")
-      .orderBy("Views", "desc")
+      .join("categories", "papers.CatID", "=", "categories.catID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
+      .where({ Status: "Published" })
+      .orderBy([{ column: "Views", order: "desc" }])
       .limit(limit);
   },
 
-  latestNews(limit) {
-    return db("papers")
+  async latestNews(limit) {
+    return await db("papers")
       .select([
         "papers.PaperID",
         "papers.Avatar",
         "papers.Title",
+        "papers.Abstract",
         "papers.Views",
         "papers.CreatedAt",
+        "papers.PublishDate",
+        "papers.Premium",
+        "papers.Status",
         "categories.CatName",
+        "categories.CatID",
+        "sub_categories.SubCatName",
       ])
+      .where("Status", "Published")
       .join("categories", "papers.CatID", "=", "categories.CatID")
-      .orderBy("CreatedAt", "desc")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
+      .orderBy("PublishDate", "desc")
       .limit(limit);
   },
 
@@ -54,11 +72,14 @@ module.exports = {
         "papers.PaperID",
         "papers.Title",
         "papers.CreatedAt",
+        "papers.PublishDate",
         "papers.Status",
         "papers.Tags",
+        "papers.Premium",
       ])
-      .where({ CatId: catId })
-      .whereNot({ Status: "Accepted" });
+      .whereRaw(`CatId = ${catId} AND Status = "Draft" OR Status = "Rejected"`);
+    // .where({ CatId: catId })
+    // .whereNot({ Status: "Accepted" });
   },
 
   async writerFindByUserId(userID) {
@@ -67,8 +88,10 @@ module.exports = {
         "papers.PaperID",
         "papers.Title",
         "papers.CreatedAt",
+        "papers.PublishDate",
         "papers.Status",
         "papers.EditorComment",
+        "papers.Premium",
       ])
       .where("UserID", userID);
   },
@@ -86,7 +109,7 @@ module.exports = {
 
     if (dateRelease != "Invalid date") {
       await db("papers").where("PaperID", paperID).update({
-        createdAt: dateRelease,
+        PublishDate: dateRelease,
       });
     }
   },
@@ -98,14 +121,23 @@ module.exports = {
     });
   },
 
-  async findByCatID(catId, offset) {
-    return await db("papers").where("CatID", catId).limit(6).offset(offset);
+  async findByCatID(catId, limit, offset) {
+    return await db("papers")
+      .where({ "papers.CatID": catId, Status: "Published" })
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
+      .orderBy("Premium", "desc")
+      .limit(limit)
+      .offset(offset);
   },
 
-  async findBySubCatID(subCatId, offset) {
+  async findBySubCatID(subCatId, limit, offset) {
     return await db("papers")
-      .where("SubCatID", subCatId)
-      .limit(6)
+      .where({ "papers.SubCatID": subCatId, Status: "Published" })
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
+      .orderBy("Premium", "desc")
+      .limit(limit)
       .offset(offset);
   },
 
@@ -117,12 +149,22 @@ module.exports = {
     return rows[0].total;
   },
 
+  async countByTagId(tagId) {
+    const tag = await tagModel.findTagById(tagId);
+    const pattern = tag.TagName;
+    const rows = await db("papers")
+      .where("Tags", "like", `%${pattern}%`)
+      .count("*", { as: "total" });
+
+    return rows[0].total;
+  },
+
   async add(paper) {
-    await db("papers").insert(paper);
+    return await db("papers").insert(paper);
   },
 
   async update(paperID, paper) {
-    await db("papers").where("PaperID", paperID).update({
+    return await db("papers").where("PaperID", paperID).update({
       Title: paper.Title,
       Abstract: paper.Abstract,
       Content: paper.Content,
@@ -130,6 +172,13 @@ module.exports = {
       SubCatID: paper.SubCatID,
       Tags: paper.Tags,
       Avatar: paper.Avatar,
+    });
+  },
+
+  async publish(paperId) {
+    return await db("papers").where("PaperID", paperId).update({
+      Status: "Published",
+      PublishDate: new Date(),
     });
   },
 
@@ -148,9 +197,9 @@ module.exports = {
   },
 
   async search(query) {
-    //FTS
+    //Full-text search
     const rows = await db.raw(
-      `SELECT * FROM papers WHERE MATCH (Title, Content, Abstract) AGAINST ('${query}')`,
+      `SELECT * FROM papers WHERE MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`,
     );
 
     return rows[0];
@@ -166,11 +215,11 @@ module.exports = {
       .catch((err) => console.log(err));
   },
 
-  patch(paper) {
+  async patch(paper) {
     const id = paper.ProID;
     delete paper.ProID;
 
-    return db("papers").where("PaperID", id).update(paper);
+    return await db("papers").where("PaperID", id).update(paper);
   },
 
   async size() {
@@ -180,5 +229,22 @@ module.exports = {
 
   async del(id) {
     return await db("papers").where("PaperID", id).del();
+  },
+
+  async activePremium(id) {
+    return await db("papers").where("PaperID", id).update("Premium", 1);
+  },
+
+  async findPapersByTagId(tagId, limit, offset) {
+    const tag = await tagModel.findTagById(tagId);
+    const pattern = `"value":"${tag.TagName}"`;
+    return await db("papers")
+      .where("Tags", "like", `%${pattern}%`)
+      .andWhere("Status", "Published")
+      .join("categories", "papers.CatID", "=", "categories.CatID")
+      .join("sub_categories", "papers.SubCatID", "=", "sub_categories.SubCatID")
+      .orderBy("Premium", "desc")
+      .limit(limit)
+      .offset(offset);
   },
 };

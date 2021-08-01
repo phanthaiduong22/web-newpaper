@@ -44,26 +44,26 @@
                   <td class="text-center pl-4">{{@index}}</td>
                   <td class="col-md-6">
                       {{#eq Status "Draft"}}
-                        <h5><a class="font-medium mb-0 text-info" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
+                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
                       {{/eq}}
 
                       {{#eq Status "Rejected"}}
-                        <h5><a class="font-medium mb-0 text-info" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
+                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
                       {{/eq}}
 
                       {{#eq Status "Accepted"}}
-                        <h5 class="text-success">{{Title}}</h5>
+                        <h5><a class="font-medium mb-0" href="">{{Title}}</a></h5>
                       {{/eq}}
                       
                       {{#eq Status "Published"}}
-                        <h5 class="text-primary">{{Title}}</h5>
+                        <h5><a class="font-medium mb-0" href="/papers/details/{{PaperID}}">{{Title}}</a></h5>
                       {{/eq}}
                   </td>
                   <td class="text-center col-md-1">
                     <span class="text-muted">{{Status}}</span><br>
                   </td>
                   <td class="text-center col-md-2">  
-                    <span class="text-muted">{{CreatedAt}}</span><br>
+                    <span class="text-muted">{{PublishDate}}</span><br>
                   </td>
                   <td class="col-md-3"> 
                     <span class="text-muted">{{EditorComment}}</span><br>

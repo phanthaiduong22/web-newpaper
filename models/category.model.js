@@ -78,4 +78,14 @@ module.exports = {
       .select("CatID")
       .where("EditorID", editorId);
   },
+
+  async addSubCat(subCatName, catId) {
+    const subCat = await db("sub_categories").insert({
+      SubCatName: subCatName,
+    });
+    await db("category_sub_categories").insert({
+      CatID: catId,
+      SubCatID: subCat[0],
+    });
+  },
 };

@@ -1,5 +1,40 @@
 {{#section "css"}}
   <link href="/public/css/admin.users.css" rel="stylesheet" type="text/css" />
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+  />
+{{/section}}
+
+{{#section "js"}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+<script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+  ></script>
+<script>
+  const editProfileBtn = document.querySelectorAll("button[name='username']");
+  editProfileBtn.forEach(btn => {
+    const username = btn.innerHTML.trim();
+    btn.addEventListener('click', function(){
+      $.getJSON(`http://localhost:3001/admin/users/${username}`, function (data) {
+        const {Name, Dob, Email, UserID} = data.user;
+        const dob = moment(Dob).format("DD/MM/YYYY");
+        $("#name").val(Name);
+        $("#dob").val(dob);
+        $("#email").val(Email);
+        $("#editProfileUserID").val(UserID);
+      });
+      
+    });
+  })
+  $("#dob").datetimepicker({
+  format: "d/m/Y",
+  timepicker: false,
+  mask: true,
+});
+
+
+</script>
 {{/section}}
 <div class="container-fluid p-5">
   <div class="row">
@@ -13,10 +48,7 @@
             <thead>
               <tr>
                 <th scope="col" class="border-0 font-medium pl-4">#</th>
-                <th scope="col" class="border-0 font-medium">Name</th>
-                <th scope="col" class="border-0 font-medium">Email</th>
-                <th scope="col" class="border-0 text-center font-medium">Username</th>
-                <th scope="col" class="border-0 text-center font-medium">DoB</th>
+                <th scope="col" class="border-0 font-medium">Username</th>
                 <th scope="col" class="border-0 text-center font-medium">Role</th>
                 <th scope="col" class="border-0 text-center font-medium">Specification</th>
                 <th scope="col" class="border-0 text-center font-medium">Update Role</th>
@@ -27,28 +59,19 @@
               {{#each this.users}}
               <tr>
                 <td class="pl-4">{{@index}}</td>
-                <td>
-                    <h5 class="font-medium mb-0">{{Name}}</h5>
+                <td class="col-4">
+                  <button name="username" type="button" class="w-100 font-medium mb-0 btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+                  {{Username}}
+                </button>
+                    
                     {{!-- <span class="text-muted">Texas, Unitedd states</span> --}}
-                </td>
-                <td>
-                    <span class="text-muted">{{Email}}</span><br>
-                    {{!-- <span class="text-muted">Past : teacher</span> --}}
-                </td>
-                <td class="text-center">
-                    <span class="text-muted">{{Username}}</span><br>
-                    {{!-- <span class="text-muted">12: 55 AM</span> --}}
-                </td>
-                <td class="text-center">
-                    <span class="text-muted">{{DateOfBirth}}</span><br>
-                    {{!-- <span class="text-muted">12: 55 AM</span> --}}
-                </td>
+                </td>  
                 <td class="text-center">  
                   <span class="text-muted text-center text-capitalize">{{Role}}</span><br>
                 </td>
                 <td> 
                   {{#eq Role "editor"}}
-                  <form method="POST" class="d-flex justify-content-around align-items-center" action="/admin/users/editor">
+                  <form method="POST" class="d-flex justify-content-center" action="/admin/users/editor">
                     <input type="hidden" name="userID" value="{{UserID}}"/>
                     <select name="category" class="form-control category-select" id="exampleFormControlSelect2">
                       <option selected value={{CatID}}>{{CatName}}</option>
@@ -58,12 +81,12 @@
                         {{/isnt}}
                       {{/each}}
                     </select>
-                    <button type="submit" class="btn btn-outline-info"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="submit" title="update" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form>
                   {{/eq}}
                 </td>
                 <td>
-                  <form method="POST" class="d-flex justify-content-around" action="/admin/users/">
+                  <form method="POST" class="d-flex justify-content-center" action="/admin/users/">
                     <input type="hidden" name="userID" value="{{UserID}}"/>
                     <select name="role" class="form-control category-select" id="exampleFormControlSelect1">
                       <option>...</option>
@@ -72,16 +95,18 @@
                       <option>Premium</option>
                       <option>User</option>
                     </select>
-                    <button type="submit" class="btn btn-outline-info"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
+                    <button type="submit" title="update" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form> 
                 </td>
-                <td><form method="POST" action="/admin/users/del">
+                <td class="col-1"><form method="POST" action="/admin/users/del">
                   <input type="hidden" name="userId" value={{UserID}}>
                   <button
                     type="submit"
                     class="btn btn-danger"
+                    title="Delete account"
                   >
-                    <i class="fa fa-trash-o" aria-hidden="true"></i>
+                  
+                    <i class="fa fa-trash-o w-100" aria-hidden="true"></i>
                     
                   </button>
                 </form></td>
@@ -92,6 +117,74 @@
           </table>
         </div>
       </div>
+    </div>
+  </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Edit Profile</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form method="POST" action="/admin/users/edit">
+      <div class="modal-body">
+        <input id="editProfileUserID" name="userId" type="hidden" value="">
+        <div class="form-group row">
+                  <label for="name" class="col-4 col-form-label">
+                    Name
+                  </label>
+                  <div class="col-8">
+                    <input
+                      id="name"
+                      name="name"
+                      class="form-control here"
+                      value=""
+                      type="text"
+                      required
+                    />
+                  </div>
+      </div>
+       <div class="form-group row">
+                  <label for="email" class="col-4 col-form-label">
+                    Email
+                  </label>
+                  <div class="col-8">
+                    <input
+                      id="email"
+                      name="email"
+                      class="form-control here"
+                      value=""
+                      type="text"
+                      required
+                    />
+                  </div>
+      </div>
+      <div class="form-group row">
+                  <label for="dob" class="col-4 col-form-label">
+                    DoB
+                  </label>
+                  <div class="col-8">
+                    <input
+                      id="dob"
+                      name="dob"
+                      class="form-control here"
+                      value=""
+                      type="text"
+                      required
+                    />
+                  </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary">Save changes</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+
+      </form>
     </div>
   </div>
 </div>

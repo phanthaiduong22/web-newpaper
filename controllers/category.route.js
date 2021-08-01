@@ -1,7 +1,6 @@
 const express = require("express");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 const categoryModel = require("../models/category.model");
-const { route } = require("./editor.route");
 
 const router = express.Router();
 
@@ -16,7 +15,7 @@ router.get("/", authUser, authRole("admin"), async function (req, res) {
 });
 
 router.get("/add", authUser, authRole("admin"), function (req, res) {
-  res.render("vwCategories/add");
+  res.render("vwCategories/add", { active: { categories: true } });
 });
 
 router.post("/add", authUser, authRole("admin"), async function (req, res) {
@@ -36,6 +35,7 @@ router.get("/edit", authUser, authRole("admin"), async function (req, res) {
   }
 
   res.render("vwCategories/edit", {
+    active: { categories: true },
     category,
   });
 });
@@ -49,5 +49,26 @@ router.post("/del", authUser, authRole("admin"), async function (req, res) {
   await categoryModel.del(req.body.CatID);
   res.redirect("/admin/categories");
 });
+
+router.get(
+  "/:id/addSubCategory",
+  authUser,
+  authRole("admin"),
+  async function (req, res) {
+    res.render("vwCategories/addSubCat", { active: { categories: true } });
+  },
+);
+
+router.post(
+  "/:id/addSubCategory",
+  authUser,
+  authRole("admin"),
+  async function (req, res) {
+    const subCatName = req.body.txtSubCatName;
+    const catId = req.params.id;
+    await categoryModel.addSubCat(subCatName, catId);
+    res.redirect("/admin/categories");
+  },
+);
 
 module.exports = router;

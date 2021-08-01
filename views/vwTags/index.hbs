@@ -1,14 +1,12 @@
 <div class="card p-5">
   <h4 class="card-header d-flex justify-content-between">
-    Categories
-    <a
-      class="btn btn-outline-success"
-      href="/admin/categories/add"
-      role="button"
-    >
-      <i class="fa fa-plus" aria-hidden="true"></i>
-      Add Category
-    </a>
+    Tags
+    {{#eq authUser.Role "admin"}}
+      <a class="btn btn-outline-success" href="/tags/add" role="button">
+        <i class="fa fa-plus" aria-hidden="true"></i>
+        Add a tag
+      </a>
+    {{/eq}}
   </h4>
   <div class="card-body">
     {{#if this.empty}}
@@ -23,38 +21,26 @@
               #
             </th>
             <th scope="col">
-              Category
+              Tag
             </th>
-            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
-          {{#each this.categories}}
+          {{#each this.tags}}
             <tr>
               <th class="text-center" scope="row">
                 {{@index}}
               </th>
               <td>
-                <a href="/papers/byCat/{{CatID}}">
-                  {{CatName}}
+                <a href="/tags?id={{TagId}}">
+                  {{TagName}}
                 </a>
               </td>
               <td class="text-right">
+                {{#eq ../authUser.Role "admin"}}
                 <a
                   class="btn btn-primary btn-sm"
-                  href="/admin/categories/{{CatID}}/addSubCategory"
-                  role="button"
-                  title="Add Sub Category"
-                >
-                  <i class="fa fa-plus w-100" aria-hidden="true">
-                    Add Sub Category
-                  </i>
-                </a>
-              </td>
-              <td class="text-right">
-                <a
-                  class="btn btn-primary btn-sm"
-                  href="/admin/categories/edit?id={{CatID}}"
+                  href="/tags/edit?id={{TagId}}"
                   role="button"
                   title="Edit"
                 >
@@ -62,6 +48,7 @@
                     Edit
                   </i>
                 </a>
+                {{/eq}}
               </td>
             </tr>
           {{/each}}

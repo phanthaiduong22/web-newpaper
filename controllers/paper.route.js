@@ -1,7 +1,13 @@
+const fs = require("fs");
+const path = require("path");
 const express = require("express");
+
+const commentModel = require("../models/comment.model");
 const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
 const moment = require("moment");
+const puppeteer = require("puppeteer");
+const { authUser, authPremium } = require("../middlewares/auth.mdw");
 
 const router = express.Router();
 
@@ -15,7 +21,7 @@ router.get("/byCat/:id", async function (req, res) {
     }
   }
 
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
 
@@ -32,7 +38,7 @@ router.get("/byCat/:id", async function (req, res) {
   }
 
   const offset = (page - 1) * limit;
-  const list = await paperModel.findByCatID(catId, offset);
+  const list = await paperModel.findByCatID(catId, limit, offset);
   const raw_data = await categoryModel.allWithDetails();
   const categories = raw_data[0];
   const subcategories = await categoryModel.getSubCategories();
@@ -48,6 +54,10 @@ router.get("/byCat/:id", async function (req, res) {
         categories[i].SubCategory.push(obj);
       }
     }
+  }
+
+  for (let i of list) {
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
   }
 
   res.render("vwPapers/byCat", {
@@ -64,30 +74,47 @@ router.get("/byCat/:id", async function (req, res) {
 
 router.get("/details/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
+  const paper = await paperModel.findById(paperId);
+  if (!paper) res.redirect("/");
 
-  let paper = await paperModel.findById(paperId);
-  let relatedNews = await paperModel.findByCatID(paper.CatID);
+  if (paper.Premium) {
+    if (!req.session.authUser || !req.session.authUser.Premium) {
+      return res.render("vwPapers/details", {
+        err_message: "This paper is premium!",
+      });
+    }
+  }
+  const relatedNews = await paperModel.findByCatID(paper.CatID);
 
   paperModel.increaseView(paperId, paper.Views);
   paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
-  for(i = 0;i<relatedNews.length; i++){
-    relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format("Do MMMM YYYY");
+  paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
+  for (i = 0; i < relatedNews.length; i++) {
+    relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format(
+      "Do MMMM YYYY",
+    );
+    relatedNews[i].PublishDate = moment(relatedNews[i].PublishDate).format(
+      "Do MMMM YYYY",
+    );
   }
 
-  if (paper === null) {
-    return res.redirect("/");
+  const comments = await commentModel.findAllCommentByPaperId(paperId);
+  for (i = 0; i < comments.length; i++) {
+    comments[i].CreatedAt = moment(comments[i].CreatedAt).format(
+      "Do MMMM YYYY",
+    );
   }
-
   res.render("vwPapers/details", {
-    paper: paper,
+    paper,
     relatedNews,
+    comments,
   });
 });
 
 router.get("/bySubCat/:subcatid", async function (req, res) {
   const subCatId = +req.params.subcatid || 0;
   const cat = await categoryModel.getCatbySubCatID(subCatId);
-  const limit = 6;
+  const limit = 3;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
   const total = await paperModel.countByCatID(cat[0].CatID);
@@ -103,7 +130,7 @@ router.get("/bySubCat/:subcatid", async function (req, res) {
   }
 
   const offset = (page - 1) * limit;
-  const list = await paperModel.findBySubCatID(subCatId, offset);
+  const list = await paperModel.findBySubCatID(subCatId, limit, offset);
   const raw_data = await categoryModel.allWithDetails();
   const categories = raw_data[0];
   const subcategories = await categoryModel.getSubCategories();
@@ -121,6 +148,10 @@ router.get("/bySubCat/:subcatid", async function (req, res) {
     }
   }
 
+  for (let i of list) {
+    i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
+  }
+
   res.render("vwPapers/byCat", {
     papers: list,
     categories: categories,
@@ -133,19 +164,61 @@ router.get("/bySubCat/:subcatid", async function (req, res) {
   });
 });
 
-router.get("/details/:id", async function (req, res) {
+router.get(
+  "/details/:id/premium",
+  authUser,
+  authPremium,
+  async function (req, res) {
+    const paperId = +req.params.id || 0;
+    let paper = await paperModel.findById(paperId);
+    if (!paper) {
+      return res.redirect("/");
+    }
+
+    paperModel.increaseView(paperId, paper.Views);
+    paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
+
+    res.render("vwPapers/premium", { paper });
+  },
+);
+
+router.get(
+  "/details/:id/download",
+  authUser,
+  authPremium,
+  async function (req, res) {
+    const paperId = +req.params.id || 0;
+    const browser = await puppeteer.launch();
+
+    const url = `http://localhost:3001/papers/details/${paperId}/premium`;
+    const page = await browser.newPage();
+    await page.setCookie({
+      name: "connect.sid",
+      value: req.cookies["connect.sid"],
+      url,
+    });
+
+    const filePath = path.join(__dirname, "..", `pdf/test-${paperId}.pdf`);
+    await page.goto(url, { waitUntil: "networkidle2" });
+    await page.pdf({ path: filePath, format: "a4" });
+    await browser.close();
+
+    res.download(filePath);
+  },
+);
+
+router.post("/details/:id/comment", authUser, async function (req, res) {
+  const { content } = req.body;
+  const userId = req.session.authUser.UserID;
   const paperId = +req.params.id || 0;
-
-  let paper = await paperModel.findById(paperId);
-  paperModel.increaseView(paperId, paper.Views);
-  paper.CreatedAt = moment(paper.CreatedAt).format("Do MMMM YYYY");
-  if (paper === null) {
-    return res.redirect("/");
-  }
-
-  res.render("vwPapers/details", {
-    paper: paper,
-  });
+  const comment = {
+    PaperID: paperId,
+    UserID: userId,
+    Content: content,
+    CreatedAt: new Date(),
+  };
+  await commentModel.addComment(comment);
+  res.redirect(`/papers/details/${paperId}`);
 });
 
 module.exports = router;
