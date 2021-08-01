@@ -127,17 +127,26 @@
                      
                 </td>
                 <td>
-                  <a class="btn btn-primary" href="/writer/management/paper/{{PaperID}}"><i class="fa fa-pencil-square-o w-100" aria-hidden="true"></i>
-</a>
+                  <div class="dropdown">
+                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                     <i class="fa fa-cog" aria-hidden="true"></i>
+
+                    </a>
+
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <a class="dropdown-item" href="/writer/management/paper/{{PaperID}}">Edit</a>
+                      <form class="dropdown-item" method="POST" action="/writer/management/paper/{{PaperID}}/del">
+                        <button class="btn btn-danger" type="submit">
+                          Delete
+
+                        </button>
+                        </form>
+                     
+                    </div>
+                  </div>
                 </td>
-                <td>
-                  <form method="POST" action="/writer/management/paper/{{PaperID}}/del">
-                  
-                    <button class="btn btn-danger" type="submit">
-                      <i class="fa fa-trash w-100" aria-hidden="true"></i>
-                    </button>
-                  </form>
-                </td>
+                
+                
                 </tr>
               {{/each}}
               
