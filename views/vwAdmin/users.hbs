@@ -16,7 +16,7 @@
   editProfileBtn.forEach(btn => {
     const username = btn.innerHTML.trim();
     btn.addEventListener('click', function(){
-      $.getJSON(`http://localhost:3001/admin/users/${username}`, function (data) {
+      $.getJSON(`/admin/users/${username}`, function (data) {
         const {Name, Dob, Email, UserID} = data.user;
         const dob = moment(Dob).format("DD/MM/YYYY");
         $("#name").val(Name);
