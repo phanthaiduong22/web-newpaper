@@ -71,7 +71,7 @@ router.post("/patch", authUser, authRole("admin"), async (req, res) => {
 });
 
 router.post("/del", authUser, authRole("admin"), async (req, res) => {
-  await tagModel.del(req.body.TagId);
+  await tagModel.del(req.body);
   res.redirect("/tags");
 });
 
