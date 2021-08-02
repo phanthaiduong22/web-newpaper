@@ -18,7 +18,7 @@
     for(let tag of tags) {
       tag.addEventListener('click', (e) => {
         const tagName = tag.innerHTML;
-        const url = "http://localhost:3001/tags?name=" + encodeURIComponent(`${tagName}`);
+        const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
         window.location.href = url;
       })
     }

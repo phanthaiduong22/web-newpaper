@@ -21,7 +21,7 @@
       tag.addEventListener('click', (e) => {
         e.preventDefault();
         const tagName = tag.innerHTML;
-        const url = "http://localhost:3001/tags?name=" + encodeURIComponent(`${tagName}`);
+        const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
         window.location.href = url;
       })
     }

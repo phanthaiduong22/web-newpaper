@@ -1,3 +1,4 @@
+require("dotenv").config();
 const fs = require("fs");
 const path = require("path");
 const express = require("express");
@@ -8,6 +9,8 @@ const categoryModel = require("../models/category.model");
 const moment = require("moment");
 const puppeteer = require("puppeteer");
 const { authUser, authPremium } = require("../middlewares/auth.mdw");
+
+const DOMAIN = process.env.DOMAIN;
 
 const router = express.Router();
 
@@ -188,9 +191,9 @@ router.get(
   authPremium,
   async function (req, res) {
     const paperId = +req.params.id || 0;
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({});
 
-    const url = `http://localhost:3001/papers/details/${paperId}/premium`;
+    const url = `http://${DOMAIN}/papers/details/${paperId}/premium`;
     const page = await browser.newPage();
     await page.setCookie({
       name: "connect.sid",
