@@ -52,33 +52,6 @@ CREATE TABLE `comment` (
   PRIMARY KEY (`PaperID`,`UserID`,`CreatedAt`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `papers`;
-CREATE TABLE `papers` (
-  `PaperID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Avatar` varchar(500) NOT NULL,
-  `Title` varchar(500) NOT NULL,
-  `CatID` int unsigned NOT NULL,
-  `SubCatID` int unsigned NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `Abstract` varchar(500) NOT NULL,
-  `Content` text NOT NULL,
-  `Tags` varchar(500) NOT NULL,
-  `Views` int NOT NULL DEFAULT '0',
-  `Status` varchar(500) NOT NULL DEFAULT 'Draft',
-  `UserID` int NOT NULL,
-  `EditorComment` varchar(500) DEFAULT NULL,
-  `PublishDate` timestamp NULL DEFAULT NULL,
-  `Premium` tinyint DEFAULT '0',
-  PRIMARY KEY (`PaperID`),
-  KEY `CatID` (`CatID`),
-  KEY `SubCatID` (`SubCatID`),
-  KEY `UserID` (`UserID`),
-  FULLTEXT KEY `Title` (`Title`,`Abstract`,`Content`),
-  CONSTRAINT `papers_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `categories` (`CatID`),
-  CONSTRAINT `papers_ibfk_2` FOREIGN KEY (`SubCatID`) REFERENCES `sub_categories` (`SubCatID`),
-  CONSTRAINT `papers_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
 
 DROP TABLE IF EXISTS `reset`;
 CREATE TABLE `reset` (
@@ -106,4 +79,57 @@ CREATE TABLE `tag` (
   UNIQUE KEY `TagId_UNIQUE` (`TagId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- UPDATE users SET role = 'admin' where Username='admin';
+DROP TABLE IF EXISTS `papers`;
+CREATE TABLE `papers` (
+  `PaperID` int unsigned NOT NULL AUTO_INCREMENT,
+  `Avatar` varchar(500) NOT NULL,
+  `Title` varchar(500) NOT NULL,
+  `CatID` int unsigned NOT NULL,
+  `SubCatID` int unsigned NOT NULL,
+  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `Abstract` varchar(500) NOT NULL,
+  `Content` text NOT NULL,
+  `Tags` varchar(500) NOT NULL,
+  `Views` int NOT NULL DEFAULT '0',
+  `Status` varchar(500) NOT NULL DEFAULT 'Draft',
+  `UserID` int NOT NULL,
+  `EditorComment` varchar(500) DEFAULT NULL,
+  `PublishDate` timestamp NULL DEFAULT NULL,
+  `Premium` tinyint DEFAULT '0',
+  PRIMARY KEY (`PaperID`),
+  KEY `CatID` (`CatID`),
+  KEY `SubCatID` (`SubCatID`),
+  KEY `UserID` (`UserID`),
+  FULLTEXT KEY `Title` (`Title`,`Abstract`,`Content`),
+  CONSTRAINT `papers_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `categories` (`CatID`),
+  CONSTRAINT `papers_ibfk_2` FOREIGN KEY (`SubCatID`) REFERENCES `sub_categories` (`SubCatID`),
+  CONSTRAINT `papers_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+ BEGIN;
+  INSERT INTO `categories` VALUES (1, 'Mobile');
+  INSERT INTO `categories` VALUES (2, 'TinICT');
+  INSERT INTO `categories` VALUES (3, 'Internet');
+  INSERT INTO `categories` VALUES (4, 'Explore');
+ COMMIT;
+
+ BEGIN;
+  INSERT INTO `sub_categories` VALUES (1, 'Iphone');
+  INSERT INTO `sub_categories` VALUES (2, 'Android');
+  INSERT INTO `sub_categories` VALUES (3, 'Machine Learning');
+  INSERT INTO `sub_categories` VALUES (4, 'Networking');
+  INSERT INTO `sub_categories` VALUES (5, 'Google');
+  INSERT INTO `sub_categories` VALUES (6, 'Knowledge');
+ COMMIT;
+
+ BEGIN;
+  INSERT INTO `category_sub_categories` VALUES (1, 1);
+  INSERT INTO `category_sub_categories` VALUES (1, 2);
+  INSERT INTO `category_sub_categories` VALUES (2, 3);
+  INSERT INTO `category_sub_categories` VALUES (3, 4);
+  INSERT INTO `category_sub_categories` VALUES (3, 5);
+  INSERT INTO `category_sub_categories` VALUES (4, 6);
+ COMMIT;
+
+
+-- UPDATE users SET role = 'admin' where Username='admin'
