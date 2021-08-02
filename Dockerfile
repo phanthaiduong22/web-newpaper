@@ -34,15 +34,14 @@ WORKDIR /app
 >>>>>>> 8090df3... fix down pdf
 
 
-# WORKDIR /app
+WORKDIR /app
 
-# COPY /package.json .
+COPY /package.json .
 
-# RUN yarn install
+RUN yarn install
 
-# COPY . .
+COPY . .
 
-# EXPOSE 3001
+EXPOSE 3001
 
-# CMD [ "yarn", "start" ]
-CMD [ "sleep", "30000"]
+CMD [ "yarn", "start" ]
