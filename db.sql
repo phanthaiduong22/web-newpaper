@@ -106,4 +106,4 @@ CREATE TABLE `tag` (
   UNIQUE KEY `TagId_UNIQUE` (`TagId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
--- UPDATE users SET role = 'admin' where Username='admin'
+-- UPDATE users SET role = 'admin' where Username='admin';

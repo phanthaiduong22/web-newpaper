@@ -1,0 +1,9 @@
+1    [user]
+   1   name = Duong Phan
+   2   email = phanthaiduong2000@gmail.com
+   3   # name =  Dat Tran
+   4   # email = doodal.jin@gmail.com
+   5   # name = tieubaovi0217
+   6   # email = nguyenvitieubao0217@gmail.com
+   7 [url "git@github.com:"]
+   8   insteadOf = https://github.com/
