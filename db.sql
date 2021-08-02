@@ -33,6 +33,13 @@ CREATE TABLE `category_editors` (
   CONSTRAINT `category_editors_ibfk_2` FOREIGN KEY (`EditorID`) REFERENCES `users` (`UserID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+DROP TABLE IF EXISTS `sub_categories`;
+CREATE TABLE `sub_categories` (
+  `SubCatID` int unsigned NOT NULL AUTO_INCREMENT,
+  `SubCatName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`SubCatID`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 DROP TABLE IF EXISTS `category_sub_categories`;
 CREATE TABLE `category_sub_categories` (
   `CatID` int unsigned NOT NULL,
@@ -63,12 +70,7 @@ CREATE TABLE `reset` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=76 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `sub_categories`;
-CREATE TABLE `sub_categories` (
-  `SubCatID` int unsigned NOT NULL AUTO_INCREMENT,
-  `SubCatName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`SubCatID`)
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
 
 DROP TABLE IF EXISTS `tag`;
 CREATE TABLE `tag` (
