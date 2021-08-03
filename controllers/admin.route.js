@@ -41,7 +41,7 @@ router.post(
     await userModel.updateEditorCategory(userID, catID);
 
     res.redirect("/admin/users");
-  },
+  }
 );
 
 router.get("/papers", authUser, authRole("admin"), async (req, res) => {
@@ -49,7 +49,7 @@ router.get("/papers", authUser, authRole("admin"), async (req, res) => {
   for (let i = 0; i < papers.length; i += 1) {
     if (papers[i].PublishDate !== null)
       papers[i].PublishDate = moment(papers[i].PublishDate).format(
-        "Do MMMM YYYY",
+        "Do MMMM YYYY"
       );
   }
   res.render("vwAdmin/papers", { papers, active: { paperManagement: true } });
@@ -85,7 +85,7 @@ router.post(
     return res.render("vwAdmin/papers", {
       err_message: "Please wait until " + publishDate,
     });
-  },
+  }
 );
 
 router.get(
@@ -100,7 +100,7 @@ router.get(
     } else {
       return res.json({ message: "User not found!" });
     }
-  },
+  }
 );
 
 router.post("/users/edit", authUser, authRole("admin"), async (req, res) => {
@@ -121,7 +121,7 @@ router.post(
     const paperId = req.params.id;
     await paperModel.activePremium(paperId);
     res.redirect("/admin/papers");
-  },
+  }
 );
 
 module.exports = router;

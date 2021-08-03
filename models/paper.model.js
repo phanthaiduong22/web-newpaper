@@ -2,6 +2,8 @@ const db = require("../utils/db");
 const categoryModel = require("./category.model");
 const tagModel = require("../models/tag.model");
 const commentModel = require("../models/comment.model");
+const { formText } = require("pdfkit");
+const moment = require("moment");
 
 module.exports = {
   all() {
@@ -100,19 +102,18 @@ module.exports = {
   async editorAcceptPaper(paperID, dateRelease, subCatID, tags, editorComment) {
     const cat = await categoryModel.getCatbySubCatID(subCatID);
 
+    if (dateRelease == "Invalid date") {
+      dateRelease = moment(new Date()).format("YYYY-MM-DD");
+    }
+
     await db("papers").where("PaperID", paperID).update({
       CatID: cat.CatID,
       SubCatID: subCatID,
       Tags: tags,
       Status: "Accepted",
       EditorComment: editorComment,
+      PublishDate: dateRelease,
     });
-
-    if (dateRelease != "Invalid date") {
-      return await db("papers").where("PaperID", paperID).update({
-        PublishDate: dateRelease,
-      });
-    }
   },
 
   async editorRejectPaper(paperID, editorComment) {
@@ -200,7 +201,7 @@ module.exports = {
         "sub_categories",
         "papers.SubCatID",
         "=",
-        "sub_categories.SubCatID",
+        "sub_categories.SubCatID"
       );
     if (rows.length === 0) return null;
     return rows[0];
@@ -209,7 +210,7 @@ module.exports = {
   async search(query) {
     //Full-text search
     const rows = await db.raw(
-      `SELECT * FROM papers WHERE Status = "Published" AND MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`,
+      `SELECT * FROM papers WHERE Status = "Published" AND MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`
     );
 
     return rows[0];

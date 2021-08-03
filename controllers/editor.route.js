@@ -5,6 +5,7 @@ const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
 const tagModel = require("../models/tag.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
+const { invalid } = require("moment");
 
 // const fs = require("fs");
 
@@ -27,7 +28,7 @@ router.get(
       papers: papers,
       active: { editorManagement: true },
     });
-  },
+  }
 );
 
 router.get(
@@ -56,7 +57,7 @@ router.get(
       paper,
       sub_categories,
     });
-  },
+  }
 );
 
 router.post(
@@ -74,12 +75,9 @@ router.post(
       let dateRelease;
       if (raw_dob) {
         dateRelease = moment(raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
-      } else {
-        dateRelease = moment(new Date()).format("YYYY-MM-DD");
       }
 
       const t = JSON.parse(req.body.tags);
-      console.log(t);
       for (let i = 0; i < t.length; i += 1) {
         try {
           await tagModel.addTag({ TagName: t[i].value });
@@ -93,7 +91,7 @@ router.post(
         dateRelease,
         sub_categories,
         tags,
-        editorComment,
+        editorComment
       );
     } else if (reject) {
       await paperModel.editorRejectPaper(paperId, editorComment);
@@ -101,7 +99,7 @@ router.post(
     if (req.session.authUser.Role === "admin")
       return res.redirect("/admin/papers");
     res.redirect("/editor/management");
-  },
+  }
 );
 
 module.exports = router;
