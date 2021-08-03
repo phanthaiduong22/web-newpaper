@@ -78,7 +78,7 @@ router.get("/byCat/:id", async function (req, res) {
 router.get("/details/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
   const paper = await paperModel.findById(paperId);
-  if (!paper) res.redirect("/");
+  if (!paper) return res.redirect("/");
 
   if (paper.Premium) {
     if (!req.session.authUser || !req.session.authUser.Premium) {
@@ -94,17 +94,17 @@ router.get("/details/:id", async function (req, res) {
   paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
   for (i = 0; i < relatedNews.length; i++) {
     relatedNews[i].CreatedAt = moment(relatedNews[i].CreatedAt).format(
-      "Do MMMM YYYY"
+      "Do MMMM YYYY",
     );
     relatedNews[i].PublishDate = moment(relatedNews[i].PublishDate).format(
-      "Do MMMM YYYY"
+      "Do MMMM YYYY",
     );
   }
 
   const comments = await commentModel.findAllCommentByPaperId(paperId);
   for (i = 0; i < comments.length; i++) {
     comments[i].CreatedAt = moment(comments[i].CreatedAt).format(
-      "Do MMMM YYYY"
+      "Do MMMM YYYY",
     );
   }
   res.render("vwPapers/details", {
@@ -182,7 +182,7 @@ router.get(
     paper.PublishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
 
     res.render("vwPapers/premium", { paper });
-  }
+  },
 );
 
 router.get(
@@ -211,7 +211,7 @@ router.get(
     await browser.close();
 
     res.download(filePath);
-  }
+  },
 );
 
 router.post("/details/:id/comment", authUser, async function (req, res) {
