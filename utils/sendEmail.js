@@ -2,12 +2,15 @@ const resetModel = require("../models/reset.model");
 const nodemailer = require("nodemailer");
 
 // async..await is not allowed in global scope, must use a wrapper
+const GMAILPASSWORD = process.env.GMAILPASSWORD;
+const GMAILEMAIL = process.env.GMAILEMAIL;
+
 const sendEmail = async (email, data) => {
   let transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "nguyenvitieubao021700@gmail.com",
-      pass: "Bao0949478619",
+      user: GMAILEMAIL,
+      pass: GMAILPASSWORD,
     },
   });
   const info = {
