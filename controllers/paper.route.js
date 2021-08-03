@@ -197,6 +197,7 @@ router.get(
 
     const url = `http://${DOMAIN}/papers/details/${paperId}/premium`;
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0);
     await page.setCookie({
       name: "connect.sid",
       value: req.cookies["connect.sid"],
