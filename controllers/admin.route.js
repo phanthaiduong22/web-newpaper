@@ -21,12 +21,15 @@ router.get("/users", authUser, authRole("admin"), async function (req, res) {
 
 // authUser, authRole("admin")
 router.post("/users", authUser, authRole("admin"), async function (req, res) {
-  let role = req.body.role.toLowerCase();
-  let userID = req.body.userID;
+  const role = req.body.role.toLowerCase();
+  const userID = req.body.userID;
 
   await userModel.updateUserRole(userID, role);
-  if (req.session.authUser.Role !== "user")
+  if (role !== "user") {
     await userModel.activePremium(userID, 60 * 60 * 24 * 365 * 1000);
+  } else {
+    await userModel.activePremium(userID, 0);
+  }
   res.redirect("/admin/users");
 });
 
@@ -41,7 +44,7 @@ router.post(
     await userModel.updateEditorCategory(userID, catID);
 
     res.redirect("/admin/users");
-  }
+  },
 );
 
 router.get("/papers", authUser, authRole("admin"), async (req, res) => {
@@ -49,7 +52,7 @@ router.get("/papers", authUser, authRole("admin"), async (req, res) => {
   for (let i = 0; i < papers.length; i += 1) {
     if (papers[i].PublishDate !== null)
       papers[i].PublishDate = moment(papers[i].PublishDate).format(
-        "Do MMMM YYYY"
+        "Do MMMM YYYY",
       );
   }
   res.render("vwAdmin/papers", { papers, active: { paperManagement: true } });
@@ -69,9 +72,7 @@ router.post(
     const paperId = req.params.id;
     const paper = await paperModel.findById(paperId);
     if (paper.Status === "Published" || paper.Status === "Rejected")
-      return res.render("vwAdmin/papers", {
-        err_message: "This paper has been published or rejected",
-      });
+      return res.redirect("/admin/papers");
 
     if (
       paper.Status === "Draft" ||
@@ -85,7 +86,7 @@ router.post(
     return res.render("vwAdmin/papers", {
       err_message: "Please wait until " + publishDate,
     });
-  }
+  },
 );
 
 router.get(
@@ -100,7 +101,7 @@ router.get(
     } else {
       return res.json({ message: "User not found!" });
     }
-  }
+  },
 );
 
 router.post("/users/edit", authUser, authRole("admin"), async (req, res) => {
@@ -121,7 +122,7 @@ router.post(
     const paperId = req.params.id;
     await paperModel.activePremium(paperId);
     res.redirect("/admin/papers");
-  }
+  },
 );
 
 module.exports = router;
