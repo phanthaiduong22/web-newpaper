@@ -1,10 +1,18 @@
-function authUser(req, res, next) {
+const userModel = require("../models/user.model");
+
+const authUser = async (req, res, next) => {
+  if (req.session.authUser) {
+    const result = await userModel.findByUserID(req.session.authUser.UserID);
+    if (!result) {
+      return res.redirect("/");
+    }
+  }
   if (req.session.auth === false) {
     req.session.retUrl = req.originalUrl;
     return res.redirect("/account/login");
   }
   next();
-}
+};
 
 function authRole(role) {
   return (req, res, next) => {
