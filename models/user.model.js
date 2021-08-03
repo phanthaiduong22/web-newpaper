@@ -83,6 +83,7 @@ module.exports = {
 
   async del(id) {
     await db("category_editors").where("EditorID", id).del();
+    await db("comment").where("UserID", id).del();
     return await db("users").where("UserID", id).del();
   },
 

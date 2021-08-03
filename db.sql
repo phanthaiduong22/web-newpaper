@@ -105,7 +105,6 @@ CREATE TABLE `papers` (
   FULLTEXT KEY `Title` (`Title`,`Abstract`,`Content`),
   CONSTRAINT `papers_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `categories` (`CatID`),
   CONSTRAINT `papers_ibfk_2` FOREIGN KEY (`SubCatID`) REFERENCES `sub_categories` (`SubCatID`),
-  CONSTRAINT `papers_ibfk_3` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
  BEGIN;
