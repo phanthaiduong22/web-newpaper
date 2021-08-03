@@ -71,7 +71,12 @@ router.post(
     const { accept, reject, editorComment } = req.body;
     if (accept) {
       let { raw_dob, sub_categories, tags } = req.body;
-      const dateRelease = moment(raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+      let dateRelease;
+      if (raw_dob) {
+        dateRelease = moment(raw_dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+      } else {
+        dateRelease = moment(new Date()).format("YYYY-MM-DD");
+      }
 
       const t = JSON.parse(req.body.tags);
       console.log(t);
