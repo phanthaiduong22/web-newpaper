@@ -117,6 +117,8 @@ router.get("/details/:id", async function (req, res) {
 router.get("/bySubCat/:subcatid", async function (req, res) {
   const subCatId = +req.params.subcatid || 0;
   const cat = await categoryModel.getCatbySubCatID(subCatId);
+  if (!cat) return res.redirect("/");
+
   const limit = 3;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
