@@ -24,19 +24,22 @@ router.get("/profile/dashboard", authUser, function (req, res) {
 });
 
 router.post("/profile/dashboard", authUser, async function (req, res) {
-  const { name, email, dob } = req.body;
+  const { dob } = req.body;
+  const updatedName = req.body.name;
+  const updatedEmail = req.body.email;
   const updatedDob = moment(dob, "DD/MM/YYYY").format("YYYY-MM-DD");
-
-  const user = await userModel.findByEmail(email);
-  if (user !== null) {
-    const err_message = decodeURIComponent("This email is used.");
-    return res.redirect(
-      `/account/profile/dashboard?err_message=${err_message}`,
-    );
+  if (updatedEmail !== req.session.authUser.Email) {
+    const user = await userModel.findByEmail(updatedEmail);
+    if (user !== null) {
+      const err_message = decodeURIComponent("This email is used.");
+      return res.redirect(
+        `/account/profile/dashboard?err_message=${err_message}`,
+      );
+    }
   }
   await userModel.updateProfile(req.session.authUser.UserID, {
-    name,
-    email,
+    name: updatedName,
+    email: updatedEmail,
     dob: updatedDob,
   });
 
@@ -187,7 +190,7 @@ router.post("/resetpassword", notAuth, async (req, res) => {
   const email = req.body.email;
   const user = await userModel.findByEmail(email);
 
-  if (user.length === 0) {
+  if (user === null) {
     return res.render("vwAccount/resetpassword", {
       err_message: "There no account with that email.",
     });
