@@ -35,12 +35,12 @@ router.get(
   authUser,
   authRole("editor"),
   async function (req, res) {
-    const editorId = req.session.authUser.UserID;
+    const editorId = +req.session.authUser.UserID;
     const paperId = +req.params.id || 0;
     const paper = await paperModel.findById(paperId);
     const catIdOfEditor = await categoryModel.findCatByEditorId(editorId);
 
-    if (paper === null || paper.CatID !== catIdOfEditor.CatID) {
+    if (paper === null || paper.CatID !== catIdOfEditor[0].CatID) {
       return res.redirect("/editor/management");
     }
     if (paper.Status === "Published") return res.redirect("/editor/management");
@@ -70,10 +70,12 @@ router.post(
   authUser,
   authRole("editor"),
   async function (req, res) {
+    const editorId = +req.session.authUser.UserID;
     const paperId = +req.params.id || 0;
     const paper = await paperModel.findById(paperId);
     const catIdOfEditor = await categoryModel.findCatByEditorId(editorId);
-    if (paper === null || paper.CatID !== catIdOfEditor.CatID) {
+
+    if (paper === null || paper.CatID !== catIdOfEditor[0].CatID) {
       return res.redirect("/editor/management");
     }
     if (paper.Status === "Published" && req.session.authUser.Role !== "admin")
