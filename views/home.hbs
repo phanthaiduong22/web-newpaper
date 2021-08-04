@@ -36,14 +36,7 @@
                 class="d-block w-100"
                 alt="..."
               />
-              <div class="carousel-caption d-none d-md-block">
-                <h5>
-                  First slide label
-                </h5>
-                <p>
-                  Some representative placeholder content for the first slide.
-                </p>
-              </div>
+              <div class="carousel-caption d-none d-md-block"></div>
             </div>
           {{/each}}
           {{!  }}
@@ -263,19 +256,21 @@
           </a>
         </div>
         <div class="row">
-          <a class="text-decoration-none" href="/papers/details/{{PaperID}}">
-            <h5 class="card-title text-dark zoom">
-              {{Title}}
-              {{#if Premium}}
-                <div class="badge">
-                  <i
-                    class="fa fa-2x fa-star text-primary"
-                    aria-hidden="true"
-                  ></i>
-                </div>
-              {{/if}}
-            </h5>
-          </a>
+          <h5 class="card-title text-dark zoom">
+            <a
+              class="text-dark text-decoration-none"
+              href="/papers/details/{{PaperID}}"
+            >
+              <b>
+                {{Title}}
+              </b>
+            </a>
+            {{#if Premium}}
+              <div class="badge">
+                <i class="fa fa-2x fa-star text-primary" aria-hidden="true"></i>
+              </div>
+            {{/if}}
+          </h5>
         </div>
         <div class="row">
           <p class="text-muted">

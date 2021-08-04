@@ -162,8 +162,8 @@ router.get("/resetpassword", notAuth, async (req, res) => {
 });
 
 router.get("/otp", notAuth, async (req, res) => {
-  const { success_message, email } = req.query;
-  res.render("vwAccount/otp", { success_message, email });
+  const { success_message, email, err_message } = req.query;
+  res.render("vwAccount/otp", { success_message, email, err_message });
 });
 
 router.post("/otp/verify", notAuth, async (req, res) => {
@@ -181,9 +181,7 @@ router.post("/otp/verify", notAuth, async (req, res) => {
     );
   }
   const err_message = decodeURIComponent("OTP was not match or expired.");
-  res.redirect(
-    `/account/resetpassword?email=${email}&err_message=${err_message}`,
-  );
+  res.redirect(`/account/otp?email=${email}&err_message=${err_message}`);
 });
 
 router.post("/resetpassword", notAuth, async (req, res) => {
