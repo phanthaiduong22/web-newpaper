@@ -165,7 +165,7 @@
           <div class="mt-2 row">
             <form method="POST" action="/account/profile/extend">
               <label class="text-primary" for="time">Extend Premimum in (minutes): </label>
-              <input type="number" id="time" name="extend" max="525600">
+              <input type="number" id="time" name="extend" min="0" max="525600">
               <button class="btn btn-success">Submit</button>
             </form>
           </div>
