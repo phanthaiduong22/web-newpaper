@@ -78,7 +78,7 @@ router.get("/byCat/:id", async function (req, res) {
 router.get("/details/:id", async function (req, res) {
   const paperId = +req.params.id || 0;
   const paper = await paperModel.findById(paperId);
-  if (!paper) return res.redirect("/");
+  if (paper === null) return res.redirect("/");
 
   if (paper.Premium) {
     if (!req.session.authUser || !req.session.authUser.Premium) {
@@ -117,7 +117,7 @@ router.get("/details/:id", async function (req, res) {
 router.get("/bySubCat/:subcatid", async function (req, res) {
   const subCatId = +req.params.subcatid || 0;
   const cat = await categoryModel.getCatbySubCatID(subCatId);
-  if (!cat) return res.redirect("/");
+  if (cat === null) return res.redirect("/");
 
   const limit = 3;
   const page = req.query.page || 1;
@@ -206,8 +206,9 @@ router.get(
       url,
     });
 
+    const filename = `pdf/paper-${paperId}.pdf`;
     // const filePath = path.join(__dirname, "..", `pdf/test-16.pdf`);
-    const filePath = path.join(__dirname, "..", `pdf/test-${paperId}.pdf`);
+    const filePath = path.join(__dirname, "..", filename);
     await page.goto(url, { waitUntil: "networkidle2" });
     await page.pdf({ path: filePath, format: "a4" });
     await browser.close();

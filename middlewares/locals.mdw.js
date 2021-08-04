@@ -3,8 +3,10 @@ const userModel = require("../models/user.model");
 
 module.exports = function (app) {
   app.use(async function (req, res, next) {
-    if (req.session.authUser) {
-      if (req.session.authUser.UserID) {
+    if (req.session.auth === undefined) req.session.auth = false;
+
+    if (req.session.auth === true) {
+      if (req.session.authUser) {
         const result = await userModel.findByUserID(
           req.session.authUser.UserID,
         );
@@ -12,22 +14,14 @@ module.exports = function (app) {
           req.session.destroy();
           return res.redirect("/");
         }
+        req.session.authUser = result;
       }
     }
-    if (req.session.auth === undefined) {
-      req.session.auth = false;
-    }
-    if (req.session.auth === true) {
-      if (req.session.authUser.UserID)
-        req.session.authUser = await userModel.findByUserID(
-          req.session.authUser.UserID,
-        );
+
+    for (const key of Object.keys(req.session)) {
+      res.locals[key] = req.session[key];
     }
 
-    res.locals.auth = req.session.auth;
-    res.locals.authUser = req.session.authUser;
-    res.locals.admin = req.session.admin;
-    res.locals.writer = req.session.writer;
     next();
   });
 

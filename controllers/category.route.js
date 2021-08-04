@@ -31,23 +31,26 @@ router.get("/", authUser, authRole("admin"), async function (req, res) {
 });
 
 router.get("/add", authUser, authRole("admin"), function (req, res) {
-  res.render("vwCategories/add", { active: { categories: true } });
+  const err_message = req.query.err_message;
+  res.render("vwCategories/add", { err_message, active: { categories: true } });
 });
 
 router.post("/add", authUser, authRole("admin"), async function (req, res) {
   const new_category = {
     CatName: req.body.txtCatName,
   };
-
-  const result = await categoryModel.add(new_category);
-  if (!result)
-    return res.render("vwCategories/add", {
-      err_message: "This category is used.",
-    });
-  res.redirect("/admin/categories");
+  try {
+    const result = await categoryModel.add(new_category);
+    res.redirect("/admin/categories");
+  } catch (err) {
+    const err_message = encodeURIComponent("This category name is used.");
+    return res.redirect(`/admin/categories/add?err_message=${err_message}`);
+  }
 });
 
 router.get("/edit", authUser, authRole("admin"), async function (req, res) {
+  const err_message = req.query.err_message;
+  console.log(err_message);
   const id = req.query.id || 0;
   const category = await categoryModel.findById(id);
   if (category === null) {
@@ -57,23 +60,44 @@ router.get("/edit", authUser, authRole("admin"), async function (req, res) {
   res.render("vwCategories/edit", {
     active: { categories: true },
     category,
+    err_message,
   });
 });
 
 router.post("/patch", authUser, authRole("admin"), async function (req, res) {
-  await categoryModel.patch(req.body);
-  res.redirect("/admin/categories");
+  const catId = +req.body.CatID;
+  try {
+    await categoryModel.patch(req.body);
+    res.redirect("/admin/categories");
+  } catch (err) {
+    const err_message = encodeURIComponent("This category name is used.");
+    return res.redirect(
+      `/admin/categories/edit?id=${catId}&err_message=${err_message}`,
+    );
+  }
 });
 
 router.post("/del", authUser, authRole("admin"), async function (req, res) {
-  const catId = req.body.CatID;
+  const catId = +req.body.CatID;
   const total = await paperModel.countByCatID(catId);
   if (total > 0) {
-    return res.render("vwCategories/edit", {
-      err_message: `Please delete all papers of this category before delete.`,
-    });
+    const err_message = encodeURIComponent(
+      "Please delete all papers of this category before delete.",
+    );
+    return res.redirect(
+      `/admin/categories/edit?id=${catId}&err_message=${err_message}`,
+    );
   }
-  await categoryModel.del(req.body.CatID);
+  const editors = await categoryModel.findEditorsByCatId(catId);
+  if (editors.length > 0) {
+    const err_message = encodeURIComponent(
+      "There are some editors responsible for this category, please change specification before delete.",
+    );
+    return res.redirect(
+      `/admin/categories/edit?id=${catId}&err_message=${err_message}`,
+    );
+  }
+  await categoryModel.del(catId);
   res.redirect("/admin/categories");
 });
 
@@ -82,7 +106,11 @@ router.get(
   authUser,
   authRole("admin"),
   async function (req, res) {
-    res.render("vwCategories/addSubCat", { active: { categories: true } });
+    const err_message = req.query.err_message;
+    res.render("vwCategories/addSubCat", {
+      err_message,
+      active: { categories: true },
+    });
   },
 );
 
@@ -90,17 +118,20 @@ router.post(
   "/:id/addSubCategory",
   authUser,
   authRole("admin"),
-  async function (req, res) {
+  async function (req, res, next) {
     const subCatName = req.body.SubCatName;
-    const catId = req.params.id;
+    const catId = +req.params.id;
 
-    const result = await categoryModel.addSubCat(subCatName, catId);
-    if (!result)
-      return res.render("vwCategories/addSubCat", {
-        err_message: "This sub category is used.",
-      });
+    try {
+      const result = await categoryModel.addSubCat(subCatName, catId);
 
-    res.redirect(`/admin/categories/${catId}/subCategories`);
+      res.redirect(`/admin/categories/${catId}/subCategories`);
+    } catch (err) {
+      const err_message = encodeURIComponent("This Sub Cat name is used.");
+      res.redirect(
+        `/admin/categories/${catId}/addSubCategory?err_message=${err_message}`,
+      );
+    }
   },
 );
 
@@ -109,7 +140,7 @@ router.get(
   authUser,
   authRole("admin"),
   async (req, res) => {
-    const catId = req.params.id;
+    const catId = +req.params.id;
     const subCategories = await categoryModel.getSubCategoriesByCatId(catId);
     res.render("vwCategories/editSubCat", { subCategories });
   },
@@ -122,7 +153,8 @@ router.post(
   async (req, res) => {
     const catId = +req.params.id;
     const subCatId = +req.params.subCatId;
-    await categoryModel.patchSubCat(subCatId, req.body.SubCatName);
+    const subCatName = req.body.SubCatName;
+    await categoryModel.patchSubCat(subCatId, subCatName);
     res.redirect(`/admin/categories/${catId}/subCategories`);
   },
 );
@@ -136,8 +168,10 @@ router.post(
     const subCatId = +req.params.subCatId;
     const subCatName = req.body.SubCatName;
     const total = await paperModel.countBySubCatID(subCatId);
+    const subCategories = await categoryModel.getSubCategoriesByCatId(catId);
     if (total > 0) {
       return res.render("vwCategories/editSubCat", {
+        subCategories,
         err_message: `Please delete all papers of sub category: ${subCatName} before delete this sub category`,
       });
     }

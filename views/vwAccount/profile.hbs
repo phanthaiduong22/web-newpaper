@@ -24,9 +24,13 @@
     $("#dob").val(dob);
   </script>
 {{/section}}
+
 <div class="container mt-5">
+   
   <div class="row">
+    
     <div class="col-md-3">
+      
       <div class="list-group">
        
         <a
@@ -44,8 +48,24 @@
       </div>
     </div>
     {{#if dashboard}}
+    
     <div class="col-md-9">
       <div class="card">
+        {{#if err_message}}
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+      <button
+        type="button"
+        class="close"
+        data-dismiss="alert"
+        aria-label="Close"
+      >
+        <span aria-hidden="true">
+          ×
+        </span>
+      </button>
+      {{err_message}}
+    </div>
+  {{/if}} 
         <div class="card-body">
           <div class="row">
             <div class="col-md-12">

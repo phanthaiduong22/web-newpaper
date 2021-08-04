@@ -5,7 +5,6 @@ const paperModel = require("../models/paper.model");
 const categoryModel = require("../models/category.model");
 const tagModel = require("../models/tag.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
-const { invalid } = require("moment");
 
 // const fs = require("fs");
 
@@ -28,7 +27,7 @@ router.get(
       papers: papers,
       active: { editorManagement: true },
     });
-  }
+  },
 );
 
 router.get(
@@ -36,8 +35,14 @@ router.get(
   authUser,
   authRole("editor"),
   async function (req, res) {
+    const editorId = req.session.authUser.UserID;
     const paperId = +req.params.id || 0;
     const paper = await paperModel.findById(paperId);
+    const catIdOfEditor = await categoryModel.findCatByEditorId(editorId);
+
+    if (paper === null || paper.CatID !== catIdOfEditor.CatID) {
+      return res.redirect("/editor/management");
+    }
     if (paper.Status === "Published") return res.redirect("/editor/management");
 
     if (paper.PublishDate)
@@ -57,7 +62,7 @@ router.get(
       paper,
       sub_categories,
     });
-  }
+  },
 );
 
 router.post(
@@ -67,6 +72,10 @@ router.post(
   async function (req, res) {
     const paperId = +req.params.id || 0;
     const paper = await paperModel.findById(paperId);
+    const catIdOfEditor = await categoryModel.findCatByEditorId(editorId);
+    if (paper === null || paper.CatID !== catIdOfEditor.CatID) {
+      return res.redirect("/editor/management");
+    }
     if (paper.Status === "Published" && req.session.authUser.Role !== "admin")
       return res.redirect("/editor/management");
     const { accept, reject, editorComment } = req.body;
@@ -91,7 +100,7 @@ router.post(
         dateRelease,
         sub_categories,
         tags,
-        editorComment
+        editorComment,
       );
     } else if (reject) {
       await paperModel.editorRejectPaper(paperId, editorComment);
@@ -99,7 +108,7 @@ router.post(
     if (req.session.authUser.Role === "admin")
       return res.redirect("/admin/papers");
     res.redirect("/editor/management");
-  }
+  },
 );
 
 module.exports = router;

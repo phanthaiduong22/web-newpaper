@@ -75,8 +75,6 @@ module.exports = {
   },
 
   async add(category) {
-    const result = await db("categories").where("CatName", category.CatName);
-    if (result.length > 0) return null;
     return await db("categories").insert(category);
   },
 
@@ -122,14 +120,17 @@ module.exports = {
   },
 
   async addSubCat(subCatName, catId) {
-    const sub = await db("sub_categories").where("SubCatName", subCatName);
-    if (sub.length > 0) return null;
     const subCat = await db("sub_categories").insert({
       SubCatName: subCatName,
     });
+
     return await db("category_sub_categories").insert({
       CatID: catId,
       SubCatID: subCat[0],
     });
+  },
+
+  async findEditorsByCatId(catId) {
+    return await db("category_editors").where("CatID", catId);
   },
 };

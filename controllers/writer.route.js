@@ -20,6 +20,7 @@ router.get(
   authUser,
   authRole("writer"),
   async function (req, res) {
+    const { err_message } = req.query;
     const userId = req.session.authUser.UserID;
     const papers = await paperModel.writerFindByUserId(userId);
     for (i = 0; i < papers.length; i++) {
@@ -29,6 +30,7 @@ router.get(
         );
     }
     res.render("vwWriter/management", {
+      err_message,
       papers: papers,
       active: { writer: true },
     });
@@ -40,14 +42,24 @@ router.get(
   authUser,
   authRole("writer"),
   async function (req, res) {
+    const { err_message } = req.query;
     const paperId = +req.params.id || 0;
 
     const paper = await paperModel.findById(paperId);
+    if (paper === null) {
+      return res.redirect("/404");
+    }
+    console.log(paper);
     if (
       (paper.Status === "Accepted" || paper.Status === "Published") &&
       req.session.authUser.Role !== "admin"
-    )
-      return res.redirect(`/writer/management/`);
+    ) {
+      console.log("here");
+      const err_message = decodeURIComponent(
+        "This paper is published or accepted.",
+      );
+      return res.redirect(`/writer/management?err_message=${err_message}`);
+    }
     paper.CreatedAt = moment(paper.CreatedAt).format("L");
     const sub_categories = await categoryModel.getSubCategories();
 
@@ -57,11 +69,8 @@ router.get(
       }
     }
 
-    if (paper === null) {
-      return res.redirect("/");
-    }
-
     res.render("vwWriter/managementPaperId", {
+      err_message,
       paper: paper,
       sub_categories,
       active: { paperManagement: true },
@@ -71,8 +80,9 @@ router.get(
 
 router.get("/upload", authUser, authRole("writer"), async function (req, res) {
   const sub_categories = await categoryModel.getSubCategories();
-
+  const { err_message } = req.query;
   res.render("vwWriter/upload", {
+    err_message,
     sub_categories,
     active: { upload: true, paperManagement: true },
     empty: sub_categories.length === 0,
@@ -99,6 +109,12 @@ router.post("/upload", authUser, authRole("writer"), async function (req, res) {
       console.log(err);
     } else {
       const Cat = await categoryModel.getCatbySubCatID(req.body.sub_categories);
+      if (Cat.length === 0) {
+        const err_message = decodeURIComponent(
+          "This SubCategory has been deleted.",
+        );
+        return res.redirect(`/writer/upload?err_message=${err_message}`);
+      }
       const newPaper = {
         Title: req.body.title,
         Abstract: req.body.abstract,
@@ -164,6 +180,14 @@ router.post(
           req.body.sub_categories,
         );
 
+        if (Cat.length === 0) {
+          const err_message = decodeURIComponent(
+            "This SubCategory has been deleted.",
+          );
+          return res.redirect(
+            `/writer/management/paper/${paperId}?err_message=${err_message}`,
+          );
+        }
         const updatedPaper = {
           Title: req.body.title,
           Abstract: req.body.abstract,

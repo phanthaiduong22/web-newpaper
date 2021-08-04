@@ -55,18 +55,13 @@ module.exports = {
     });
   },
 
-  async updateUserRole(userID, role) {
-    return await db("users")
-      .where("UserID", userID)
-      .update({
-        Role: role,
-      })
-      .then(() => {
-        return 1;
-      })
-      .catch(() => {
-        return 0;
-      });
+  async updateUserRole(userID, oldRole, updatedRole) {
+    if (oldRole === "editor") {
+      await db("category_editors").where("EditorID", userID).del();
+    }
+    return await db("users").where("UserID", userID).update({
+      Role: updatedRole,
+    });
   },
   async updateEditorCategory(userID, catID) {
     return await db

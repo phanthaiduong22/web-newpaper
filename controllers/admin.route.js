@@ -19,16 +19,16 @@ router.get("/users", authUser, authRole("admin"), async function (req, res) {
   });
 });
 
-// authUser, authRole("admin")
 router.post("/users", authUser, authRole("admin"), async function (req, res) {
-  const role = req.body.role.toLowerCase();
-  const userID = req.body.userID;
-
-  await userModel.updateUserRole(userID, role);
-  if (role !== "user") {
-    await userModel.activePremium(userID, 60 * 60 * 24 * 365 * 1000);
+  const userId = req.body.userID;
+  const user = await userModel.findByUserID(userId);
+  const oldRole = user.Role.toLowerCase();
+  const updatedRole = req.body.role.toLowerCase();
+  await userModel.updateUserRole(userId, oldRole, updatedRole);
+  if (updatedRole !== "user") {
+    await userModel.activePremium(userId, 60 * 60 * 24 * 365 * 1000);
   } else {
-    await userModel.activePremium(userID, 0);
+    await userModel.activePremium(userId, 0);
   }
   res.redirect("/admin/users");
 });
@@ -38,16 +38,15 @@ router.post(
   authUser,
   authRole("admin"),
   async function (req, res) {
-    let userID = req.body.userID;
-    let catID = req.body.category;
-
+    const userID = req.body.userID;
+    const catID = req.body.category;
     await userModel.updateEditorCategory(userID, catID);
-
     res.redirect("/admin/users");
   },
 );
 
 router.get("/papers", authUser, authRole("admin"), async (req, res) => {
+  const { err_message } = req.query;
   const papers = await paperModel.all();
   for (let i = 0; i < papers.length; i += 1) {
     if (papers[i].PublishDate !== null)
@@ -55,11 +54,15 @@ router.get("/papers", authUser, authRole("admin"), async (req, res) => {
         "Do MMMM YYYY",
       );
   }
-  res.render("vwAdmin/papers", { papers, active: { paperManagement: true } });
+  res.render("vwAdmin/papers", {
+    err_message,
+    papers,
+    active: { paperManagement: true },
+  });
 });
 
 router.post("/users/del", authUser, authRole("admin"), async (req, res) => {
-  const userId = req.body.userId;
+  const { userId } = req.body;
   await userModel.del(userId);
   res.redirect("/admin/users");
 });
@@ -68,11 +71,15 @@ router.post(
   "/papers/publish/:id",
   authUser,
   authRole("admin"),
-  async (req, res) => {
-    const paperId = req.params.id;
+  async (req, res, next) => {
+    const paperId = +req.params.id;
     const paper = await paperModel.findById(paperId);
-    if (paper.Status === "Published" || paper.Status === "Rejected")
-      return res.redirect("/admin/papers");
+    if (paper.Status === "Published" || paper.Status === "Rejected") {
+      const err_message = encodeURIComponent(
+        "This paper has been published or rejected.",
+      );
+      return res.redirect(`/admin/papers?err_message=${err_message}`);
+    }
 
     if (
       paper.Status === "Draft" ||
@@ -83,9 +90,8 @@ router.post(
       return res.redirect("/admin/papers");
     }
     const publishDate = moment(paper.PublishDate).format("Do MMMM YYYY");
-    return res.render("vwAdmin/papers", {
-      err_message: "Please wait until " + publishDate,
-    });
+    const err_message = encodeURIComponent("Please wait until " + publishDate);
+    return res.redirect(`/admin/papers?err_message=${err_message}`);
   },
 );
 
@@ -124,5 +130,9 @@ router.post(
     res.redirect("/admin/papers");
   },
 );
+
+router.get("/block", authUser, authRole("admin"), (req, res) => {
+  res.render("vwAdmin/block");
+});
 
 module.exports = router;

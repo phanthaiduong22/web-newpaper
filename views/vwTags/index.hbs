@@ -42,20 +42,43 @@
               <td>
                 {{count}}
               </td>    
-              <td class="text-right">
                 {{#eq ../authUser.Role "admin"}}
+              <td class="text-right">
                 <a
                   class="btn btn-primary btn-sm"
                   href="/tags/edit?id={{TagId}}"
                   role="button"
                   title="Edit"
                 >
-                  <i class="fa fa-pencil w-100" aria-hidden="true">
-                    Edit
+                  <i class="fa fa-pencil fa-2x w-100" aria-hidden="true">
                   </i>
                 </a>
-                {{/eq}}
+              </td><td>
+                <form method="POST">
+                  <input
+                    type="hidden"
+                    readonly
+                    class="form-control"
+                    id="txtTagId"
+                    name="TagId"
+                    value="{{TagId}}"
+                  />
+                  <input
+                    type="hidden"
+                    class="form-control"
+                    id="txtTagName"
+                    name="oldTagName"
+                    required
+                    autofocus
+                    value="{{TagName}}"
+                  />
+                  <button type="submit" class="btn btn-danger" formaction="/tags/del">
+                    <i class="fa fa-trash w-100" aria-hidden="true"></i>
+
+                  </button>
+                </form>
               </td>
+                {{/eq}}
               
             </tr>
           {{/each}}

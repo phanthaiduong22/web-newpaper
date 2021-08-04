@@ -11,11 +11,13 @@ const sendEmail = require("../utils/sendEmail");
 const router = express.Router();
 
 router.get("/profile", authUser, function (req, res) {
-  res.redirect("profile/dashboard");
+  res.redirect("/account/profile/dashboard");
 });
 
 router.get("/profile/dashboard", authUser, function (req, res) {
+  const { err_message } = req.query;
   res.render("vwAccount/profile", {
+    err_message,
     dashboard: true,
     active: { profile: true },
   });
@@ -24,11 +26,20 @@ router.get("/profile/dashboard", authUser, function (req, res) {
 router.post("/profile/dashboard", authUser, async function (req, res) {
   const { name, email, dob } = req.body;
   const updatedDob = moment(dob, "DD/MM/YYYY").format("YYYY-MM-DD");
+
+  const user = await userModel.findByEmail(email);
+  if (user !== null) {
+    const err_message = decodeURIComponent("This email is used.");
+    return res.redirect(
+      `/account/profile/dashboard?err_message=${err_message}`,
+    );
+  }
   await userModel.updateProfile(req.session.authUser.UserID, {
     name,
     email,
     dob: updatedDob,
   });
+
   res.redirect("/account/profile/dashboard");
 });
 
@@ -43,18 +54,18 @@ router.get("/profile/changepassword", authUser, function (req, res) {
 
 router.post("/profile/changepassword", authUser, async function (req, res) {
   const { oldPassword, newPassword, confirmPassword } = req.body;
-  const user = await userModel.findByEmail(req.session.authUser.Email);
+  const user = await userModel.findByUserID(req.session.authUser.UserID);
   const ret = bcrypt.compareSync(oldPassword, user.Password);
   if (ret === false) {
     return res.render("vwAccount/profile", {
-      changePassword: true,
+      changepassword: true,
       active: { profile: true },
       err_message: "Incorrect old password!",
     });
   }
   if (newPassword !== confirmPassword) {
     return res.render("vwAccount/profile", {
-      changePassword: true,
+      changepassword: true,
       active: { profile: true },
       err_message: "Password have to match!",
     });
@@ -91,7 +102,7 @@ router.post("/register", notAuth, async function (req, res) {
 });
 
 router.get("/is-valid-username", async function (req, res) {
-  const username = req.query.username;
+  const { username } = req.query;
   const user = await userModel.findByUsername(username);
   if (user !== null) {
     return res.json(false);
@@ -100,7 +111,7 @@ router.get("/is-valid-username", async function (req, res) {
 });
 
 router.get("/is-valid-email", async function (req, res) {
-  const email = req.query.email;
+  const { email } = req.query;
   const user = await userModel.findByEmail(email);
   if (user !== null) {
     return res.json(false);
@@ -115,9 +126,6 @@ router.get("/login", notAuth, async function (req, res) {
 });
 
 router.post("/login", notAuth, async function (req, res) {
-  if (req.session.auth === true) {
-    return res.redirect("/");
-  }
   const user = await userModel.findByUsername(req.body.username);
   if (!user) {
     return res.render("vwAccount/login", {
@@ -146,11 +154,13 @@ router.post("/logout", authUser, async function (req, res) {
 });
 
 router.get("/resetpassword", notAuth, async (req, res) => {
-  res.render("vwAccount/resetpassword");
+  const { email, otp, edit } = req.query;
+  res.render("vwAccount/resetpassword", { email, otp, edit });
 });
 
 router.get("/otp", notAuth, async (req, res) => {
-  res.render("vwAccount/otp");
+  const { success_message, email } = req.query;
+  res.render("vwAccount/otp", { success_message, email });
 });
 
 router.post("/otp/verify", notAuth, async (req, res) => {
@@ -163,18 +173,21 @@ router.post("/otp/verify", notAuth, async (req, res) => {
     email === reset.email &&
     timeNow - reset.created_at <= reset.expiresin * 1000
   ) {
-    return res.render("vwAccount/resetpassword", { email, otp, edit: true });
+    return res.redirect(
+      `/account/resetpassword?edit=true&email=${email}&otp=${otp}`,
+    );
   }
-  res.render("vwAccount/otp", {
-    email,
-    err_message: "OTP was not match or expired.",
-  });
+  const err_message = decodeURIComponent("OTP was not match or expired.");
+  res.redirect(
+    `/account/resetpassword?email=${email}&err_message=${err_message}`,
+  );
 });
 
 router.post("/resetpassword", notAuth, async (req, res) => {
   const email = req.body.email;
   const user = await userModel.findByEmail(email);
-  if (!user) {
+
+  if (user.length === 0) {
     return res.render("vwAccount/resetpassword", {
       err_message: "There no account with that email.",
     });
@@ -182,10 +195,11 @@ router.post("/resetpassword", notAuth, async (req, res) => {
 
   const otp = Math.floor(Math.random() * 900000) + 100000;
   await sendEmail(email, { otp, expiresIn: 60 * 60 * 3 });
-  res.render("vwAccount/otp", {
-    email,
-    success_message: `An OTP 6-digit code has been sent to ${email}, please check...`,
-  });
+
+  const success_message = `An OTP 6-digit code has been sent to ${email}, please check...`;
+  return res.redirect(
+    `/account/otp?email=${email}&success_message=${success_message}`,
+  );
 });
 
 router.post("/resetpassword/change", notAuth, async (req, res) => {
