@@ -17,5 +17,5 @@ services:
     command: bash -c 'while !</dev/tcp/db/3306; do sleep 2; done; yarn start'
     ports:
       - "3001:3001"
-    # volumes:
-    #   - ./:/app
+    volumes:
+      - ./public/imgs:/app/public/imgs
