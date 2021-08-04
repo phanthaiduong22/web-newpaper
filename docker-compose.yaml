@@ -1,25 +1,25 @@
 version: "3.9"
 services:
-  db:
-    image: mysql
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=123456
-      - MYSQL_USER=bietdoibancuoi
-      - MYSQL_PASSWORD=bietdoibancuoi
-      - MYSQL_DATABASE=newspapers
-    cap_add:
-      - SYS_NICE # CAP_SYS_NICE
-    volumes: 
-      - data:/var/lib/mysql
-  web:
-    depends_on:
-      - db
-    build: .
-    command: bash -c 'while !</dev/tcp/db/3306; do sleep 2; done; yarn start'
-    ports:
-      - "3001:3001"
-    volumes:
-      - imgs:/app/public/imgs
+	db:
+		image: mysql
+		restart: always
+		environment:
+			- MYSQL_ROOT_PASSWORD=123456
+			- MYSQL_USER=bietdoibancuoi
+			- MYSQL_PASSWORD=bietdoibancuoi
+			- MYSQL_DATABASE=newspapers
+		cap_add:
+			- SYS_NICE # CAP_SYS_NICE
+		volumes: 
+			- data:/var/lib/mysql
+	web:
+		depends_on:
+			- db
+		build: .
+		command: bash -c 'while !</dev/tcp/db/3306; do sleep 2; done; yarn start'
+		ports:
+			- "3001:3001"
+		volumes:
+			- imgs:/app/public/imgs
 volumes:
 	data-volume:
