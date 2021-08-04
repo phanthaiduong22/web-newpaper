@@ -105,3 +105,33 @@ CREATE TABLE `tag` (
   UNIQUE KEY `TagId_UNIQUE` (`TagId`)
 ) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+
+
+ BEGIN;
+  INSERT INTO `categories` VALUES (1, 'Mobile');
+  INSERT INTO `categories` VALUES (2, 'TinICT');
+  INSERT INTO `categories` VALUES (3, 'Internet');
+  INSERT INTO `categories` VALUES (4, 'Explore');
+ COMMIT;
+
+ BEGIN;
+  INSERT INTO `sub_categories` VALUES (1, 'Iphone');
+  INSERT INTO `sub_categories` VALUES (2, 'Android');
+  INSERT INTO `sub_categories` VALUES (3, 'Machine Learning');
+  INSERT INTO `sub_categories` VALUES (4, 'Networking');
+  INSERT INTO `sub_categories` VALUES (5, 'Google');
+  INSERT INTO `sub_categories` VALUES (6, 'Knowledge');
+ COMMIT;
+
+ BEGIN;
+  INSERT INTO `category_sub_categories` VALUES (1, 1);
+  INSERT INTO `category_sub_categories` VALUES (1, 2);
+  INSERT INTO `category_sub_categories` VALUES (2, 3);
+  INSERT INTO `category_sub_categories` VALUES (3, 4);
+  INSERT INTO `category_sub_categories` VALUES (3, 5);
+  INSERT INTO `category_sub_categories` VALUES (4, 6);
+ COMMIT;
+
+
+
+-- UPDATE users SET role = 'admin' where Username='admin'

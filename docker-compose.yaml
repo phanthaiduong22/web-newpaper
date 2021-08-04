@@ -18,4 +18,4 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - .public/imgs:./public/imgs
+      - ./:/app
