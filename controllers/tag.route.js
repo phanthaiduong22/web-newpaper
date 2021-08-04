@@ -15,12 +15,15 @@ router.get("/", async (req, res) => {
 
 router.get("/find/:id", async (req, res) => {
   let tagId = +req.params.id;
-
   const page = +req.query.page || 1;
   if (page < 1) page = 1;
-
   const limit = 3;
+  const tag = await tagModel.findTagById(tagId);
+  if (!tag) {
+    return res.redirect("/tags");
+  }
   const total = await paperModel.countByTagId(tagId);
+
   let nPages = Math.floor(total / limit);
   if (total % limit > 0) nPages++;
 

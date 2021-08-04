@@ -201,7 +201,7 @@ module.exports = {
         "sub_categories",
         "papers.SubCatID",
         "=",
-        "sub_categories.SubCatID"
+        "sub_categories.SubCatID",
       );
     if (rows.length === 0) return null;
     return rows[0];
@@ -210,7 +210,7 @@ module.exports = {
   async search(query) {
     //Full-text search
     const rows = await db.raw(
-      `SELECT * FROM papers WHERE Status = "Published" AND MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`
+      `SELECT * FROM papers WHERE Status = "Published" AND MATCH (Title, Content, Abstract) AGAINST ('${query}') ORDER BY Premium DESC`,
     );
 
     return rows[0];
