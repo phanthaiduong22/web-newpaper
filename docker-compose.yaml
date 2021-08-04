@@ -9,7 +9,7 @@ services:
       - MYSQL_PASSWORD=bietdoibancuoi
       - MYSQL_DATABASE=newspapers
     cap_add:
-      - SYS_NICE  # CAP_SYS_NICE
+      - SYS_NICE # CAP_SYS_NICE
   web:
     depends_on:
       - db
@@ -18,4 +18,4 @@ services:
     ports:
       - "3001:3001"
     volumes:
-      - .:/code
+      - .public/imgs:./public/imgs
