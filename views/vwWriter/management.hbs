@@ -56,7 +56,7 @@
               {{#each this.papers}}
               
                 <tr>
-                  <td class="text-center pl-4">{{@index}}</td>
+                  <td class="text-center pl-4">{{sum @index 1}}</td>
                   <td class="col-md-6">
                       {{#eq Status "Draft"}}
                         <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>

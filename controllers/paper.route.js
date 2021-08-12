@@ -24,7 +24,7 @@ router.get("/byCat/:id", async function (req, res) {
     }
   }
   const limit = 3;
-  const page = req.query.page || 1;
+  const page = +req.query.page || 1;
   if (page < 1) page = 1;
 
   const total = await paperModel.countByCatID(catId);
@@ -61,12 +61,13 @@ router.get("/byCat/:id", async function (req, res) {
   for (let i of list) {
     i.PublishDate = moment(i.PublishDate).format("Do MMMM YYYY");
   }
-
   res.render("vwPapers/byCat", {
     papers: list,
     categories: categories,
     empty: list.length === 0,
     page_numbers,
+    previous_page: page > 1 ? page - 1 : undefined,
+    next_page: page < page_numbers.length ? page + 1 : undefined,
     layout: "categories.hbs",
     active: { categories: true },
     CatActive: catId,
