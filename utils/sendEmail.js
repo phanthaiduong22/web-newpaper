@@ -1,5 +1,5 @@
-const resetModel = require("../models/reset.model");
-const nodemailer = require("nodemailer");
+const resetModel = require('../models/reset.model');
+const nodemailer = require('nodemailer');
 
 // async..await is not allowed in global scope, must use a wrapper
 const GMAILPASSWORD = process.env.GMAILPASSWORD;
@@ -7,7 +7,7 @@ const GMAILEMAIL = process.env.GMAILEMAIL;
 
 const sendEmail = async (email, data) => {
   let transporter = nodemailer.createTransport({
-    service: "gmail",
+    service: 'gmail',
     auth: {
       user: GMAILEMAIL,
       pass: GMAILPASSWORD,
@@ -21,7 +21,7 @@ const sendEmail = async (email, data) => {
   };
   await resetModel.add(info);
 
-  let text = "";
+  let text = '';
   text += `<h2>Reset Your Password</h2>
   To change your password, please use the following One Time Password (OTP):
   <h2>${data.otp}</h2>
@@ -32,9 +32,9 @@ const sendEmail = async (email, data) => {
   We hope to see you again soon.`;
 
   let mailOptions = {
-    from: "nguyenvitieubao021700@gmail.com",
+    from: 'nguyenvitieubao021700@gmail.com',
     to: email,
-    subject: "Bietdoibancuoi - Reset Password",
+    subject: 'Bietdoibancuoi - Reset Password',
     html: text,
   };
 

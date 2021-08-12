@@ -1,54 +1,54 @@
-const db = require("../utils/db");
+const db = require('../utils/db');
 
 module.exports = {
   async all() {
-    return await db("users");
+    return await db('users');
   },
 
   async allWithSpecific() {
-    return await db("category_editors")
-      .select("*")
-      .rightJoin("users", "users.UserID", "=", "category_editors.EditorID")
+    return await db('category_editors')
+      .select('*')
+      .rightJoin('users', 'users.UserID', '=', 'category_editors.EditorID')
       .leftJoin(
-        "categories",
-        "categories.CatID",
-        "=",
-        "category_editors.CatID",
+        'categories',
+        'categories.CatID',
+        '=',
+        'category_editors.CatID',
       );
   },
 
   async add(user) {
-    return await db("users").insert(user);
+    return await db('users').insert(user);
   },
   async findByUserID(id) {
-    const rows = await db("users").where("UserID", id);
+    const rows = await db('users').where('UserID', id);
     if (rows.length === 0) return null;
 
     return rows[0];
   },
 
   async findByUsername(username) {
-    const rows = await db("users").where("Username", username);
+    const rows = await db('users').where('Username', username);
     if (rows.length === 0) return null;
 
     return rows[0];
   },
 
   async findByEmail(email) {
-    const rows = await db("users").where("Email", email);
+    const rows = await db('users').where('Email', email);
     if (rows.length === 0) return null;
 
     return rows[0];
   },
 
   async changePassword(userID, password) {
-    return await db("users")
-      .where("UserID", userID)
+    return await db('users')
+      .where('UserID', userID)
       .update({ Password: password });
   },
 
   async updateProfile(userID, profile) {
-    return await db("users").where("UserID", userID).update({
+    return await db('users').where('UserID', userID).update({
       Name: profile.name,
       Email: profile.email,
       Dob: profile.dob,
@@ -56,10 +56,10 @@ module.exports = {
   },
 
   async updateUserRole(userID, oldRole, updatedRole) {
-    if (oldRole === "editor") {
-      await db("category_editors").where("EditorID", userID).del();
+    if (oldRole === 'editor') {
+      await db('category_editors').where('EditorID', userID).del();
     }
-    return await db("users").where("UserID", userID).update({
+    return await db('users').where('UserID', userID).update({
       Role: updatedRole,
     });
   },
@@ -77,13 +77,13 @@ module.exports = {
   },
 
   async del(id) {
-    await db("category_editors").where("EditorID", id).del();
-    await db("comment").where("UserID", id).del();
-    return await db("users").where("UserID", id).del();
+    await db('category_editors').where('EditorID', id).del();
+    await db('comment').where('UserID', id).del();
+    return await db('users').where('UserID', id).del();
   },
 
   async activePremium(id, Time) {
-    return await db("users").where("UserID", id).update({
+    return await db('users').where('UserID', id).update({
       Premium: 1,
       Time,
       GetPremiumAt: new Date().getTime(),
@@ -91,7 +91,7 @@ module.exports = {
   },
 
   async deactivePremium(id) {
-    return await db("users").where("UserID", id).update({
+    return await db('users').where('UserID', id).update({
       Premium: 0,
       Time: 0,
       GetPremiumAt: new Date().getTime(),

@@ -26,15 +26,16 @@
               Category
             </th>
             <th scope="col"></th>
+
           </tr>
         </thead>
         <tbody>
           {{#each this.categories}}
             <tr>
-              <th class="text-center" scope="row">
-                {{@index}}
-              </th>
-              <td>
+              <td class="text-center" scope="row">
+                {{sum @index 1}}
+              </td>
+              <td class="">
                 <div class="dropdown">
                   <a
                     class="btn btn-info dropdown-toggle text-capitalize"

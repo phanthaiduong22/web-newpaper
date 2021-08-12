@@ -268,4 +268,8 @@ module.exports = {
       .where("PaperID", paperId)
       .update({ Status: "Accepted" });
   },
+
+  async firstCatId(paperId) {
+    return await db("categories").first();
+  },
 };

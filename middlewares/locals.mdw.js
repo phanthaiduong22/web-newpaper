@@ -1,5 +1,6 @@
 const categoryModel = require("../models/category.model");
 const userModel = require("../models/user.model");
+const paperModel = require("../models/paper.model");
 
 module.exports = function (app) {
   app.use(async function (req, res, next) {
@@ -21,7 +22,8 @@ module.exports = function (app) {
     for (const key of Object.keys(req.session)) {
       res.locals[key] = req.session[key];
     }
-
+    const firstCatId = await paperModel.firstCatId();
+    res.locals.firstCatId = firstCatId.CatID;
     next();
   });
 

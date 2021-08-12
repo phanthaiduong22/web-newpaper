@@ -23,7 +23,6 @@ router.get("/byCat/:id", async function (req, res) {
       break;
     }
   }
-
   const limit = 3;
   const page = req.query.page || 1;
   if (page < 1) page = 1;
