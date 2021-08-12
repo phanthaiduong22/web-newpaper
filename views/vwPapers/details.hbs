@@ -12,45 +12,24 @@
     src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
   ></script>
   <script>
-    var input = document.querySelector('input[name=tags]');
-    new Tagify(input)
-    const tags = document.querySelectorAll(".tagify__tag-text");
-    for(let tag of tags) {
-      tag.addEventListener('click', (e) => {
-        const tagName = tag.innerHTML;
-        const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
-        window.location.href = url;
-      })
-    }
+    var input = document.querySelector('input[name=tags]'); new Tagify(input)
+    const tags = document.querySelectorAll(".tagify__tag-text"); for(let tag of
+    tags) { tag.addEventListener('click', (e) => { const tagName =
+    tag.innerHTML; const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
+    window.location.href = url; }) }
   </script>
   <script>
-    //Get the button
-    var mybutton = document.getElementById("myBtn");
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
-      }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
-      let paperId =
+    //Get the button var mybutton = document.getElementById("myBtn"); // When
+    the user scrolls down 20px from the top of the document, show the button
+    window.onscroll = function() {scrollFunction()}; function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20)
+    { mybutton.style.display = "block"; } else { mybutton.style.display =
+    "none"; } } // When the user clicks on the button, scroll to the top of the
+    document function topFunction() { document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0; } let paperId =
     {{this.paper.PaperID}}
-    ;
-    const downloadBtn = $("#download");
-    downloadBtn.on('click',function(e) {
-      e.preventDefault();
-      window.open(`/papers/details/${paperId}/download`);
-    });
+    ; const downloadBtn = $("#download"); downloadBtn.on('click',function(e) {
+    e.preventDefault(); window.open(`/papers/details/${paperId}/download`); });
   </script>
 {{/section}}
 {{#if err_message}}
@@ -146,6 +125,10 @@
                 <div class="d-flex flex-column justify-content-start ml-2">
                   <span class="d-block font-weight-bold name">
                     {{Name}}
+                    -
+                    <span
+                      class="font-weight-normal text-capitalize font-italic"
+                    >{{Role}}</span>
                   </span>
                   <span class="date text-black-50">
                     {{CreatedAt}}
@@ -158,7 +141,7 @@
                 </p>
               </div>
             </div>
-            <div class="bg-white">
+            <div class="bg-white mt-2">
               <div class="d-flex flex-row fs-12">
                 <div class="like p-2 cursor">
                   <i class="fa fa-thumbs-o-up"></i>
@@ -178,6 +161,19 @@
                     Share
                   </span>
                 </div>
+                {{#if ../admin}}
+                <div class="like p-2 cursor">
+                  <form method="POST"
+                    action="/admin/papers/{{../this.paper.PaperID}}/comment/{{CommentID}}/del"
+                  >
+                    <button type="submit" class="ml-1 btn btn-danger">
+                  <i class="fa fa-trash"></i>
+                      Delete
+                    </button>
+                  </form>
+                </div>
+                
+                {{/if}}
               </div>
             </div>
           </div>

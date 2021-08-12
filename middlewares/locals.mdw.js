@@ -1,6 +1,6 @@
-const categoryModel = require("../models/category.model");
-const userModel = require("../models/user.model");
-const paperModel = require("../models/paper.model");
+const categoryModel = require('../models/category.model');
+const userModel = require('../models/user.model');
+const paperModel = require('../models/paper.model');
 
 module.exports = function (app) {
   app.use(async function (req, res, next) {
@@ -13,7 +13,7 @@ module.exports = function (app) {
         );
         if (!result) {
           req.session.destroy();
-          return res.redirect("/");
+          return res.redirect('/');
         }
         req.session.authUser = result;
       }

@@ -82,7 +82,7 @@
           <div class="row">
             <div class="form-group">
               <label for="txtName"><b>Date release:</b> {{this.paper.PublishDate}}</label>
-              <input type="text" class="form-control" id="txtDOB" name="raw_dob" required/>
+              <input type="text" class="form-control" id="txtDOB" name="raw_dob" value="{{this.paper.rawPublishDate}}" required/>
             </div>
           </div>
           <div class="row">
@@ -104,7 +104,7 @@
         </div>
         <div class="form-group">
           <label for="txtComment"><i class="fa fa-comment" aria-hidden="true"></i> <b>Comment</b>:</label>
-          <textarea id="txtComment" class="p-2" name="editorComment" rows="3" style="width: 100%" required></textarea>
+          <textarea id="txtComment" class="p-2" name="editorComment" rows="3" style="width: 100%" required>{{this.paper.EditorComment}}</textarea>
         </div>
         <div class="row m-2">
             <div id="buttons">

@@ -12,19 +12,12 @@
     src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
   ></script>
   <script>
-    var input = document.querySelectorAll('input[name=tags]');
-    for(let i of input) {
-      new Tagify(i);
-    }
-    const tags = document.querySelectorAll(".tagify__tag-text");
-    for(let tag of tags) {
-      tag.addEventListener('click', (e) => {
-        e.preventDefault();
-        const tagName = tag.innerHTML;
-        const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
-        window.location.href = url;
-      })
-    }
+    var input = document.querySelectorAll('input[name=tags]'); for(let i of
+    input) { new Tagify(i); } const tags =
+    document.querySelectorAll(".tagify__tag-text"); for(let tag of tags) {
+    tag.addEventListener('click', (e) => { e.preventDefault(); const tagName =
+    tag.innerHTML; const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
+    window.location.href = url; }) }
   </script>
 {{/section}}
 <div class="card">

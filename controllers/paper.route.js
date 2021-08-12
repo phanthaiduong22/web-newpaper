@@ -102,10 +102,12 @@ router.get("/details/:id", async function (req, res) {
 
   const comments = await commentModel.findAllCommentByPaperId(paperId);
   for (i = 0; i < comments.length; i++) {
+    comments[i].rawCreatedAt = comments[i].CreatedAt;
     comments[i].CreatedAt = moment(comments[i].CreatedAt).format(
       "Do MMMM YYYY",
     );
   }
+  // console.log(comments);
   res.render("vwPapers/details", {
     paper,
     relatedNews,
