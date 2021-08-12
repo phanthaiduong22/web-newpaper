@@ -14,6 +14,7 @@ module.exports = function (app) {
           return numeral(val).format("0,0");
         },
         helpers,
+        sum: (a, b) => a + b,
       },
     }),
   );

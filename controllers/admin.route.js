@@ -6,7 +6,6 @@ const userModel = require("../models/user.model");
 const categoryModel = require("../models/category.model");
 const { authUser, authRole } = require("../middlewares/auth.mdw");
 const paperModel = require("../models/paper.model");
-const tagModel = require("../models/tag.model");
 
 router.get("/users", authUser, authRole("admin"), async function (req, res) {
   const users = await userModel.allWithSpecific();
@@ -131,8 +130,26 @@ router.post(
   },
 );
 
-router.get("/block", authUser, authRole("admin"), (req, res) => {
-  res.render("vwAdmin/block");
-});
+router.post(
+  "/papers/:id/unmark",
+  authUser,
+  authRole("admin"),
+  async (req, res) => {
+    const paperId = req.params.id;
+    await paperModel.unmarkPremium(paperId);
+    res.redirect("/admin/papers");
+  },
+);
+
+router.post(
+  "/papers/:id/depublish",
+  authUser,
+  authRole("admin"),
+  async (req, res) => {
+    const paperId = req.params.id;
+    await paperModel.depublish(paperId);
+    res.redirect("/admin/papers");
+  },
+);
 
 module.exports = router;

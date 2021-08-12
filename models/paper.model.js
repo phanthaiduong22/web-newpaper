@@ -2,7 +2,6 @@ const db = require("../utils/db");
 const categoryModel = require("./category.model");
 const tagModel = require("../models/tag.model");
 const commentModel = require("../models/comment.model");
-const { formText } = require("pdfkit");
 const moment = require("moment");
 
 module.exports = {
@@ -258,5 +257,15 @@ module.exports = {
       .orderBy("Premium", "desc")
       .limit(limit)
       .offset(offset);
+  },
+
+  async unmarkPremium(paperId) {
+    return await db("papers").where("PaperID", paperId).update({ Premium: 0 });
+  },
+
+  async depublish(paperId) {
+    return await db("papers")
+      .where("PaperID", paperId)
+      .update({ Status: "Accepted" });
   },
 };

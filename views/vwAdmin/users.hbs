@@ -32,8 +32,19 @@
   timepicker: false,
   mask: true,
 });
-
-
+</script>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var deleteUserForm = document.getElementById('delete-user-form');
+    var deleteUserBtn = document.getElementById('delete-user-btn');
+    $('#exampleModal').on('show.bs.modal', function (event) {
+      var button = $(event.relatedTarget);
+      var id = button.data('id');
+    })
+    deleteUserBtn.addEventListener('click', function() {
+      deleteUserForm.submit();
+    });
+})
 </script>
 {{/section}}
 <div class="container-fluid p-5">
@@ -41,7 +52,7 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <h5 class="card-title text-uppercase mb-0">Manage Users</h5>
+          <h5 class="card-title mb-0">Manage Users</h5>
         </div>
         <div class="table-responsive">
           <table class="table border no-wrap user-table mb-0">
@@ -58,7 +69,7 @@
               {{!--  --}}
               {{#each this.users}}
               <tr>
-                <td class="pl-4">{{@index}}</td>
+                <td class="pl-4">{{sum @index 1}}</td>
                 <td class="col-4">
                   <button name="username" type="button" class="w-100 font-medium mb-0 btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
                   {{Username}}
@@ -97,18 +108,24 @@
                     <button type="submit" title="update" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form> 
                 </td>
-                <td class="col-1"><form method="POST" action="/admin/users/del">
-                  <input type="hidden" name="userId" value={{UserID}}>
-                  <button
-                    type="submit"
-                    class="btn btn-danger"
-                    title="Delete account"
-                  >
-                  
-                    <i class="fa fa-trash-o w-100" aria-hidden="true"></i>
+                <td class="col-1">
+                   <form id="delete-user-form" method="POST" action="/admin/users/del">
+                    <input type="hidden" name="userId" value={{UserID}}>
+                    <button
+                      
+                      type="button"
+                      class="btn btn-danger"
+                      title="Delete account"
+                      data-toggle="modal"
+                      data-target="#delete-course-modal"
+                      data-id="{{UserID}}"
+                    >
                     
-                  </button>
-                </form></td>
+                      <i class="fa fa-lg fa-trash-o w-100" aria-hidden="true"></i>
+                      
+                    </button>
+                  </form>
+                </td>
               </tr>
               {{/each}}
             {{!--  --}}
@@ -119,6 +136,30 @@
     </div>
   </div>
 </div>
+
+<!-- Delete User Modal -->
+<div class="modal fade" id="delete-course-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you really sure?
+      </div>
+      <div class="modal-footer">
+        <button id="delete-user-btn" type="button" class="btn btn-danger">Delete</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 <!-- Modal -->
 <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">

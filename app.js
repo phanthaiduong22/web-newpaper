@@ -1,9 +1,10 @@
+require("dotenv").config();
 const express = require("express");
 const morgan = require("morgan");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
+const PORT = 3001;
 
-require("dotenv").config();
 const app = express();
 
 app.use(cors({ origin: "*" }));
@@ -36,7 +37,6 @@ app.use((err, req, res, next) => {
   res.redirect("/");
 });
 
-const PORT = 3001;
-app.listen(PORT, function () {
-  console.log(`EC Web App listening at http://localhost:${PORT}`);
+app.listen(PORT, (server) => {
+  console.log(`GenZ Web App listening at http://localhost:${PORT}`);
 });

@@ -1,19 +1,5 @@
-{{#section "css"}}
-  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
-{{/section}}
-
 {{#section "js"}}
-  <script src="https://unpkg.com/@yaireo/tagify"></script>
-  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-  <script>
-    var input = document.querySelector('input[name=tags]');
-    new Tagify(input)
-  </script>
-    <script
-    src="https://cdn.tiny.cloud/1/gvtv7ihf6847atiz3flob6067u01hd25hmsld40h5o94kqy1/tinymce/5/tinymce.min.js"
-    referrerpolicy="origin"
-  ></script
-
+  <script src="/public/js/admin/papers.js"></script>
 {{/section}}
 <div class="container-fluid mt-5">
   {{#if err_message}}
@@ -36,124 +22,236 @@
       <div class="card">
         <div class="card-body">
           <h4 class="card-header d-flex justify-content-between">
-    Papers
-    <a
-      class="btn btn-outline-success"
-      href="/writer/upload"
-      role="button"
-    >
-      <i class="fa fa-plus" aria-hidden="true"></i>
-      Upload a paper
-    </a>
-  </h4>
+            Manage Papers
+            <a
+              class="btn btn-outline-success"
+              href="/writer/upload"
+              role="button"
+            >
+              <i class="fa fa-plus" aria-hidden="true"></i>
+              Upload a paper
+            </a>
+          </h4>
         </div>
         <div class="table-responsive">
           <table class="table border no-wrap user-table mb-0">
             <thead>
               <tr>
                 <div class="row">
-                  <th scope="col" class="text-center col-1 border-0   font-medium pl-4">#</th>
-                  <th scope="col" class="text-center col-3 order-0  font-medium">Paper Title</th>
-                  <th scope="col" class="text-center col-1 border-0  font-medium">Status</th>
-                  <th scope="col" class="text-center col-1 border-0  font-medium">Publish Date</th>
-                  <th scope="col" class="text-center col-6 border-1  font-medium">Comment</th>
-                  <th scope="col" class="text-center col-6 border-1  font-medium">Premium</th>
+                  <th scope="col" class="text-center font-medium">#</th>
+                  <th scope="col" class="text-center font-medium">Paper Title</th>
+                  <th scope="col" class="text-center font-medium">Status</th>
+                  <th scope="col" class="text-center font-medium">Publish Date</th>
+                  <th scope="col" class="text-center font-medium">Comment</th>
+                  <th scope="col" class="text-center font-medium">Premium</th>
+                  <th scope="col"></th>
                 </div>
-                
+
               </tr>
             </thead>
             <tbody>
-              {{!--  --}}
+              {{!  }}
               {{#each this.papers}}
                 <tr>
-                  <td class="text-center pl-4">{{@index}}</td>
+                  <td class="text-center pl-4">{{sum @index 1}}</td>
                   <td class="col-md-6">
-                      {{#eq Status "Draft"}}
-                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
+                    {{#eq Status "Draft"}}
+                      <h5><a
+                          class="font-medium mb-0"
+                          href="/writer/management/paper/{{PaperID}}"
+                        >{{Title}}</a></h5>
+                    {{/eq}}
 
-                      {{#eq Status "Rejected"}}
-                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
+                    {{#eq Status "Rejected"}}
+                      <h5><a
+                          class="font-medium mb-0"
+                          href="/writer/management/paper/{{PaperID}}"
+                        >{{Title}}</a></h5>
+                    {{/eq}}
 
-                      {{#eq Status "Accepted"}}
-                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
-                      
-                      {{#eq Status "Published"}}
-                        <h5><a class="font-medium mb-0" href="/papers/details/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
+                    {{#eq Status "Accepted"}}
+                      <h5><a
+                          class="font-medium mb-0"
+                          href="/writer/management/paper/{{PaperID}}"
+                        >{{Title}}</a></h5>
+                    {{/eq}}
+
+                    {{#eq Status "Published"}}
+                      <h5><a
+                          class="font-medium mb-0"
+                          href="/papers/details/{{PaperID}}"
+                        >{{Title}}</a></h5>
+                    {{/eq}}
                   </td>
                   <td class="text-center col-md-1">
-                    <span class="text-muted">{{Status}}</span><br>
+                    <span class="text-muted">{{Status}}</span><br />
                   </td>
-                  <td class="text-center col-md-2">  
-                      
-                        <span class="text-muted">{{PublishDate}}</span><br>
-                    
+                  <td class="text-center col-md-2">
+
+                    <span class="text-muted">{{PublishDate}}</span><br />
+
                   </td>
-                  <td class="col-md-3"> 
-                    <span class="text-muted">{{EditorComment}}</span><br>
-                  </td> 
+                  <td class="col-md-3">
+                    <span class="text-muted">{{EditorComment}}</span><br />
+                  </td>
                   <td>
                     {{#isnt Status "Published"}}
-                    <form method="POST" action="/admin/papers/publish/{{PaperID}}">
+                      <form
+                        method="POST"
+                        action="/admin/papers/publish/{{PaperID}}"
+                      >
                         <button
                           type="submit"
-                          class="btn btn-success"
+                          class="btn btn-success btn-block"
+                          title="publish paper"
                         >
                           Publish
                         </button>
                       </form>
                     {{/isnt}}
 
-                      {{#eq Premium 0}}
-                        {{#eq Status "Published"}}
-                          <form method="POST" action="/admin/papers/activepremium/{{PaperID}}">
+                    {{#eq Premium 0}}
+                      {{#eq Status "Published"}}
+                        <form
+                          method="POST"
+                          action="/admin/papers/activepremium/{{PaperID}}"
+                        >
+                          <button
+                            type="submit"
+                            class="btn btn-primary btn-block"
+                            title="Mark as premium paper"
+                          >
+                            Premium
+                          </button>
+                        </form>
+                      {{/eq}}
+
+                    {{/eq}}
+                    {{#if Premium}}
+                      <i
+                        class="fa fa-star w-100 text-primary text-center"
+                        aria-hidden="true"
+                      ></i>
+                    {{/if}}
+
+                  </td>
+                  <td>
+                    <div class="dropdown">
+                      <a
+                        class="btn btn-secondary dropdown-toggle"
+                        href="#"
+                        role="button"
+                        id="dropdownMenuLink"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        <i class="fa fa-cog" aria-hidden="true"></i>
+                      </a>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuLink"
+                      >
+                        <a
+                          class="dropdown-item"
+                          href="/writer/management/paper/{{PaperID}}"
+                        >Edit</a>
+                        <div class="dropdown-divider"></div>
+
+                        {{#eq Premium 1}}
+                          <form
+                            method="POST"
+                            action="/admin/papers/{{PaperID}}/unmark"
+                          >
                             <button
+                              class="dropdown-item btn btn-danger"
                               type="submit"
-                              class="btn btn-primary"
-                              title="Mark as premium paper"
                             >
-                              Make premium           
+                              Unmark Premium
                             </button>
                           </form>
+                          <div class="dropdown-divider"></div>
                         {{/eq}}
-                        
-                      {{/eq}}
-                      {{#if Premium}}
-                        <i class="fa fa-star w-100 text-primary text-center" aria-hidden="true"></i>
-                      {{/if}}
-                     
-                </td>
-                <td>
-                  <div class="dropdown">
-                    <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                     <i class="fa fa-cog" aria-hidden="true"></i>
-
-                    </a>
-
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                      <a class="dropdown-item" href="/writer/management/paper/{{PaperID}}">Edit</a>
-                      <form class="dropdown-item" method="POST" action="/writer/management/paper/{{PaperID}}/del">
-                        <button class="btn btn-danger" type="submit">
-                          Delete
-
-                        </button>
+                        {{#eq Status "Published"}}
+                          <form
+                            method="POST"
+                            action="/admin/papers/{{PaperID}}/depublish"
+                          >
+                            <button
+                              class="dropdown-item btn btn-danger"
+                              type="submit"
+                            >
+                              DePublish
+                            </button>
+                          </form>
+                          <div class="dropdown-divider"></div>
+                        {{/eq}}
+                        <form
+                          id="delete-paper-form"
+                          method="POST"
+                          action="/writer/management/paper/{{PaperID}}/del"
+                        >
+                          <button
+                            class="dropdown-item btn btn-danger"
+                            type="button"
+                            data-toggle="modal"
+                            data-target="#exampleModal"
+                          >
+                            Delete
+                          </button>
                         </form>
-                     
+                      </div>
                     </div>
-                  </div>
-                </td>
-                
-                
+                  </td>
+
                 </tr>
               {{/each}}
-              
-              {{!--  --}}
+
+              {{!  }}
             </tbody>
           </table>
         </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Delete Paper Modal-->
+<div
+  class="modal fade"
+  id="exampleModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete paper</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you really sure?
+      </div>
+      <div class="modal-footer">
+        <button
+          id="delete-paper-btn"
+          type="button"
+          class="btn btn-danger"
+        >Delete</button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-dismiss="modal"
+        >Close</button>
       </div>
     </div>
   </div>

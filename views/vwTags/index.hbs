@@ -26,13 +26,15 @@
             <th scope="col">
               Count
             </th>
+            <th scope="col"></th>
+            <th scope="col"></th>
           </tr>
         </thead>
         <tbody>
           {{#each this.tags}}
             <tr>
               <th class="text-center" scope="row">
-                {{@index}}
+                {{sum @index 1}}
               </th>
               <td>
                 <a href="/tags/find/{{TagId}}">
@@ -73,7 +75,7 @@
                     value="{{TagName}}"
                   />
                   <button type="submit" class="btn btn-danger" formaction="/tags/del">
-                    <i class="fa fa-trash w-100" aria-hidden="true"></i>
+                    <i class="fa fa-trash fa-lg w-100" aria-hidden="true"></i>
 
                   </button>
                 </form>
