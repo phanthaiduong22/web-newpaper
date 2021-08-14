@@ -9,8 +9,10 @@ const paperModel = require("../models/paper.model");
 const tagModel = require("../models/tag.model");
 const commentModel = require("../models/comment.model");
 
+const { sortHelper } = require("../helpers/sort");
+
 router.get("/users", authUser, authRole("admin"), async function (req, res) {
-  const users = await userModel.allWithSpecific();
+  const users = await userModel.allWithSpecific().then(sortHelper(req));
   let categories = await categoryModel.all();
 
   res.render("vwAdmin/users", {
@@ -48,7 +50,7 @@ router.post(
 
 router.get("/papers", authUser, authRole("admin"), async (req, res) => {
   const { err_message } = req.query;
-  const papers = await paperModel.all();
+  const papers = await paperModel.all().then(sortHelper(req));
   for (let i = 0; i < papers.length; i += 1) {
     if (papers[i].PublishDate !== null)
       papers[i].PublishDate = moment(papers[i].PublishDate).format(

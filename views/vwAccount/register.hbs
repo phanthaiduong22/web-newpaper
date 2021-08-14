@@ -5,6 +5,12 @@
   />
 {{/section}}
 
+{{#section "js"}}
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+  ></script>
+  <script src="/public/js/account/register.js"></script>
+{{/section}}
 <div class="card container mt-5 mb-5" style="max-width: 500px">
   {{#if err_message}}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -82,7 +88,13 @@
         <label for="txtDOB">
           Date of Birth.
         </label>
-        <input type="text" class="form-control" id="txtDOB" name="raw_dob" />
+        <input
+          type="text"
+          class="form-control"
+          id="txtDOB"
+          name="raw_dob"
+          required
+        />
       </div>
       <button type="submit" class="btn btn-success d-block w-100">
         Register
@@ -98,10 +110,3 @@
     </p>
   </div>
 </div>
-
-{{#section "js"}}
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
-  ></script>
-  <script src="/public/js/account/register.js"></script>
-{{/section}}
