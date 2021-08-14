@@ -19,9 +19,9 @@ module.exports = {
     return async (data) => {
       // console.log("here");
       if (req.query) {
-        if (req.query.hasOwnProperty("_sort")) {
-          const isValidType = ["asc", "desc"].includes(req.query.type);
-          if (req.query.type === "asc") {
+        if (req.query.hasOwnProperty('_sort')) {
+          const isValidType = ['asc', 'desc'].includes(req.query.type);
+          if (req.query.type === 'asc') {
             return data.sort(sortAscending(req.query.column));
           }
           data.sort(sortDescending(req.query.column));

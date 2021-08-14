@@ -1,35 +1,35 @@
-const exphbs = require("express-handlebars");
-const hbs_sections = require("express-handlebars-sections");
-const numeral = require("numeral");
-var helpers = require("handlebars-helpers")();
+const exphbs = require('express-handlebars');
+const hbs_sections = require('express-handlebars-sections');
+const numeral = require('numeral');
+var helpers = require('handlebars-helpers')();
 
-const Handlebars = require("handlebars");
+const Handlebars = require('handlebars');
 
 module.exports = function (app) {
   app.engine(
-    "hbs",
+    'hbs',
     exphbs({
-      defaultLayout: "main.hbs",
+      defaultLayout: 'main.hbs',
       // defaultLayout: "bs4.hbs",
       helpers: {
         section: hbs_sections(),
         format_number(val) {
-          return numeral(val).format("0,0");
+          return numeral(val).format('0,0');
         },
         helpers,
         sum: (a, b) => a + b,
 
         sortable: (column, sort) => {
-          const sortType = column === sort.column ? sort.type : "default";
+          const sortType = column === sort.column ? sort.type : 'default';
           const icons = {
-            default: "oi oi-elevator",
-            asc: "oi oi-sort-ascending",
-            desc: "oi oi-sort-descending",
+            default: 'oi oi-elevator',
+            asc: 'oi oi-sort-ascending',
+            desc: 'oi oi-sort-descending',
           };
           const types = {
-            default: "desc",
-            asc: "desc",
-            desc: "asc",
+            default: 'desc',
+            asc: 'desc',
+            desc: 'asc',
           };
           const type = types[sortType];
           const icon = icons[sortType];
@@ -46,5 +46,5 @@ module.exports = function (app) {
       },
     }),
   );
-  app.set("view engine", "hbs");
+  app.set('view engine', 'hbs');
 };
