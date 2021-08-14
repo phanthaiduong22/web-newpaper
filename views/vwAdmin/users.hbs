@@ -33,19 +33,7 @@
   mask: true,
 });
 </script>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    var deleteUserForm = document.getElementById('delete-user-form');
-    var deleteUserBtn = document.getElementById('delete-user-btn');
-    $('#exampleModal').on('show.bs.modal', function (event) {
-      var button = $(event.relatedTarget);
-      var id = button.data('id');
-    })
-    deleteUserBtn.addEventListener('click', function() {
-      deleteUserForm.submit();
-    });
-})
-</script>
+<script src="/public/js/admin/users.js"></script>
 {{/section}}
 <div class="container-fluid p-5">
   <div class="row">
@@ -109,10 +97,9 @@
                   </form> 
                 </td>
                 <td class="col-1">
-                   <form id="delete-user-form" method="POST" action="/admin/users/del">
-                    <input type="hidden" name="userId" value={{UserID}}>
+                   
                     <button
-                      
+                  
                       type="button"
                       class="btn btn-danger"
                       title="Delete account"
@@ -124,7 +111,7 @@
                       <i class="fa fa-lg fa-trash-o w-100" aria-hidden="true"></i>
                       
                     </button>
-                  </form>
+           
                 </td>
               </tr>
               {{/each}}
@@ -136,6 +123,9 @@
     </div>
   </div>
 </div>
+
+<form id="delete-user-form" method="POST" ></form>
+
 
 <!-- Delete User Modal -->
 <div class="modal fade" id="delete-course-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

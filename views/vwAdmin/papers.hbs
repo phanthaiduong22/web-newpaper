@@ -191,20 +191,17 @@
                           </form>
                           <div class="dropdown-divider"></div>
                         {{/eq}}
-                        <form
-                          id="delete-paper-form"
-                          method="POST"
-                          action="/writer/management/paper/{{PaperID}}/del"
+
+                        <button
+                          class="dropdown-item btn btn-danger"
+                          type="button"
+                          data-id="{{PaperID}}"
+                          data-toggle="modal"
+                          data-target="#exampleModal"
                         >
-                          <button
-                            class="dropdown-item btn btn-danger"
-                            type="button"
-                            data-toggle="modal"
-                            data-target="#exampleModal"
-                          >
-                            Delete
-                          </button>
-                        </form>
+                          Delete
+                        </button>
+
                       </div>
                     </div>
                   </td>
@@ -220,6 +217,7 @@
     </div>
   </div>
 </div>
+<form id="delete-paper-form" method="POST"></form>
 
 <!-- Delete Paper Modal-->
 <div
