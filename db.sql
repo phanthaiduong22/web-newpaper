@@ -1,137 +1,192 @@
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `UserID` int NOT NULL AUTO_INCREMENT,
-  `Username` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Password` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Name` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Email` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `Dob` date NOT NULL,
-  `Role` varchar(50) NOT NULL DEFAULT 'user',
-  `Premium` tinyint NOT NULL DEFAULT '0',
-  `Time` bigint DEFAULT NULL,
-  `GetPremiumAt` bigint DEFAULT NULL,
-  PRIMARY KEY (`UserID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- MySQL Workbench Forward Engineering
 
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
-DROP TABLE IF EXISTS `categories`;
-CREATE TABLE `categories` (
-  `CatID` int unsigned NOT NULL AUTO_INCREMENT,
-  `CatName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+-- -----------------------------------------------------
+-- Schema newspapers
+-- -----------------------------------------------------
+
+-- -----------------------------------------------------
+-- Schema newspapers
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `newspapers` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+USE `newspapers` ;
+
+-- -----------------------------------------------------
+-- Table `newspapers`.`categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`categories` (
+  `CatID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `CatName` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
   PRIMARY KEY (`CatID`),
-  UNIQUE KEY `CatName_UNIQUE` (`CatName`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE INDEX `CatName_UNIQUE` (`CatName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 28
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
-DROP TABLE IF EXISTS `sub_categories`;
-CREATE TABLE `sub_categories` (
-  `SubCatID` int unsigned NOT NULL AUTO_INCREMENT,
-  `SubCatName` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`SubCatID`),
-  UNIQUE KEY `SubCatName_UNIQUE` (`SubCatName`)
-) ENGINE=InnoDB AUTO_INCREMENT=44 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+-- -----------------------------------------------------
+-- Table `newspapers`.`users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`users` (
+  `UserID` INT NOT NULL AUTO_INCREMENT,
+  `Username` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  `Password` VARCHAR(255) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  `Name` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  `Email` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  `Dob` DATE NOT NULL,
+  `Role` VARCHAR(50) NOT NULL DEFAULT 'user',
+  `Premium` TINYINT NOT NULL DEFAULT '0',
+  `Time` BIGINT NULL DEFAULT NULL,
+  `GetPremiumAt` BIGINT NULL DEFAULT NULL,
+  PRIMARY KEY (`UserID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 35
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `reset`;
-CREATE TABLE `reset` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `email` varchar(255) NOT NULL,
-  `otp` int NOT NULL,
-  `created_at` bigint NOT NULL,
-  `expiresin` bigint NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `papers`;
-CREATE TABLE `papers` (
-  `PaperID` int unsigned NOT NULL AUTO_INCREMENT,
-  `Avatar` varchar(500) NOT NULL,
-  `Title` varchar(500) NOT NULL,
-  `CatID` int unsigned NOT NULL,
-  `SubCatID` int unsigned NOT NULL,
-  `CreatedAt` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `Abstract` varchar(500) NOT NULL,
-  `Content` text NOT NULL,
-  `Tags` varchar(500) NOT NULL,
-  `Views` int NOT NULL DEFAULT '0',
-  `Status` varchar(500) NOT NULL DEFAULT 'Draft',
-  `UserID` int NOT NULL,
-  `EditorComment` varchar(500) DEFAULT NULL,
-  `PublishDate` timestamp NULL DEFAULT NULL,
-  `Premium` tinyint DEFAULT '0',
-  PRIMARY KEY (`PaperID`),
-  KEY `CatID` (`CatID`),
-  KEY `SubCatID` (`SubCatID`),
-  FULLTEXT KEY `Title` (`Title`,`Abstract`,`Content`),
-  CONSTRAINT `papers_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `categories` (`CatID`),
-  CONSTRAINT `papers_ibfk_2` FOREIGN KEY (`SubCatID`) REFERENCES `sub_categories` (`SubCatID`)
-) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-DROP TABLE IF EXISTS `category_sub_categories`;
-CREATE TABLE `category_sub_categories` (
-  `CatID` int unsigned NOT NULL,
-  `SubCatID` int unsigned NOT NULL,
-  PRIMARY KEY (`CatID`,`SubCatID`),
-  KEY `SubCatID` (`SubCatID`),
-  CONSTRAINT `category_sub_categories_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `categories` (`CatID`),
-  CONSTRAINT `category_sub_categories_ibfk_2` FOREIGN KEY (`SubCatID`) REFERENCES `sub_categories` (`SubCatID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
-DROP TABLE IF EXISTS `category_editors`;
-CREATE TABLE `category_editors` (
-  `EditorID` int NOT NULL,
-  `CatID` int unsigned NOT NULL,
+-- -----------------------------------------------------
+-- Table `newspapers`.`category_editors`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`category_editors` (
+  `EditorID` INT NOT NULL,
+  `CatID` INT UNSIGNED NOT NULL,
   PRIMARY KEY (`EditorID`),
-  UNIQUE KEY `EditorID` (`EditorID`),
-  KEY `category_editors_ibfk_1` (`CatID`),
-  CONSTRAINT `category_editors_ibfk_1` FOREIGN KEY (`CatID`) REFERENCES `categories` (`CatID`),
-  CONSTRAINT `category_editors_ibfk_2` FOREIGN KEY (`EditorID`) REFERENCES `users` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE INDEX `EditorID` (`EditorID` ASC) VISIBLE,
+  INDEX `category_editors_ibfk_1` (`CatID` ASC) VISIBLE,
+  CONSTRAINT `category_editors_ibfk_1`
+    FOREIGN KEY (`CatID`)
+    REFERENCES `newspapers`.`categories` (`CatID`),
+  CONSTRAINT `category_editors_ibfk_2`
+    FOREIGN KEY (`EditorID`)
+    REFERENCES `newspapers`.`users` (`UserID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `comment`;
-CREATE TABLE `comment` (
-  `PaperID` int NOT NULL,
-  `Content` text NOT NULL,
-  `UserID` varchar(45) NOT NULL,
-  `CreatedAt` timestamp NOT NULL,
-  PRIMARY KEY (`PaperID`,`UserID`,`CreatedAt`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-DROP TABLE IF EXISTS `tag`;
-CREATE TABLE `tag` (
-  `TagId` int unsigned NOT NULL AUTO_INCREMENT,
-  `TagName` varchar(45) NOT NULL,
+-- -----------------------------------------------------
+-- Table `newspapers`.`sub_categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`sub_categories` (
+  `SubCatID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `SubCatName` VARCHAR(50) CHARACTER SET 'utf8' COLLATE 'utf8_unicode_ci' NOT NULL,
+  PRIMARY KEY (`SubCatID`),
+  UNIQUE INDEX `SubCatName_UNIQUE` (`SubCatName` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 53
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `newspapers`.`category_sub_categories`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`category_sub_categories` (
+  `CatID` INT UNSIGNED NOT NULL,
+  `SubCatID` INT UNSIGNED NOT NULL,
+  PRIMARY KEY (`CatID`, `SubCatID`),
+  INDEX `SubCatID` (`SubCatID` ASC) VISIBLE,
+  CONSTRAINT `category_sub_categories_ibfk_1`
+    FOREIGN KEY (`CatID`)
+    REFERENCES `newspapers`.`categories` (`CatID`),
+  CONSTRAINT `category_sub_categories_ibfk_2`
+    FOREIGN KEY (`SubCatID`)
+    REFERENCES `newspapers`.`sub_categories` (`SubCatID`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `newspapers`.`comment`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`comment` (
+  `PaperID` INT NOT NULL,
+  `Content` TEXT NOT NULL,
+  `UserID` VARCHAR(45) NOT NULL,
+  `CreatedAt` TIMESTAMP NOT NULL,
+  `CommentID` INT NOT NULL AUTO_INCREMENT,
+  PRIMARY KEY (`CommentID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 9
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `newspapers`.`papers`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`papers` (
+  `PaperID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `Avatar` VARCHAR(500) NOT NULL,
+  `Title` VARCHAR(500) NOT NULL,
+  `CatID` INT UNSIGNED NOT NULL,
+  `SubCatID` INT UNSIGNED NOT NULL,
+  `CreatedAt` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+  `Abstract` VARCHAR(500) NOT NULL,
+  `Content` TEXT NOT NULL,
+  `Tags` VARCHAR(500) NOT NULL,
+  `Views` INT NOT NULL DEFAULT '0',
+  `Status` VARCHAR(500) NOT NULL DEFAULT 'Draft',
+  `UserID` INT NOT NULL,
+  `EditorComment` VARCHAR(500) NULL DEFAULT NULL,
+  `PublishDate` TIMESTAMP NULL DEFAULT NULL,
+  `Premium` TINYINT NULL DEFAULT '0',
+  PRIMARY KEY (`PaperID`),
+  INDEX `CatID` (`CatID` ASC) VISIBLE,
+  INDEX `SubCatID` (`SubCatID` ASC) VISIBLE,
+  FULLTEXT INDEX `Title` (`Title`, `Abstract`, `Content`) VISIBLE,
+  CONSTRAINT `papers_ibfk_1`
+    FOREIGN KEY (`CatID`)
+    REFERENCES `newspapers`.`categories` (`CatID`),
+  CONSTRAINT `papers_ibfk_2`
+    FOREIGN KEY (`SubCatID`)
+    REFERENCES `newspapers`.`sub_categories` (`SubCatID`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 60
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `newspapers`.`reset`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`reset` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `email` VARCHAR(255) NOT NULL,
+  `otp` INT NOT NULL,
+  `created_at` BIGINT NOT NULL,
+  `expiresin` BIGINT NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 100
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `newspapers`.`tag`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `newspapers`.`tag` (
+  `TagId` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+  `TagName` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`TagId`),
-  UNIQUE KEY `TagName_UNIQUE` (`TagName`),
-  UNIQUE KEY `TagId_UNIQUE` (`TagId`)
-) ENGINE=InnoDB AUTO_INCREMENT=82 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  UNIQUE INDEX `TagName_UNIQUE` (`TagName` ASC) VISIBLE,
+  UNIQUE INDEX `TagId_UNIQUE` (`TagId` ASC) VISIBLE)
+ENGINE = InnoDB
+AUTO_INCREMENT = 117
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
 
 
-
- BEGIN;
-  INSERT INTO `categories` VALUES (1, 'Mobile');
-  INSERT INTO `categories` VALUES (2, 'TinICT');
-  INSERT INTO `categories` VALUES (3, 'Internet');
-  INSERT INTO `categories` VALUES (4, 'Explore');
- COMMIT;
-
- BEGIN;
-  INSERT INTO `sub_categories` VALUES (1, 'Iphone');
-  INSERT INTO `sub_categories` VALUES (2, 'Android');
-  INSERT INTO `sub_categories` VALUES (3, 'Machine Learning');
-  INSERT INTO `sub_categories` VALUES (4, 'Networking');
-  INSERT INTO `sub_categories` VALUES (5, 'Google');
-  INSERT INTO `sub_categories` VALUES (6, 'Knowledge');
- COMMIT;
-
- BEGIN;
-  INSERT INTO `category_sub_categories` VALUES (1, 1);
-  INSERT INTO `category_sub_categories` VALUES (1, 2);
-  INSERT INTO `category_sub_categories` VALUES (2, 3);
-  INSERT INTO `category_sub_categories` VALUES (3, 4);
-  INSERT INTO `category_sub_categories` VALUES (3, 5);
-  INSERT INTO `category_sub_categories` VALUES (4, 6);
- COMMIT;
-
-
-
--- UPDATE users SET role = 'admin' where Username='admin'
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
