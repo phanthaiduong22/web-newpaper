@@ -25,9 +25,15 @@
             <thead>
               <tr class="text-center">
                 <th scope="col" class="border-0 font-medium pl-4">#</th>
-                <th scope="col" class="border-0 font-medium">Paper Title</th>
-                <th scope="col" class="border-0 font-medium">Created At</th>
-                <th scope="col" class="border-0 font-medium">Status</th>
+                <th scope="col" class="border-0 font-medium">Paper Title
+                  {{{sortable "Title" _sort}}}
+                </th>
+                <th scope="col" class="border-0 font-medium">Created At
+                  {{{sortable "CreatedAt" _sort}}}
+                </th>
+                <th scope="col" class="border-0 font-medium">Status
+                  {{{sortable "Status" _sort}}}
+                </th>
                 <th scope="col" class="border-0 font-medium">Tags</th>
               </tr>
             </thead>

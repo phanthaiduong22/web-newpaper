@@ -5,16 +5,18 @@ const tagModel = require("../models/tag.model");
 const moment = require("moment");
 const router = express.Router();
 
+const { sortHelper } = require("../helpers/sort");
+
 router.get("/", async (req, res) => {
   if (req.query.hasOwnProperty("name")) {
     const tagName = req.query.name;
     const tag = await tagModel.findTagIdByTagName(tagName);
     return res.redirect(`/tags/find/${tag.TagId}`);
   }
-  const tags = await tagModel.all();
-  for (let tag of tags) {
-    tag.count = await tagModel.countPaperByTagName(tag.TagName);
-  }
+  const tags = await tagModel.all().then(sortHelper(req));
+  // for (let tag of tags) {
+  //   tag.count = await tagModel.countPaperByTagName(tag.TagName);
+  // }
   res.render("vwTags/index", { tags, active: { tagManagement: true } });
 });
 

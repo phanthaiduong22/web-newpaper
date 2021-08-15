@@ -22,12 +22,16 @@
             </th>
             <th scope="col">
               Tag
+               {{{sortable "TagName" _sort}}}
             </th>
-            <th scope="col">
+            <th scope="col" class="text-center">
               Count
+              {{{sortable "Count" _sort}}}
             </th>
-            <th scope="col"></th>
-            <th scope="col"></th>
+            {{#if admin}}
+              <th scope="col"></th>
+              <th scope="col"></th>
+            {{/if}}
           </tr>
         </thead>
         <tbody>
@@ -41,8 +45,8 @@
                   {{TagName}}
                 </a>
               </td>    
-              <td>
-                {{count}}
+              <td class="text-center">
+                {{Count}}
               </td>    
                 {{#eq ../authUser.Role "admin"}}
               <td class="text-right">
@@ -55,7 +59,7 @@
                   <i class="fa fa-pencil fa-2x w-100" aria-hidden="true">
                   </i>
                 </a>
-              </td><td>
+              </td><td class="text-right">
                 <form method="POST">
                   <input
                     type="hidden"
