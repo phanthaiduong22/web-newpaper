@@ -1,18 +1,23 @@
 {{#section "css"}}
-  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+    rel="stylesheet"
+    type="text/css"
+  />
 {{/section}}
 
 {{#section "js"}}
   <script src="https://unpkg.com/@yaireo/tagify"></script>
-  <script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+  <script
+    src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
+  ></script>
   <script>
-    var input = document.querySelector('input[name=tags]');
-    new Tagify(input)
+    var input = document.querySelector('input[name=tags]'); new Tagify(input)
   </script>
-    <script
+  <script
     src="https://cdn.tiny.cloud/1/xj36kfadjrtykjwcr6ww3u7prfswvbmgfs5gj6yee8zpkzv9/tinymce/5/tinymce.min.js"
     referrerpolicy="origin"
-  ></script
+  ></script>
 
 {{/section}}
 <div class="container-fluid mt-5">
@@ -31,66 +36,89 @@
       {{err_message}}
     </div>
   {{/if}}
-  <div class="row">
-    <div class="col-md-12">
-      <div class="card">
-        <div class="card-body bg-primary">
-          <h1 class="card-title mb-0 text-white text-center">List of Papers</h1>
-        </div>
-        <div class="table-responsive">
-          <table class="table border no-wrap user-table mb-0">
-            <thead>
-              <tr>
-                <div class="row">
-                  <th scope="col" class="text-center col-1 border-0   font-medium pl-4">#</th>
-                  <th scope="col" class="text-center col-3 order-0  font-medium">Paper Title</th>
-                  <th scope="col" class="text-center col-1 border-0  font-medium">Status</th>
-                  <th scope="col" class="text-center col-1 border-0  font-medium">Publish Date</th>
-                  <th scope="col" class="text-center col-6 border-1  font-medium">Comment</th>
-                </div>
-                
-              </tr>
-            </thead>
-            <tbody>
-              {{!--  --}}
-              {{#each this.papers}}
-              
-                <tr>
-                  <td class="text-center pl-4">{{sum @index 1}}</td>
-                  <td class="col-md-6">
-                      {{#eq Status "Draft"}}
-                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
-
-                      {{#eq Status "Rejected"}}
-                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
-
-                      {{#eq Status "Accepted"}}
-                        <h5><a class="font-medium mb-0" href="/writer/management/paper/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
-                      
-                      {{#eq Status "Published"}}
-                        <h5><a class="font-medium mb-0" href="/papers/details/{{PaperID}}">{{Title}}</a></h5>
-                      {{/eq}}
-                  </td>
-                  <td class="text-center col-md-1">
-                    <span class="text-muted">{{Status}}</span><br>
-                  </td>
-                  <td class="text-center col-md-2">  
-                    <span class="text-muted">{{PublishDate}}</span><br>
-                  </td>
-                  <td class="col-md-3"> 
-                    <span class="text-muted">{{EditorComment}}</span><br>
-                  </td> 
-                </tr>
-              {{/each}}
-              
-              {{!--  --}}
-            </tbody>
-          </table>
-        </div>
+  <div class="row mx-2">
+    <div class="col">
+      <div class="card-body bg-primary">
+        <h1 class="card-title mb-0 text-white text-center">List of Papers</h1>
       </div>
     </div>
   </div>
+  <div class="row border-bottom mx-2">
+    <div class="py-2 text-center col-1 font-weight-bold">#</div>
+    <div class="py-2 text-center col-6 font-weight-bold">Title</div>
+    <div class="py-2 text-center col-1 font-weight-bold">
+      <div class="dropdown show">
+        <a
+          class="btn border-light dropdown-toggle font-weight-bold"
+          href="#"
+          role="button"
+          id="dropdownMenuLink"
+          data-toggle="dropdown"
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Status
+        </a>
+
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" href="/writer/management">All</a>
+          <a class="dropdown-item" href="?status=Published">Published</a>
+          <a class="dropdown-item" href="?status=Draft">Draft</a><a
+            class="dropdown-item"
+            href="?status=Accepted"
+          >Accepted</a><a
+            class="dropdown-item"
+            href="?status=Rejected"
+          >Rejected</a>
+
+        </div>
+      </div>
+    </div>
+    <div class="py-2 text-center col-2 font-weight-bold">Publish Date</div>
+    <div class="py-2 text-center col-2 font-weight-bold">Comment</div>
+  </div>
+  {{#each this.papers}}
+    <div class="row border-bottom py-3">
+      <div class="text-center col-1">{{sum @index 1}}</div>
+      <div class="col-6">
+        {{#eq Status "Draft"}}
+          <h5><a
+              class="font-medium mb-0"
+              href="/writer/management/paper/{{PaperID}}"
+            >{{Title}}</a></h5>
+        {{/eq}}
+
+        {{#eq Status "Rejected"}}
+          <h5><a
+              class="font-medium mb-0"
+              href="/writer/management/paper/{{PaperID}}"
+            >{{Title}}</a></h5>
+        {{/eq}}
+
+        {{#eq Status "Accepted"}}
+          <h5><a
+              class="font-medium mb-0"
+              href="/writer/management/paper/{{PaperID}}"
+            >{{Title}}</a></h5>
+        {{/eq}}
+
+        {{#eq Status "Published"}}
+          <h5><a
+              class="font-medium mb-0"
+              href="/papers/details/{{PaperID}}"
+            >{{Title}}</a></h5>
+        {{/eq}}
+      </div>
+      <div class="text-center col-1">
+        <span class="text-muted">{{Status}}
+        </span>
+      </div>
+      <div class="text-center col-2">
+        <span class="text-muted">{{PublishDate}}</span>
+      </div>
+      <div class="text-center col-2">
+        <span class="text-muted">{{EditorComment}}</span>
+      </div>
+    </div>
+  {{/each}}
 </div>
