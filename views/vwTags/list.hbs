@@ -23,19 +23,18 @@
 <div class="px-5 card container">
   <div class="card-body">
     {{#each this.papers}}
-      <div class="row border-bottom pt-3" style="height: 15rem;">
-        <div class="col-md-4 zoom" style="width: 18rem;">
+      <div class="row border-bottom py-3">
+        <div class="col-lg-4 col-md-6 col-sm-12 zoom">
           <a href="/papers/details/{{PaperID}}">
             <img
               src="/public/imgs/{{Avatar}}"
-              class="img-thumbnail"
+              class="img-category img-thumbnail"
               alt="{{Avatar}}"
               title="{{PaperTitle}}"
-              style="height: 12rem; width: 100%;"
             />
           </a>
         </div>
-        <div class="col-md-8 mt-3 pr-5">
+        <div class="col-lg-8 col-md-6 col-sm-12 mt-3 pr-lg-5">
           <div class="row">
             <div class="badge">
               <a href="/papers/byCat/{{CatID}}">
@@ -45,7 +44,7 @@
                 </i>
               </a>
             </div>
-            <div class="badge">
+            <div class="badge text-primary">
               <i class="fa fa-calendar" aria-hidden="true"></i>
               {{PublishDate}}
             </div>
@@ -55,18 +54,15 @@
               </div>
             {{/if}}
           </div>
-          <div class="row">
-            <a
-              class="text-decoration-none text-truncate"
-              href="/papers/details/{{PaperID}}"
-            >
+          <div class="row text-truncate">
+            <a class="text-decoration-none" href="/papers/details/{{PaperID}}">
               <h5 class="card-title text-dark mt-2">
                 {{Title}}
               </h5>
             </a>
           </div>
-          <div class="row">
-            <p class="text-truncate text-muted">
+          <div class="row text-truncate">
+            <p class="text-muted">
               {{Abstract}}
             </p>
           </div>
