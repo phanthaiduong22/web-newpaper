@@ -16,8 +16,8 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
     <link rel="stylesheet" href="/public/css/main.css" />
-    <title>GenZ</title>
     {{{_sections.css}}}
+    <title>GenZ</title>
   </head>
   <body>
     <!-- 
@@ -183,45 +183,7 @@
         <span id="demo" class="border rounded border-primary bg-primary"></span>
       </footer>
       <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-      <script>
-          const run = async function () { 
-            $.getJSON("/account/profile/getpremium/time", function (data) {
-              const date = data;
-              if(date.message) {
-                document.getElementById("demo").innerHTML = "EXPIRED";
-                return;
-              }
-              // Set the date we're counting down to
-              var countDownDate = date.GetPremiumAt + date.Time;
-
-              // Update the count down every 1 second
-              var x = setInterval(function() {
-                // Get today's date and time
-                var now = new Date().getTime();
-                  
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-                  
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                  
-                // Output the result in an element with id="demo"
-                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
-                  
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                  clearInterval(x);
-                  document.getElementById("demo").innerHTML = "EXPIRED";
-                }
-              }, 1000);
-            });
-          };
-        run();
-    </script>
+      <script src="/public/js/layouts/main.js"></script>
     
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"

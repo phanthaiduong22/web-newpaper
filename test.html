@@ -1,0 +1,103 @@
+<nav class="navbar navbar-expand-custom navbar-mainbg pr-2 display-1 mb-3">
+  <a class="navbar-brand navbar-logo" href="/">GenZ</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <i class="fas fa-bars text-white"></i>
+  </button>
+
+  <form method="POST" class="form-inline my-2 my-lg-0" action="/search">
+    <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
+    <button class="bg-transparent btn text-white text-center" type="submit"><i class="fa fa-lg fa-search  w-100"
+        aria-hidden="true"></i></button>
+  </form>
+  <form id="frmLogout" action="/account/logout" method="POST"></form>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto text-white">
+      <div class="hori-selector">
+        <div class="left"></div>
+        <div class="right"></div>
+      </div>
+      <li class="nav-item {{#if active.home}}active{{/if}}">
+        <a class="nav-link" href="/">
+          <i class="fa-lg fa fa-home " aria-hidden="true"></i> Home
+        </a>
+      </li>
+
+      <li class="nav-item {{#if active.categories}}active{{/if}}">
+        <a class="nav-link" href="{{#if admin}}/admin/categories{{else}}/papers/byCat/{{firstCatId}}{{/if}}">
+          <i class="fa-lg fa fa-list " aria-hidden="true"></i> Categories
+        </a>
+      </li>
+
+      <li class="nav-item {{#if active.tagManagement}}active{{/if}}">
+        <a class="nav-link" href="/tags">
+          <i class="fa-lg fa fa-tags" aria-hidden="true"></i> Tags
+        </a>
+      </li>
+      {{#if auth}}
+      {{#eq authUser.Role "admin"}}
+      <li class="nav-item {{#if active.adminUser}}active{{/if}}">
+        <a class="nav-link" href="/admin/users">
+          <i class="fa-lg fa fa-user" aria-hidden="true"></i> User Management
+        </a>
+      </li>
+      <li class="nav-item {{#if active.paperManagement}}active{{/if}}">
+        <a class="nav-link" href="/admin/papers">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Paper Management
+        </a>
+      </li>
+
+      {{/eq}}
+
+      {{#eq authUser.Role "editor"}}
+      <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
+        <a class="nav-link" href="/editor/management">
+          <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editor Management
+        </a>
+      </li>
+      {{/eq}}
+      {{#eq authUser.Role "writer"}}
+      <li class="nav-item {{#if active.writer}}active{{/if}}">
+        <a class="nav-link" href="/writer/management">
+          <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i> Writer Management
+        </a>
+      </li>
+      <li class="nav-item {{#if active.upload}}active{{/if}}">
+        <a class="nav-link" href="/writer/upload">
+          <i class="fa-lg fa fa-upload " aria-hidden="true"></i> Upload
+        </a>
+      </li>
+      {{/eq}}
+      <li class="nav-item {{#if active.profile}}active{{/if}}">
+        <a class="nav-link" href="/account/profile">
+          {{#if admin}}
+          <i class="fa-lg fa fa-user-secret" aria-hidden="true"></i>
+          {{else}}
+          <i class="fa-lg fa fa-user-circle" aria-hidden="true"></i>
+          {{/if}}
+
+          Hi, <b>{{authUser.Name}}</b>!
+        </a>
+      <li class="nav-item">
+        <a class="nav-link" href="javascript: $('#frmLogout').submit();">
+          <i class="fa-lg fa fa-sign-out " aria-hidden="true"></i>
+          Sign Out
+        </a>
+      </li>
+      {{else}}
+      <li class="nav-item {{#if active.register}}active{{/if}}">
+        <a class="nav-link" href="/account/register">
+          <i class="fa-lg fa fa-user-plus " aria-hidden="true"></i>
+          Register
+        </a>
+      </li>
+      <li class="nav-item {{#if active.login}}active{{/if}}">
+        <a class="nav-link" href="/account/login">
+          <i class="fa-lg fa fa-sign-in " aria-hidden="true"></i>
+          Sign in
+        </a>
+      </li>
+      {{/if}}
+    </ul>
+  </div>
+</nav>

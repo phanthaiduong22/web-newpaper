@@ -170,3 +170,41 @@ body {
     "Helvetica Neue", "Arial", "sans-serif", "Apple Color Emoji",
     "Segoe UI Emoji", "Segoe UI Symbol" !important;
 }
+
+@media (max-width: 992px) {
+  #navbar-responsive {
+    min-width: 85%;
+    justify-content: space-between;
+  }
+}
+
+@media (max-width: 620px) {
+  #navbar-responsive {
+    width: 100%;
+    flex-direction: column;
+  }
+
+  #search-form {
+    width: 95%;
+    display: flex;
+    align-self: center;
+  }
+
+  input[name="search"] {
+    flex: 1;
+  }
+
+  a.navbar-logo {
+    margin: auto;
+    font-size: 48px;
+  }
+
+  button.navbar-toggler {
+    display: none;
+  }
+
+  #navbarSupportedContent {
+    margin-top: 1rem;
+    display: block;
+  }
+}

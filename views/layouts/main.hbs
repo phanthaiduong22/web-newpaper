@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -15,173 +14,144 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
     />
-    <link rel="stylesheet" href="/public/vendor/open-iconic-master/font/css/open-iconic-bootstrap.css">
-    <link rel="stylesheet" href="/public/css/main.css"/>
+    <link
+      rel="stylesheet"
+      href="/public/vendor/open-iconic-master/font/css/open-iconic-bootstrap.css"
+    />
+    {{{_sections.css}}}
+    <link rel="stylesheet" href="/public/css/main.css" />
+
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
 
 
     <title>GenZ</title>
-    {{{_sections.css}}}
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-
   </head>
   <body class="pb-5">
-    <!-- 
-      NavBar
-    -->
-    <nav class="navbar navbar-expand-custom navbar-mainbg pr-2 display-1 mb-3">
-        <a class="navbar-brand navbar-logo" href="/">GenZ</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <i class="fas fa-bars text-white"></i>
-        </button>
-        {{!-- search --}}
-        <form method="POST" class="form-inline my-2 my-lg-0" action="/search">
-          <input class="form-control mr-sm-2" name="search" type="search" placeholder="Search" aria-label="Search">
-          <button class="bg-transparent btn text-white text-center" type="submit"><i class="fa fa-lg fa-search  w-100" aria-hidden="true"></i></button>
+
+    {{! Navbar  }}
+    <nav class="navbar navbar-expand-custom navbar-mainbg display-1 mb-3">
+      <a class="navbar-brand navbar-logo" href="/">GenZ</a>
+
+      <div id="navbar-responsive" class="d-flex"> 
+        <form id="search-form" method="POST" class="form-inline" action="/search">
+          <input class="form-control" name="search" type="search" placeholder="Search" aria-label="Search">
+          <button class="bg-transparent btn text-white text-center" type="submit"><i class="fa fa-lg fa-search  w-100"
+              aria-hidden="true"></i></button>
         </form>
-        <form id="frmLogout" action="/account/logout" method="POST"></form>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto text-white">
-                <div class="hori-selector"><div class="left"></div><div class="right"></div></div>
-                <li class="nav-item {{#if active.home}}active{{/if}}">
-                    <a class="nav-link" href="/">
-                    <i class="fa-lg fa fa-home " aria-hidden="true"></i> Home
-                </a>
-                </li>
-                
-                <li class="nav-item {{#if active.categories}}active{{/if}}">
-                    <a class="nav-link" href="{{#if admin}}/admin/categories{{else}}/papers/byCat/{{firstCatId}}{{/if}}">
-                    <i class="fa-lg fa fa-list " aria-hidden="true"></i> Categories
-                    </a>
-                </li> 
-                {{!--  --}}
-                   <li class="nav-item {{#if active.tagManagement}}active{{/if}}">
-                      <a class="nav-link" href="/tags">
-                        <i class="fa-lg fa fa-tags" aria-hidden="true"></i> Tags
-                      </a>
-                  </li>
-                {{#if auth}}
-                  {{#eq authUser.Role "admin"}}
-                  <li class="nav-item {{#if active.adminUser}}active{{/if}}">
-                      <a class="nav-link" href="/admin/users">
-                        <i class="fa-lg fa fa-user" aria-hidden="true"></i> User Management
-                      </a>
-                  </li>
-                  <li class="nav-item {{#if active.paperManagement}}active{{/if}}">
-                      <a class="nav-link" href="/admin/papers">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Paper Management
-                      </a>
-                  </li>
-               
-                  {{/eq}}
-                  
-                  {{#eq authUser.Role "editor"}}
-                  <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
-                      <a class="nav-link" href="/editor/management">
-                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editor Management
-                      </a>
-                  </li>
-                  {{/eq}}
-                  {{#eq authUser.Role "writer"}}
-                  <li class="nav-item {{#if active.writer}}active{{/if}}">
-                      <a class="nav-link" href="/writer/management">
-                        <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i> Writer Management
-                      </a>
-                  </li>
-                  <li class="nav-item {{#if active.upload}}active{{/if}}">
-                    <a class="nav-link" href="/writer/upload">
-                      <i class="fa-lg fa fa-upload " aria-hidden="true"></i> Upload
-                    </a>
-                </li>
-                  {{/eq}}
-                <li class="nav-item {{#if active.profile}}active{{/if}}">
-                  <a class="nav-link" href="/account/profile">
-                    {{#if admin}}
-                      <i class="fa-lg fa fa-user-secret" aria-hidden="true"></i>
-                      {{else}} 
-                      <i class="fa-lg fa fa-user-circle" aria-hidden="true"></i>
-                    {{/if}}
-                    
-                    Hi, <b>{{authUser.Name}}</b>!
-                  </a>
-                <li class="nav-item">
-                    <a class="nav-link" href="javascript: $('#frmLogout').submit();">
-                      <i class="fa-lg fa fa-sign-out " aria-hidden="true"></i>
-                      Sign Out
-                    </a>
-                </li>
-                {{else}}
-                <li class="nav-item {{#if active.register}}active{{/if}}">
-                  <a class="nav-link" href="/account/register">
-                    <i class="fa-lg fa fa-user-plus " aria-hidden="true"></i>
-                    Register
-                  </a>
-                </li>
-                <li class="nav-item {{#if active.login}}active{{/if}}">
-                    <a class="nav-link" href="/account/login">
-                      <i class="fa-lg fa fa-sign-in " aria-hidden="true"></i>
-                      Sign in
-                    </a>
-                </li>
-                {{/if}}
-                {{!--  --}}
-            </ul>
-        </div>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <i class="fa fa-bars text-white" aria-hidden="true"></i>
+        </button>
+      </div>
+      
+      <form id="frmLogout" action="/account/logout" method="POST"></form>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto text-white">
+          <div class="hori-selector">
+            <div class="left"></div>
+            <div class="right"></div>
+          </div>
+          <li class="nav-item {{#if active.home}}active{{/if}}">
+            <a class="nav-link" href="/">
+              <i class="fa-lg fa fa-home " aria-hidden="true"></i> Home
+            </a>
+          </li>
 
+          <li class="nav-item {{#if active.categories}}active{{/if}}">
+            <a class="nav-link" href="{{#if admin}}/admin/categories{{else}}/papers/byCat/{{firstCatId}}{{/if}}">
+              <i class="fa-lg fa fa-list " aria-hidden="true"></i> Categories
+            </a>
+          </li>
+
+          <li class="nav-item {{#if active.tagManagement}}active{{/if}}">
+            <a class="nav-link" href="/tags">
+              <i class="fa-lg fa fa-tags" aria-hidden="true"></i> Tags
+            </a>
+          </li>
+          {{#if auth}}
+          {{#eq authUser.Role "admin"}}
+          <li class="nav-item {{#if active.adminUser}}active{{/if}}">
+            <a class="nav-link" href="/admin/users">
+              <i class="fa-lg fa fa-user" aria-hidden="true"></i> User Management
+            </a>
+          </li>
+          <li class="nav-item {{#if active.paperManagement}}active{{/if}}">
+            <a class="nav-link" href="/admin/papers">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i>Paper Management
+            </a>
+          </li>
+
+          {{/eq}}
+
+          {{#eq authUser.Role "editor"}}
+          <li class="nav-item {{#if active.editorManagement}}active{{/if}}">
+            <a class="nav-link" href="/editor/management">
+              <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editor Management
+            </a>
+          </li>
+          {{/eq}}
+          {{#eq authUser.Role "writer"}}
+          <li class="nav-item {{#if active.writer}}active{{/if}}">
+            <a class="nav-link" href="/writer/management">
+              <i class="fa fa-lg fa-pencil-square-o" aria-hidden="true"></i> Writer Management
+            </a>
+          </li>
+          <li class="nav-item {{#if active.upload}}active{{/if}}">
+            <a class="nav-link" href="/writer/upload">
+              <i class="fa-lg fa fa-upload " aria-hidden="true"></i> Upload
+            </a>
+          </li>
+          {{/eq}}
+          <li class="nav-item {{#if active.profile}}active{{/if}}">
+            <a class="nav-link" href="/account/profile">
+              {{#if admin}}
+              <i class="fa-lg fa fa-user-secret" aria-hidden="true"></i>
+              {{else}}
+              <i class="fa-lg fa fa-user-circle" aria-hidden="true"></i>
+              {{/if}}
+
+              Hi, <b>{{authUser.Name}}</b>!
+            </a>
+          <li class="nav-item">
+            <a class="nav-link" href="javascript: $('#frmLogout').submit();">
+              <i class="fa-lg fa fa-sign-out " aria-hidden="true"></i>
+              Sign Out
+            </a>
+          </li>
+          {{else}}
+          <li class="nav-item {{#if active.register}}active{{/if}}">
+            <a class="nav-link" href="/account/register">
+              <i class="fa-lg fa fa-user-plus " aria-hidden="true"></i>
+              Register
+            </a>
+          </li>
+          <li class="nav-item {{#if active.login}}active{{/if}}">
+            <a class="nav-link" href="/account/login">
+              <i class="fa-lg fa fa-sign-in " aria-hidden="true"></i>
+              Sign in
+            </a>
+          </li>
+          {{/if}}
+        </ul>
+      </div>
     </nav>
-    
-      {{{body}}}
+    {{{body}}}
 
-      <footer class="fixed-bottom text-right text-white">
-        <span id="demo" class="border rounded border-primary bg-primary"></span>
-      </footer>
-      <script>
-          const run = async function () { 
-            $.getJSON("/account/profile/getpremium/time", function (data) {
-              const date = data;
-              if(date.message) {
-                document.getElementById("demo").innerHTML = "EXPIRED";
-                return;
-              }
-              // Set the date we're counting down to
-              var countDownDate = date.GetPremiumAt + date.Time;
-
-              // Update the count down every 1 second
-              var x = setInterval(function() {
-                // Get today's date and time
-                var now = new Date().getTime();
-                  
-                // Find the distance between now and the count down date
-                var distance = countDownDate - now;
-                  
-                // Time calculations for days, hours, minutes and seconds
-                var days = Math.floor(distance / (1000 * 60 * 60 * 24));
-                var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-                var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-                  
-                // Output the result in an element with id="demo"
-                document.getElementById("demo").innerHTML = days + "d " + hours + "h "
-                + minutes + "m " + seconds + "s ";
-                  
-                // If the count down is over, write some text 
-                if (distance < 0) {
-                  clearInterval(x);
-                  document.getElementById("demo").innerHTML = "EXPIRED";
-                }
-              }, 1000);
-            });
-          };
-        run();
-    </script>
+    <footer class="fixed-bottom text-right text-white">
+      <span id="demo" class="border rounded border-primary bg-primary"></span>
+    </footer>
+    <script src="/public/js/layouts/main.js"></script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
       crossorigin="anonymous"
     ></script>
-    <script
-      src="/public/js/main.js"
-    ></script>
-    
+    <script src="/public/js/main.js"></script>
+
     {{{_sections.js}}}
   </body>
 </html>
