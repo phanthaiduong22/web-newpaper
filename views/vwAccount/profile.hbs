@@ -66,7 +66,7 @@
             {{err_message}}
           </div>
         {{/if}} 
-        <div class="card-body">
+        <div class="card-body pb-0">
           <div class="row">
             <div class="col-md-12">
               <h4>
@@ -79,14 +79,14 @@
             <div class="col-md-12">
               <form method="POST">
                 <div class="form-group row">
-                  <label for="name" class="col-4 col-form-label">
+                  <label for="name" class="col-md-4 col-sm-12 col-form-label">
                      {{#if writer}}
                       Pen Name
                     {{else}}
                       Name
                     {{/if}}
                   </label>
-                  <div class="col-8">
+                  <div class="col-md-8 col-sm-12">
                     <input
                       id="name"
                       name="name"
@@ -102,10 +102,10 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="email" class="col-4 col-form-label">
+                  <label for="email" class="col-md-4 col-sm-12 col-form-label">
                     Email
                   </label>
-                  <div class="col-8">
+                  <div class="col-md-8 col-sm-12">
                     <input
                       id="email"
                       name="email"
@@ -121,10 +121,10 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="dob" class="col-4 col-form-label">
+                  <label for="dob" class="col-md-4 col-sm-12 col-form-label">
                     Date of Birth.
                   </label>
-                  <div class="col-8">
+                  <div class="col-md-8 col-sm-12">
                     <input id="dobhidden" type="hidden" value="{{authUser.Dob}}">
                     <input
                       id="dob"
@@ -138,12 +138,10 @@
                   </div>
                 
                 </div>
-                <div class="form-group row">
-                  <div class="offset-4 col-8">
-                    <button name="submit" type="submit" class="btn btn-primary">
-                      Update My Profile <i class="ml-1 fa fa-pencil fa-lg" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                <div class="form-group d-flex justify-content-center">
+                  <button name="submit" type="submit" class="btn btn-primary">
+                    Update My Profile <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                  </button>
                 </div>
               </form>
             </div>
@@ -179,7 +177,7 @@
     {{else}}
       <div class="col-md-9 mt-md">
       <div class="card">
-        <div class="card-body">
+        <div class="card-body pb-0">
           <div class="row">
             {{#if err_message}}
               <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -201,10 +199,10 @@
             <div class="col-md-12">
               <form method="POST">
                 <div class="form-group row">
-                  <label for="name" class="col-4 col-form-label">
+                  <label for="name" class="col-md-4 col-sm-12 col-form-label">
                     Old Password
                   </label>
-                  <div class="col-8">
+                  <div class="col-md-8 col-sm-12">
                     <input
                       id="oldPassword"
                       name="oldPassword"
@@ -215,10 +213,10 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="email" class="col-4 col-form-label">
+                  <label for="email" class="col-md-4 col-sm-12 col-form-label">
                     New Password
                   </label>
-                  <div class="col-8">
+                  <div class="col-md-8 col-sm-12">
                     <input
                       id="newPassword"
                       name="newPassword"
@@ -229,10 +227,10 @@
                   </div>
                 </div>
                 <div class="form-group row">
-                  <label for="email" class="col-4 col-form-label">
+                  <label for="email" class="col-md-4 col-sm-12 col-form-label">
                     Confirm Password
                   </label>
-                  <div class="col-8">
+                  <div class="col-md-8 col-sm-12">
                     <input
                       id="confirmPassword"
                       name="confirmPassword"
@@ -242,12 +240,10 @@
                     />
                   </div>
                 </div>
-                <div class="form-group row">
-                  <div class="offset-4 col-8">
-                    <button name="submit" type="submit" class="btn btn-primary">
-                      Update Password <i class="ml-1 fa fa-pencil fa-lg" aria-hidden="true"></i>
-                    </button>
-                  </div>
+                <div class="form-group d-flex justify-content-center">
+                  <button name="submit" type="submit" class="btn btn-primary">
+                    Update Password <i class="fa fa-pencil fa-lg" aria-hidden="true"></i>
+                  </button>
                 </div>
               </form>
             </div>
