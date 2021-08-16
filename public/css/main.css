@@ -292,3 +292,9 @@ body {
     max-width: 720px;
   }
 }
+
+@media (min-width: 250px) and (max-width: 992px) {
+  .mt-xs-1 {
+    margin-top: 16px !important;
+  }
+}

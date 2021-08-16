@@ -20,11 +20,11 @@
     window.location.href = url; }) }
   </script>
 {{/section}}
-<div class="card">
+<div class="card mt-xs-1">
   <div class="card-body">
     {{#each this.papers}}
       <div class="row border-bottom py-3">
-        <div class="col-md-4 zoom">
+        <div class="col-lg-5 col-md-6 zoom">
           <a href="/papers/details/{{PaperID}}">
             <img
               src="/public/imgs/{{Avatar}}"
@@ -34,7 +34,7 @@
             />
           </a>
         </div>
-        <div class="col-md-8 mt-3 pr-lg-5 p-sm-4 p-sm">
+        <div class="col-lg-7 col-md-6 mt-3 pr-lg-5 p-sm-4 p-sm">
           <div class="row">
             <div class="badge">
               <a href="/papers/byCat/{{CatID}}">

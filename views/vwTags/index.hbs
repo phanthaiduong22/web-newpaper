@@ -48,44 +48,50 @@
               <td class="text-center">
                 {{Count}}
               </td>    
-                {{#eq ../authUser.Role "admin"}}
-              <td class="text-right">
-                <a
-                  class="btn btn-primary btn-sm"
-                  href="/tags/edit?id={{TagId}}"
-                  role="button"
-                  title="Edit"
-                >
-                  <i class="fa fa-pencil fa-2x w-100" aria-hidden="true">
-                  </i>
-                </a>
-              </td><td class="text-right">
-                <form method="POST">
-                  <input
-                    type="hidden"
-                    readonly
-                    class="form-control"
-                    id="txtTagId"
-                    name="TagId"
-                    value="{{TagId}}"
-                  />
-                  <input
-                    type="hidden"
-                    class="form-control"
-                    id="txtTagName"
-                    name="oldTagName"
-                    required
-                    autofocus
-                    value="{{TagName}}"
-                  />
-                  <button type="submit" class="btn btn-danger" formaction="/tags/del">
-                    <i class="fa fa-trash fa-lg w-100" aria-hidden="true"></i>
-
-                  </button>
-                </form>
-              </td>
-                {{/eq}}
-              
+              {{#eq ../authUser.Role "admin"}}
+                <td class="text-right">
+                  <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <i class="fa fa-cog" aria-hidden="true"></i>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                      <a
+                        class="dropdown-item"
+                        href="/tags/edit?id={{TagId}}"
+                        role="button"
+                        title="Edit"
+                      >
+                        Edit
+                      </a>
+                      <div class="dropdown-divider"></div>
+                      <form method="POST">
+                        <input
+                          type="hidden"
+                          readonly
+                          id="txtTagId"
+                          name="TagId"
+                          value="{{TagId}}"
+                        />
+                        <input
+                          type="hidden"
+                          id="txtTagName"
+                          name="oldTagName"
+                          required
+                          autofocus
+                          value="{{TagName}}"
+                        />
+                        <button class="dropdown-item" type="submit btn" formaction="/tags/del">
+                          Delete
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                  
+                </td>
+                <td class="text-right">
+                  
+                </td>
+              {{/eq}}
             </tr>
           {{/each}}
         </tbody>

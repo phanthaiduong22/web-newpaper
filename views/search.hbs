@@ -1,54 +1,98 @@
+{{#section "css"}}
+  <link
+    href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+    rel="stylesheet"
+    type="text/css"
+  />
+  <link rel="stylesheet" href="/public/css/details.css" />
+{{/section}}
+{{#section "js"}}
+  <script src="https://unpkg.com/@yaireo/tagify"></script>
+  <script
+    src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
+  ></script>
+  <script>
+    var input = document.querySelectorAll('input[name=tags]'); for(let i of
+    input) { new Tagify(i); } const tags =
+    document.querySelectorAll(".tagify__tag-text"); for(let tag of tags) {
+    tag.addEventListener('click', (e) => { e.preventDefault(); const tagName =
+    tag.innerHTML; const url = "/tags?name=" + encodeURIComponent(`${tagName}`);
+    window.location.href = url; }) }
+  </script>
+{{/section}}
 <div class="container mt-3">
   {{#if searchList}}
-    <h1>
+    <h5>
       Search for
-    </h1>
-  {{else}}
-    <h1>
-      No result
-    </h1>
-  {{/if}}
-  {{!  }}
-  {{#each this.searchList}}
-    <a
-      href="/papers/details/{{PaperID}}"
-      style="color: inherit; text-decoration:none;"
-      class="border-bottom"
-    >
-      <div class="row mb-1 zoom">
-        <div class="col-4" style="height: 18rem;">
-          <img
-            src="/public/imgs/{{Avatar}}"
-            class="img-thumbnail"
-            alt="Image"
-            style="width: 100%; max-height: 100%;"
-          />
-        </div>
-        <div class="col">
-          <i class="fa fa-calendar" aria-hidden="true"></i>
-          {{PublishDate}}
-          <i class="fa fa-eye fa-lg ml-2" aria-hidden="true">
-            {{Views}}
-          </i>
-          {{#if Premium}}
-            <i
-              class="fa fa-star fa-lg ml-2 text-primary"
-              aria-hidden="true"
-            ></i>
-          {{/if}}
-          <div class="row">
-            <h4 class="card-title text-dark ml-3">
-              <b>
-                {{Title}}
-              </b>
-            </h4>
+      {{content}}
+    </h5>
+    <div class="card container">
+      <div class="card-body">
+        {{#each this.searchList}}
+          <div class="row border-bottom py-3">
+            <div class="col-lg-4 col-md-6 col-sm-12 zoom">
+              <a href="/papers/details/{{PaperID}}">
+                <img
+                  src="/public/imgs/{{Avatar}}"
+                  class="img-category img-thumbnail"
+                  alt="{{Avatar}}"
+                  title="{{PaperTitle}}"
+                />
+              </a>
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12 mt-3 pr-lg-5">
+              <div class="row">
+                <div class="badge">
+                  <a href="/papers/byCat/{{CatID}}">
+                    {{CatName}}
+                    <i class="fa fa-long-arrow-right" aria-hidden="true">
+                      {{SubCatName}}
+                    </i>
+                  </a>
+                </div>
+                <div class="badge text-primary">
+                  <i class="fa fa-calendar" aria-hidden="true"></i>
+                  {{PublishDate}}
+                </div>
+                {{#if Premium}}
+                  <div class="badge">
+                    <i class="fa fa-star text-primary" aria-hidden="true"></i>
+                  </div>
+                {{/if}}
+              </div>
+              <div class="row text-truncate">
+                <a
+                  class="text-decoration-none"
+                  href="/papers/details/{{PaperID}}"
+                >
+                  <h5 class="card-title text-dark mt-2">
+                    {{Title}}
+                  </h5>
+                </a>
+              </div>
+              <div class="row text-truncate">
+                <p class="text-muted">
+                  {{Abstract}}
+                </p>
+              </div>
+              <div class="row">
+                <input
+                  class="d-inline-block"
+                  name="tags"
+                  value="{{Tags}}"
+                  readonly
+                />
+              </div>
+            </div>
           </div>
-          <p class="card-text">
-            {{Abstract}}
-          </p>
-        </div>
+        {{/each}}
+
       </div>
-    </a>
-  {{/each}}
-  {{!  }}
+    </div>
+  {{else}}
+    <h5>
+      No result
+    </h5>
+  {{/if}}
+
 </div>
