@@ -23,19 +23,18 @@
 <div class="card">
   <div class="card-body">
     {{#each this.papers}}
-      <div class="row border-bottom pt-3" style="height: 15rem;">
-        <div class="col-md-4 zoom" style="width: 18rem;">
+      <div class="row border-bottom py-3">
+        <div class="col-md-4 zoom">
           <a href="/papers/details/{{PaperID}}">
             <img
               src="/public/imgs/{{Avatar}}"
-              class="img-thumbnail"
+              class="img-category img-thumbnail"
               alt="{{Avatar}}"
               title="{{PaperTitle}}"
-              style="height: 12rem; width: 100%;"
             />
           </a>
         </div>
-        <div class="col-md-8 mt-3 pr-5">
+        <div class="col-md-8 mt-3 pr-lg-5 p-sm-4 p-sm">
           <div class="row">
             <div class="badge">
               <a href="/papers/byCat/{{CatID}}">

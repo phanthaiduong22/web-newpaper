@@ -134,7 +134,7 @@
     </nav>
   <div class="container-fluid mt-2">
     <div class="row">
-      <div class="col-3">
+      <div class="col-lg-3">
         <div class="card">
           <h4 class="card-header">
             Papers
@@ -147,14 +147,14 @@
                   <div class="row">
                     <a 
                       data-toggle="collapse" href="#collapseExample{{CatID}}" role="button" aria-expanded="false" aria-controls="collapseExample"
-                      class=" col-1 list-group-item list-group-item-action"
+                      class="col-1 list-group-item list-group-item-action"
                       id = "collapseExample{{CatID}}"
                       >
                       <i class="fa fa-caret-right" aria-hidden="true"></i>
                     </a>
                     <a 
                       href="/papers/byCat/{{CatID}}" role="button"
-                      class="col-10 list-group-item list-group-item-action border {{#eq ../SubCatActive 0}}{{#is ../CatActive CatID}}active{{/is}}{{/eq}}"
+                      class="col-9 list-group-item list-group-item-action border {{#eq ../SubCatActive 0}}{{#is ../CatActive CatID}}active{{/is}}{{/eq}}"
                       >
                         {{CatName}} {{../../SubCatActive}}
                       {{#if ProductCount}}
@@ -163,7 +163,7 @@
                     </a>
                   </div>
                   
-                  <div class="m-2">
+                  <div class="my-2">
                     <div class="collapse" id="collapseExample{{CatID}}">
                       {{!--  --}}
                       {{#each SubCategory}}
@@ -186,7 +186,7 @@
           </div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-lg-9">
         {{{body}}} 
       </div>
     </div>
