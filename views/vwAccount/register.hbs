@@ -11,7 +11,10 @@
   ></script>
   <script src="/public/js/account/register.js"></script>
 {{/section}}
-<div class="card container mt-5 mb-5" style="max-width: 500px">
+<div
+  class="card container mt-5 mb-5 register-responsive"
+  style="max-width: 560px"
+>
   {{#if err_message}}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <button
@@ -28,7 +31,7 @@
     </div>
   {{/if}}
   <h4 class="card-header border rounded bg-primary text-white text-center mt-3">
-    CREATE YOUR ACCOUNT
+    Registration Form
   </h4>
   <div class="card-body">
     <form id="frmRegister" method="POST">

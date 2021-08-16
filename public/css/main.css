@@ -199,9 +199,23 @@ body {
   .text-lg {
     font-size: 20px !important;
   }
-}
 
-@media (max-width: 620px) {
+  .mb-sm {
+    margin-bottom: 8px !important;
+  }
+
+  .mt-md {
+    margin-top: 16px !important;
+  }
+
+  .mt-lg {
+    margin-top: 24px !important;
+  }
+
+  .pb-lg {
+    padding-bottom: 36px !important;
+  }
+
   #navbar-responsive {
     width: 100%;
     flex-direction: column;
@@ -230,12 +244,28 @@ body {
     margin-top: 1rem;
     display: block;
   }
+
+  .paper-img-responsive img {
+    width: 100% !important;
+  }
 }
 
 @media (max-width: 576px) {
   .img-hotnews {
     width: 100% !important;
     height: 100% !important;
+  }
+
+  .register-responsive {
+    width: 90% !important;
+  }
+
+  .ml-zero {
+    margin-left: 0 !important;
+  }
+
+  .mr-zero {
+    margin-right: 0 !important;
   }
 }
 

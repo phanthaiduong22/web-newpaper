@@ -8,9 +8,9 @@
     center; pointer-events: none; color: #aaa; }
   </style>
 {{/section}}
-<div class="container-fluid h-100">
-  <div class="row justify-content-center align-items-center h-100">
-    <div class="col-sm-4 col-md-3">
+<div class="container-fluid">
+  <div class="row justify-content-center align-items-center h-100 w-100">
+    <div class="col-sm-10 col-lg-6 col-md-10">
       {{#if err_message}}
         <div
           class="alert alert-warning alert-dismissible fade show"
@@ -64,7 +64,7 @@
         <div class="form-group d-flex">
           <div class="mr-1">
             <a
-              class="btn btn-lg btn-outline-info btn-block"
+              class="btn btn-lg btn-outline-info btn-block text-md"
               href="/"
               role="button"
             >
@@ -72,9 +72,9 @@
               Home
             </a>
           </div>
-          <div>
+          <div class="mr-1">
             <a
-              class="btn btn-lg btn-outline-info btn-block"
+              class="btn btn-lg btn-outline-info btn-block text-md"
               href="/account/register"
               role="button"
             >
@@ -82,19 +82,22 @@
               Register
             </a>
           </div>
-          <div class="flex-fill ml-1">
-            <button class="btn btn-info btn-lg btn-block" type="submit">
+          <div class="flex-fill">
+            <button
+              id="signin-btn"
+              class="btn btn-info btn-lg btn-block text-md"
+              type="submit"
+            >
               <i class="fa fa-sign-in" aria-hidden="true"></i>
-              <b>
-                Sign in
-              </b>
+              <span>Login</span>
             </button>
           </div>
         </div>
-        <a class="text-center d-block" href="/account/resetpassword">
-          <u>
-            Forgot your password?
-          </u>
+        <a
+          class="text-center d-block font-weight-bold"
+          href="/account/resetpassword"
+        >
+          Forgot your password?
         </a>
       </form>
     </div>

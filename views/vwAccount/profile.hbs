@@ -40,7 +40,7 @@
           Dashboard
         </a>
         <a href="/account/profile/changepassword" class="list-group-item list-group-item-action {{#if changepassword}}active{{/if}}">
-          Change Password
+          Password
         </a>
         <a href="/account/profile/getpremium" class="list-group-item list-group-item-action {{#if getpremium}}active{{/if}}">
           Get Premium
@@ -50,7 +50,7 @@
     {{#if dashboard}}
     
     <div class="col-md-9">
-      <div class="card">
+      <div class="card mt-md">
         {{#if err_message}}
           <div class="alert alert-warning alert-dismissible fade show" role="alert">
             <button
@@ -152,7 +152,7 @@
       </div>
     </div>
     {{else if getpremium}}
-    <div class="col-md-9">
+    <div class="col-md-9 mt-md">
       <div class="card pl-3">
         <div class="card-body">
           <div class="row">
@@ -177,7 +177,7 @@
     </div>
    
     {{else}}
-      <div class="col-md-9">
+      <div class="col-md-9 mt-md">
       <div class="card">
         <div class="card-body">
           <div class="row">
