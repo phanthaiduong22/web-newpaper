@@ -45,7 +45,7 @@
     var input = document.querySelector('input[name=tags]'); new Tagify(input)
   </script>
 {{/section}}
-<div class="card p-5 border border-light rounded m-5">
+<div class="card p-lg-5 p-sm-2 border border-light rounded w-100">
   {{#if err_message}}
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
       <button
@@ -61,9 +61,9 @@
       {{err_message}}
     </div>
   {{/if}}
-  <h1 class="card-header">
+  <h5 class="card-header">
     Create A New Post
-  </h1>
+  </h5>
   <div class="card-body">
     <form method="POST" enctype="multipart/form-data">
       <input
@@ -153,9 +153,14 @@
             Tags:
           </h4>
         </label>
-        <input name="tags" value="" placeholder="write some tags" required />
+        <input
+          class="form-control-lg"
+          name="tags"
+          placeholder="write some tags"
+          required
+        />
       </div>
-      <br />
+
       <button type="submit" class="btn btn-success d-block mx-auto w-25">
         <i class="fa fa-upload fa-2x d-inline-block" aria-hidden="true"></i>
         <h4 class="d-inline-block">
