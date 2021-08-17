@@ -1,8 +1,8 @@
-<div class="card p-5">
+<div class="container p-md-5">
   <h4 class="card-header d-flex justify-content-between">
     Categories
     <a
-      class="btn btn-outline-success"
+      class="btn btn-outline-success text-sm"
       href="/admin/categories/add"
       role="button"
     >
@@ -64,7 +64,7 @@
               <td class="text-right">
                 <div class="dropdown">
                   <a
-                    class="btn btn-secondary dropdown-toggle"
+                    class="btn btn-sm btn-secondary dropdown-toggle"
                     href="#"
                     role="button"
                     id="dropdownMenuLink"
@@ -76,22 +76,22 @@
                   </a>
                   <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
                     <a
-                      class="dropdown-item"
+                      class="dropdown-item text-sm"
                       href="/admin/categories/edit?id={{CatID}}"
                     >
-                      Edit Main Category
+                      Edit Main
                     </a>
                     <a
                       href="/admin/categories/{{CatID}}/addSubCategory"
-                      class="dropdown-item"
+                      class="dropdown-item text-sm"
                     >
-                      Add Sub Category
+                      Add Sub
                     </a>
                     <a
-                      class="dropdown-item"
+                      class="dropdown-item text-sm"
                       href="/admin/categories/{{CatID}}/subCategories"
                     >
-                      Edit Sub Category
+                      Edit Sub
                     </a>
                   </div>
                 </div>

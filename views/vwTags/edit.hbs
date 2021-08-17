@@ -44,11 +44,15 @@
         />
         <input type="hidden" value="{{this.tag.TagName}}" name="oldTagName" />
       </div>
-      <a class="btn btn-primary" href="/tags/" role="button">
+      <a class="btn btn-primary mb-2" href="/tags/" role="button">
         <i class="fa fa-backward" aria-hidden="true"></i>
         Back to List
       </a>
-      <button type="submit" class="btn btn-success" formaction="/tags/patch">
+      <button
+        type="submit"
+        class="btn btn-success mb-2"
+        formaction="/tags/patch"
+      >
         <i class="fa fa-check" aria-hidden="true"></i>
         Save
       </button>

@@ -1,4 +1,4 @@
-<div class="card p-5">
+<div class="container-fluid p-sm-5">
   <h4 class="card-header d-flex justify-content-between">
     Tags
     {{#eq authUser.Role "admin"}}
@@ -8,94 +8,83 @@
       </a>
     {{/eq}}
   </h4>
-  <div class="card-body">
+  <div>
     {{#if this.empty}}
       <h5 class="card-title">
         No data!
       </h5>
     {{else}}
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th class="text-center" scope="col">
-              #
-            </th>
-            <th scope="col">
-              Tag
-               {{{sortable "TagName" _sort}}}
-            </th>
-            <th scope="col" class="text-center">
-              Count
-              {{{sortable "Count" _sort}}}
-            </th>
-            {{#if admin}}
-              <th scope="col"></th>
-              <th scope="col"></th>
-            {{/if}}
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.tags}}
-            <tr>
-              <td class="text-center" scope="row">
-                {{sum @index 1}}
-              </td>
-              <td>
-                <a href="/tags/find/{{TagId}}">
-                  {{TagName}}
-                </a>
-              </td>    
-              <td class="text-center">
-                {{Count}}
-              </td>    
-              {{#eq ../authUser.Role "admin"}}
-                <td class="text-right">
-                  <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="fa fa-cog" aria-hidden="true"></i>
+    <div class="row mb-2">
+      <div class="col-1 text-center">
+        <b>#</b>
+      </div>
+      <div class="col">
+        <b>Tag</b>
+        {{{sortable "TagName" _sort}}}
+      </div>
+      <div class="col text-center">
+        <b>Count</b>
+        {{{sortable "Count" _sort}}}
+      </div>
+      {{#if admin}}
+        <div class="col"></div>
+      {{/if}}
+    </div>
+      {{#each this.tags}}
+        <div class="row mb-2">
+          <div class="col-1 text-center">
+            {{sum @index 1}}
+          </div>
+          <div class="col">
+            <a href="/tags/find/{{TagId}}">
+              {{TagName}}
+            </a>
+          </div>    
+          <div class="col text-center">
+            {{Count}}
+          </div>    
+          {{#eq ../authUser.Role "admin"}}
+            <div class="col text-center">
+              <div class="dropdown">
+                <button class="btn-sm btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  <i class="fa fa-cog" aria-hidden="true"></i>
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                  <a
+                    class="dropdown-item text-sm"
+                    href="/tags/edit?id={{TagId}}"
+                    role="button"
+                    title="Edit"
+                  >
+                    Edit
+                  </a>
+                  <div class="dropdown-divider"></div>
+                  <form method="POST">
+                    <input
+                      type="hidden"
+                      readonly
+                      id="txtTagId"
+                      name="TagId"
+                      value="{{TagId}}"
+                    />
+                    <input
+                      type="hidden"
+                      id="txtTagName"
+                      name="oldTagName"
+                      required
+                      autofocus
+                      value="{{TagName}}"
+                    />
+                    <button class="dropdown-item text-sm" type="submit btn" formaction="/tags/del">
+                      Delete
                     </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a
-                        class="dropdown-item"
-                        href="/tags/edit?id={{TagId}}"
-                        role="button"
-                        title="Edit"
-                      >
-                        Edit
-                      </a>
-                      <div class="dropdown-divider"></div>
-                      <form method="POST">
-                        <input
-                          type="hidden"
-                          readonly
-                          id="txtTagId"
-                          name="TagId"
-                          value="{{TagId}}"
-                        />
-                        <input
-                          type="hidden"
-                          id="txtTagName"
-                          name="oldTagName"
-                          required
-                          autofocus
-                          value="{{TagName}}"
-                        />
-                        <button class="dropdown-item" type="submit btn" formaction="/tags/del">
-                          Delete
-                        </button>
-                      </form>
-                    </div>
-                  </div>
-                  
-                </td>
-                <td class="text-right">
-                  
-                </td>
-              {{/eq}}
-            </tr>
-          {{/each}}
-        </tbody>
-      </table>
+                  </form>
+                </div>
+              </div>
+            </div>
+          {{/eq}}
+        </div>
+      {{/each}}
     {{/if}}
   </div>
 </div>
