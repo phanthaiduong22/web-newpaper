@@ -55,7 +55,7 @@
       {{err_message}}
     </div>
   {{/if}}
-  <h5 class="card-header">
+  <h5 class="card-header text-md">
     Create A New Post
   </h5>
   <div class="card-body">
@@ -68,7 +68,7 @@
       />
       <div class="form-group">
         <label for="txtTitle">
-          <h4>
+          <h4 class="text-md">
             Title
           </h4>
         </label>
@@ -83,7 +83,7 @@
       </div>
       <div class="form-group">
         <label for="txtAbstract">
-          <h4>
+          <h4 class="text-md">
             Abstract
           </h4>
         </label>
@@ -98,7 +98,7 @@
       </div>
       <div class="form-group">
         <label for="txtAvatar">
-          <h4>
+          <h4 class="text-md">
             Avatar Photo
           </h4>
         </label>
@@ -112,7 +112,7 @@
       </div>
       <div class="form-group">
         <label for="txtContent">
-          <h4>
+          <h4 class="text-md">
             Content
           </h4>
         </label>
@@ -125,14 +125,14 @@
       </div>
       <div class="form-group">
         <label for="sub_categories">
-          <h4>
+          <h4 class="text-md">
             Choose a sub categories:
           </h4>
         </label>
         <select
           id="sub_categories"
           name="sub_categories"
-          class="custom-select custom-select-lg"
+          class="custom-select custom-select-lg text-md"
         >
           {{#each this.sub_categories}}
             <option value="{{SubCatID}}">
@@ -143,12 +143,12 @@
       </div>
       <div class="form-group">
         <label for="txtContent">
-          <h4>
+          <h4 class="text-md">
             Tags:
           </h4>
         </label>
         <input
-          class="form-control-lg"
+          class="form-control-lg text-md"
           name="tags"
           placeholder="write some tags"
           required
@@ -157,7 +157,7 @@
 
       <button type="submit" class="btn btn-success d-block mx-auto w-50">
         <i class="fa fa-upload fa-2x d-inline-block" aria-hidden="true"></i>
-        <h4 class="d-inline-block">
+        <h4 class="d-inline-block text-md">
           Upload
         </h4>
       </button>

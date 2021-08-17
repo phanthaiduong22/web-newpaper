@@ -78,7 +78,7 @@
     </div>
   {{/if}}
   <div class="row">
-    <div class="col-3">
+    <div class="col-md-5 col-sm-6 mb-2">
       <img
         src="/public/imgs/{{this.paper.Avatar}}"
         class="
@@ -88,24 +88,23 @@
         alt="image-paper"
       />
     </div>
-    <div class="col">
-      <h2 class="card-title">
-        <b>
+    <div class="col-md-7 col-sm-6">
+      <h4 class="card-title text-justify text-lg">
           {{this.paper.Title}}
-        </b>
-      </h2>
+      </h4>
         <div class="container">
           <div class="row">
-            <label><b>Paper's Status:</b> {{this.paper.Status}}</label>
+            <b class="pr-1">Status:</b> <i>{{this.paper.Status}}</i>
           </div>
         </div>
-       
     </div>
   </div>
-  <div class="row m-3 border-top p-1">
+  <div class="row m-3 border-top p-0">
     <form method="POST" class="w-100" enctype="multipart/form-data">
       <div class="form-group">
-          <label for="txtTitle">Title</label>
+        <label for="txtTitle">
+          <h4 class="text-md">Title</h4>
+        </label>
           <input
             type="text"
             class="form-control"
@@ -117,19 +116,27 @@
           >
         </div>
         <div class="form-group">
-          <label for="txtAvatar" >Avatar Photo</label>
+          <label for="txtAvatar" >
+            <h4 class="text-md">Avatar Photo</h4>
+          </label>
           <input type="file" class="form-control" id="txtAvatar" name="avatar"/>
         </div>
         <div class="form-group">
-          <label for="txtAbstract">Abstract</label>
+          <label for="txtAbstract">
+            <h4 class="text-md">Abstract</h4>
+          </label>
           <textarea id="txtAbstract" name="abstract" rows="3" class="p-2" style="width: 100%" required>{{this.paper.Abstract}}</textarea>
         </div>
         <div class="form-group">
-          <label for="txtContent">Content</label>
+          <label for="txtContent">
+            <h4 class="text-md">Content</h4>
+          </label>
           <textarea id="txtContent" class="w-100" name="content" rows="20">{{this.paper.Content}}</textarea>
         </div>
         <div class="form-group">
-          <label for="sub_categories">Choose a sub categories:</label>
+          <label for="sub_categories">
+            <h4 class="text-md">Choose a sub categories:</h4>
+          </label>
           <select class="form-control" aria-label="Default select example" name="sub_categories">
             <option selected value={{this.paper.SubCatID}}>{{this.paper.SubCatName}}</option>
             {{#each this.sub_categories}}
@@ -138,7 +145,9 @@
           </select>
         </div>
         <div class="form-group">
-          <label for="txtContent">Tags</label>
+          <label for="txtContent">
+            <h4 class="text-md">Tags:</h4>
+          </label>
           <input name='tags' value='{{this.paper.Tags}}' placeholder='write some tags' required></input>
         </div>
         <button type="submit" class="btn btn-success">

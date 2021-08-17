@@ -103,18 +103,20 @@
                   </td>
                   <td class="col-md-1">
                     {{#isnt Status "Published"}}
-                      <form
-                        method="POST"
-                        action="/admin/papers/publish/{{PaperID}}"
-                      >
-                        <button
-                          type="submit"
-                          class="btn btn-success btn-sm btn-block text-sm"
-                          title="publish paper"
+                      {{#isnt Status "Rejected"}}
+                        <form
+                          method="POST"
+                          action="/admin/papers/publish/{{PaperID}}"
                         >
-                          Publish
-                        </button>
-                      </form>
+                          <button
+                            type="submit"
+                            class="btn btn-success btn-sm btn-block text-sm"
+                            title="publish paper"
+                          >
+                            Publish
+                          </button>
+                        </form>
+                      {{/isnt}}
                     {{/isnt}}
 
                     {{#eq Premium 0}}
@@ -159,11 +161,14 @@
                         class="dropdown-menu"
                         aria-labelledby="dropdownMenuLink"
                       >
-                        <a
-                          class="dropdown-item text-sm"
-                          href="/editor/management/paper/{{PaperID}}"
-                        >Edit as Editor</a>
-                        <div class="dropdown-divider"></div>
+                        {{#isnt Status "Published"}}
+                          <a
+                            class="dropdown-item text-sm"
+                            href="/editor/management/paper/{{PaperID}}"
+                          >Edit as Editor</a>
+                          <div class="dropdown-divider"></div>
+
+                        {{/isnt}}
                         <a
                           class="dropdown-item text-sm"
                           href="/writer/management/paper/{{PaperID}}"

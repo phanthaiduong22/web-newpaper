@@ -1,123 +1,133 @@
-
 {{#section "css"}}
-  <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+  <link
+    href="https://unpkg.com/@yaireo/tagify/dist/tagify.css"
+    rel="stylesheet"
+    type="text/css"
+  />
   <link rel="stylesheet" href="/public/css/details.css" />
-  <link rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.min.css"
+  />
 {{/section}}
 
 {{#section "js"}}
- <script src="https://unpkg.com/@yaireo/tagify"></script>
+  <script src="https://unpkg.com/@yaireo/tagify"></script>
   <script
     src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"
   ></script>
   <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js">
+    src="https://cdnjs.cloudflare.com/ajax/libs/jquery-datetimepicker/2.5.20/jquery.datetimepicker.full.min.js"
+  >
   </script>
   <script>
-    var input = document.querySelector('input[name=tags]');
-    new Tagify(input)
+    var input = document.querySelector('input[name=tags]'); new Tagify(input)
   </script>
-  <script>
-    //Get the button
-    var mybutton = document.getElementById("myBtn");
-
-    // When the user scrolls down 20px from the top of the document, show the button
-    window.onscroll = function() {scrollFunction()};
-
-    function scrollFunction() {
-      if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-        mybutton.style.display = "block";
-      } else {
-        mybutton.style.display = "none";
-      }
-    }
-
-    function hiddenTag(tagID) {
-      var x = document.getElementById(tagID);
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-        x.style.display = "none";
-      }
-    }
-
-    // When the user clicks on the button, scroll to the top of the document
-    function topFunction() {
-      document.body.scrollTop = 0;
-      document.documentElement.scrollTop = 0;
-    }
-
-    $('#txtDOB').datetimepicker({
-      format: 'd/m/Y',
-      timepicker: false,
-      mask: true
-    })
-  </script> 
+  <script src="/public/js/editor/management.js"></script>
 {{/section}}
 
-<div class="container card mt-5 p-2">
+<div class="container card mt-5 pt-3">
   <div class="row">
-    <div class="col-3">
+    <div class="col-md-6 mb-2">
       <img
         src="/public/imgs/{{this.paper.Avatar}}"
-        class="
-          img-thumbnail
-          ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}
-        "
+        class="img-thumbnail ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}"
         alt="image-paper"
       />
     </div>
-    <div class="col">
-      <h2 class="card-title">
-        <b>
-          {{this.paper.Title}}
-        </b>
-      </h2>
-      <form method="POST" action="/editor/management/paper/{{this.paper.PaperID}}">
+    <div class="col-md-6">
+      <h3 class="card-title">
+        {{this.paper.Title}}
+      </h3>
+      <form
+        method="POST"
+        action="/editor/management/paper/{{this.paper.PaperID}}"
+      >
         <div class="container">
-          <div class="row"> 
-            <label><b>Status:</b> {{this.paper.Status}}</label>
+          <div class="row">
+            <div class="form-group">
+              <b>Status:</b>
+              <i>{{this.paper.Status}}</i>
+            </div>
           </div>
           <div class="row">
             <div class="form-group">
-              <label for="txtName"><b>Date release:</b> {{this.paper.PublishDate}}</label>
-              <input type="text" class="form-control" id="txtDOB" name="raw_dob" value="{{this.paper.rawPublishDate}}" required/>
+              <label for="txtName"><b>Date Release:</b>
+                {{this.paper.PublishDate}}</label>
+              <input
+                type="text"
+                class="form-control"
+                id="txtDOB"
+                name="raw_dob"
+                value="{{this.paper.rawPublishDate}}"
+                required
+              />
             </div>
           </div>
           <div class="row">
             <div class="form-group" id="txtCategory">
-              <label for="txtName"><b>Categories</b> </label> <i class="fa fa-list" aria-hidden="true"></i>
-              <select class="form-control" aria-label="Default select example" name="sub_categories">
-                <option selected value={{this.paper.SubCatID}}>{{this.paper.SubCatName}}</option>
+              <label for="txtName"><b>Categories</b> </label>
+              <i class="fa fa-list" aria-hidden="true"></i>
+              <select
+                class="form-control"
+                aria-label="Default select example"
+                name="sub_categories"
+              >
+                <option
+                  selected
+                  value={{this.paper.SubCatID}}
+                >{{this.paper.SubCatName}}</option>
                 {{#each this.sub_categories}}
-                <option value="{{SubCatID}}">{{SubCatName}}</option>
+                  <option value="{{SubCatID}}">{{SubCatName}}</option>
                 {{/each}}
               </select>
             </div>
           </div>
         </div>
-      
+
         <div class="form-group">
-          <label for="txtName"><b>Tags</b></label>
-          <i class="fa fa-tags" aria-hidden="true"></i><input class="block" name="tags" value="{{this.paper.Tags}}"/>
+          <label for="txtName"><i class="fa fa-tags" aria-hidden="true"></i><b
+            >Tags:</b></label>
+          <input class="block" name="tags" value="{{this.paper.Tags}}" />
         </div>
         <div class="form-group">
-          <label for="txtComment"><i class="fa fa-comment" aria-hidden="true"></i> <b>Comment</b>:</label>
-          <textarea id="txtComment" class="p-2" name="editorComment" rows="3" style="width: 100%" required>{{this.paper.EditorComment}}</textarea>
+          <label for="txtComment"><i
+              class="fa fa-comment"
+              aria-hidden="true"
+            ></i>
+            <b>Comment</b>:</label>
+          <textarea
+            id="txtComment"
+            class="p-2"
+            name="editorComment"
+            rows="3"
+            style="width: 100%"
+            required
+          >{{this.paper.EditorComment}}</textarea>
         </div>
         <div class="row m-2">
-            <div id="buttons">
-              <input type="submit" class="btn btn-info m-2" name="accept" value="Accept">
-              <input type="submit" class="btn btn-danger" name="reject" value="Reject">
-            </div>
+          <div id="buttons">
+            <input
+              type="submit"
+              class="btn btn-primary mr-1"
+              name="accept"
+              value="Accept"
+            />
+            <input
+              type="submit"
+              class="btn btn-danger"
+              name="reject"
+              value="Reject"
+            />
+          </div>
         </div>
-      </form> 
+      </form>
     </div>
   </div>
-  <div class="row m-3 border-top p-1">
-    <div class="card-body">
+  <div class="row mt-3 border-top">
+    <div class="col card-body text-justify paper-img-responsive px-4">
       {{{this.paper.Content}}}
+    </div>
   </div>
 </div>
 
