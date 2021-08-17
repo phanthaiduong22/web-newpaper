@@ -8,9 +8,10 @@
     center; pointer-events: none; color: #aaa; }
   </style>
 {{/section}}
-<div class="container-fluid">
-  <div class="row justify-content-center align-items-center h-100 w-100 ml-1">
-    <div class="col-sm-12 col-lg-6 col-md-12">
+<div class="container-fluid d-flex flex-column justify-content-center h-100">
+
+  <div class="d-flex justify-content-center w-100">
+    <div class="">
       {{#if err_message}}
         <div
           class="alert alert-warning alert-dismissible fade show"
