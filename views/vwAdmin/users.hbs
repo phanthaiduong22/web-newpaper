@@ -100,7 +100,7 @@
                     <button type="submit" title="update" class="btn btn-outline-info ml-2"><i class="fa fa-arrow-circle-right fa-lg"></i></button>
                   </form> 
                 </td>
-                <td class="col-1">
+                <td class="col-1 text-center">
                    
                     <button
                   
@@ -117,6 +117,12 @@
                     </button>
            
                 </td>
+                <td>
+                  <!-- Button trigger modal -->
+                  <button type="button" data-id="{{UserID}}" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#extend">
+                    Extend Premium
+                  </button>
+                </td>
               </tr>
               {{/each}}
             {{!--  --}}
@@ -129,6 +135,32 @@
 </div>
 
 <form id="delete-user-form" method="POST" ></form>
+
+<!--Ẽxtend -->
+<div class="modal fade" id="extend" tabindex="-1" role="dialog" aria-labelledby="extendLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="extendLabel">Premium</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+        <form id="extend-form" method="POST" action="/account/profile/extend">
+          <div class="modal-body">
+              <div class="form-group">
+                <label class="text-primary" for="time">Extend in (minutes): </label>
+                <input class="form-control" type="number" id="time" name="extend" min="0" max="525600">
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button id="extend-btn" class="btn btn-primary">Submit</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+        </form>
+    </div>
+  </div>
+</div>
 
 
 <!-- Delete User Modal -->
