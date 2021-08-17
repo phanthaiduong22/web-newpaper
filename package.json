@@ -6,7 +6,8 @@
   "scripts": {
     "lint-staged": "prettier --single-quote --trailing-comma all  --tab-width 2 --write \"**/*.js\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect app.js",
+    "start": "nodemon app.js",
+    "debug": "nodemon --inspect app.js",
     "prepare": "husky install"
   },
   "keywords": [],

@@ -21,10 +21,10 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-body">
-          <h4 class="card-header d-flex justify-content-between">
+          <h4 class="card-header d-flex justify-content-between text-md">
             Manage Papers
             <a
-              class="btn btn-outline-success"
+              class="btn btn-outline-success text-sm"
               href="/writer/upload"
               role="button"
             >
@@ -38,19 +38,19 @@
             <thead>
               <tr>
                 <div class="row">
-                  <th scope="col" class="text-center font-medium">#</th>
-                  <th scope="col" class="text-center font-medium">Paper Title
+                  <th scope="col" class="text-center">#</th>
+                  <th scope="col" class="text-center text-sm">Paper Title
                     {{{sortable "Title" _sort}}}
                   </th>
-                  <th scope="col" class="text-center font-medium">Status
+                  <th scope="col" class="text-center text-sm">Status
                     {{{sortable "Status" _sort}}}
                   </th>
-                  <th scope="col" class="text-center font-medium">Publish Date
+                  <th scope="col" class="text-center text-sm">Publish Date
                     {{{sortable "PublishDate" _sort}}}
                   </th>
-                  <th scope="col" class="text-center font-medium">Comment</th>
-                  <th scope="col" class="text-center font-medium">Premium</th>
-                  <th scope="col">Options</th>
+                  <th scope="col" class="text-center text-sm">Comment</th>
+                  <th scope="col" class="text-center text-sm">Premium</th>
+                  <th scope="col" class="text-sm">Options</th>
                 </div>
 
               </tr>
@@ -59,48 +59,49 @@
               {{!  }}
               {{#each this.papers}}
                 <tr>
-                  <td class="text-center col-md-1">{{sum @index 1}}</td>
-                  <td class="col-md-5">
+                  <td class="text-center text-sm">{{sum @index 1}}</td>
+                  <td class="col-md-6">
                     {{#eq Status "Draft"}}
-                      <h5><a
-                          class="font-medium mb-0"
+                      <h5 class="text-justify"><a
+                          class="mb-0 text-sm"
                           href="/writer/management/paper/{{PaperID}}"
                         >{{Title}}</a></h5>
                     {{/eq}}
 
                     {{#eq Status "Rejected"}}
                       <h5><a
-                          class="font-medium mb-0"
+                          class="mb-0 text-sm"
                           href="/writer/management/paper/{{PaperID}}"
                         >{{Title}}</a></h5>
                     {{/eq}}
 
                     {{#eq Status "Accepted"}}
                       <h5><a
-                          class="font-medium mb-0"
+                          class="mb-0 text-sm"
                           href="/writer/management/paper/{{PaperID}}"
                         >{{Title}}</a></h5>
                     {{/eq}}
 
                     {{#eq Status "Published"}}
                       <h5><a
-                          class="font-medium mb-0"
+                          class="mb-0 text-sm"
                           href="/papers/details/{{PaperID}}"
                         >{{Title}}</a></h5>
                     {{/eq}}
                   </td>
-                  <td class="text-center col-md-2">
+                  <td class="text-center col-md-1 text-sm">
                     <span class="text-muted">{{Status}}</span><br />
                   </td>
-                  <td class="text-center col-md-2">
+                  <td class="text-center col-md-1">
 
-                    <span class="text-muted">{{PublishDate}}</span><br />
+                    <span class="text-muted text-sm">{{PublishDate}}</span><br
+                    />
 
                   </td>
-                  <td class="text-center col-md-2">
+                  <td class="text-center col-md-2 text-sm">
                     <span class="text-muted">{{EditorComment}}</span><br />
                   </td>
-                  <td>
+                  <td class="col-md-1">
                     {{#isnt Status "Published"}}
                       <form
                         method="POST"
@@ -108,7 +109,7 @@
                       >
                         <button
                           type="submit"
-                          class="btn btn-success btn-block"
+                          class="btn btn-success btn-sm btn-block text-sm"
                           title="publish paper"
                         >
                           Publish
@@ -124,7 +125,7 @@
                         >
                           <button
                             type="submit"
-                            class="btn btn-primary btn-block"
+                            class="btn btn-primary btn-sm btn-block text-sm"
                             title="Mark as premium paper"
                           >
                             Premium
@@ -141,10 +142,10 @@
                     {{/if}}
 
                   </td>
-                  <td>
+                  <td class="col-md-1">
                     <div class="dropdown">
                       <a
-                        class="btn btn-secondary dropdown-toggle"
+                        class="btn btn-secondary btn-sm dropdown-toggle"
                         href="#"
                         role="button"
                         id="dropdownMenuLink"
@@ -159,12 +160,12 @@
                         aria-labelledby="dropdownMenuLink"
                       >
                         <a
-                          class="dropdown-item"
+                          class="dropdown-item text-sm"
                           href="/editor/management/paper/{{PaperID}}"
                         >Edit as Editor</a>
                         <div class="dropdown-divider"></div>
                         <a
-                          class="dropdown-item"
+                          class="dropdown-item text-sm"
                           href="/writer/management/paper/{{PaperID}}"
                         >Edit as Writer</a>
                         <div class="dropdown-divider"></div>
@@ -175,7 +176,7 @@
                             action="/admin/papers/{{PaperID}}/unmark"
                           >
                             <button
-                              class="dropdown-item btn btn-danger"
+                              class="dropdown-item btn btn-danger text-sm"
                               type="submit"
                             >
                               Unmark Premium
@@ -189,7 +190,7 @@
                             action="/admin/papers/{{PaperID}}/depublish"
                           >
                             <button
-                              class="dropdown-item btn btn-danger"
+                              class="dropdown-item btn btn-danger text-sm"
                               type="submit"
                             >
                               DePublish
@@ -199,7 +200,7 @@
                         {{/eq}}
 
                         <button
-                          class="dropdown-item btn btn-danger"
+                          class="dropdown-item btn btn-danger text-sm"
                           type="button"
                           data-id="{{PaperID}}"
                           data-toggle="modal"
