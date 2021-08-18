@@ -16,90 +16,99 @@
         No data!
       </h5>
     {{else}}
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th class="text-center" scope="col">
-              #
-            </th>
-            <th scope="col">
-              Category
-              {{{sortable "CatName" _sort}}}
-            </th>
-            <th scope="col"></th>
-
-          </tr>
-        </thead>
-        <tbody>
-          {{#each this.categories}}
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
             <tr>
-              <td class="text-center" scope="row">
-                {{sum @index 1}}
-              </td>
-              <td class="">
-                <div class="dropdown">
-                  <a
-                    class="btn btn-info dropdown-toggle text-capitalize"
-                    href="/"
-                    role="button"
-                    id="dropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    {{CatName}}
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    {{#each SubCategory}}
-                      <a
-                        class="dropdown-item text-capitalize"
-                        href="/papers/bySubCat/{{SubCatID}}"
-                      >
-                        {{SubCatName}}
-                      </a>
-                    {{/each}}
-                  </div>
-                </div>
-              </td>
-              <td class="text-right">
-                <div class="dropdown">
-                  <a
-                    class="btn btn-sm btn-secondary dropdown-toggle"
-                    href="#"
-                    role="button"
-                    id="dropdownMenuLink"
-                    data-toggle="dropdown"
-                    aria-haspopup="true"
-                    aria-expanded="false"
-                  >
-                    <i class="fa fa-cog" aria-hidden="true"></i>
-                  </a>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <a
-                      class="dropdown-item text-sm"
-                      href="/admin/categories/edit?id={{CatID}}"
-                    >
-                      Edit Main
-                    </a>
-                    <a
-                      href="/admin/categories/{{CatID}}/addSubCategory"
-                      class="dropdown-item text-sm"
-                    >
-                      Add Sub
-                    </a>
-                    <a
-                      class="dropdown-item text-sm"
-                      href="/admin/categories/{{CatID}}/subCategories"
-                    >
-                      Edit Sub
-                    </a>
-                  </div>
-                </div>
-              </td>
+              <th class="text-center" scope="col">
+                #
+              </th>
+              <th scope="col">
+                Category
+                {{{sortable "CatName" _sort}}}
+              </th>
+              <th scope="col"></th>
+
             </tr>
-          {{/each}}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {{#each this.categories}}
+              <tr>
+                <td class="text-center" scope="row">
+                  {{sum @index 1}}
+                </td>
+                <td class="">
+                  <div class="dropdown">
+                    <a
+                      class="btn btn-info dropdown-toggle text-capitalize"
+                      href="/"
+                      role="button"
+                      id="dropdownMenuLink"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      {{CatName}}
+                    </a>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      {{#each SubCategory}}
+                        <a
+                          class="dropdown-item text-capitalize"
+                          href="/papers/bySubCat/{{SubCatID}}"
+                        >
+                          {{SubCatName}}
+                        </a>
+                      {{/each}}
+                    </div>
+                  </div>
+                </td>
+                <td class="text-right">
+                  <div class="dropdown">
+                    <a
+                      class="btn btn-sm btn-secondary dropdown-toggle"
+                      href="#"
+                      role="button"
+                      id="dropdownMenuLink"
+                      data-toggle="dropdown"
+                      aria-haspopup="true"
+                      aria-expanded="false"
+                    >
+                      <i class="fa fa-cog" aria-hidden="true"></i>
+                    </a>
+                    <div
+                      class="dropdown-menu"
+                      aria-labelledby="dropdownMenuLink"
+                    >
+                      <a
+                        class="dropdown-item text-sm"
+                        href="/admin/categories/edit?id={{CatID}}"
+                      >
+                        Edit Main
+                      </a>
+                      <a
+                        href="/admin/categories/{{CatID}}/addSubCategory"
+                        class="dropdown-item text-sm"
+                      >
+                        Add Sub
+                      </a>
+                      <a
+                        class="dropdown-item text-sm"
+                        href="/admin/categories/{{CatID}}/subCategories"
+                      >
+                        Edit Sub
+                      </a>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            {{/each}}
+          </tbody>
+        </table>
+      </div>
+
     {{/if}}
   </div>
 </div>

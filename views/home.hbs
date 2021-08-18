@@ -286,5 +286,79 @@
       </div>
     </div>
   {{/each}}
+
+  {{!  }}
+</div>
+
+<!-- Top 10 Categories -->
+<div class="container mt-2 mb-2 container-responsive">
+  <h1 class="border-bottom m-4 font-italic">
+    Top 10 Categories
+  </h1>
+  {{!  }}
+  {{#each this.top10}}
+    <div
+      class="paper-responsive d-flex mb-5 row ml-2 mr-2 border border-dashed border-light rounded p-2"
+    >
+      <div class="img-hotnews" style="width: 300px; height: 200px;">
+        <a href="/papers/details/{{PaperID}}">
+          <img
+            src="/public/imgs/{{Avatar}}"
+            class="img-thumbnail zoom"
+            alt="Image Paper"
+            style="max-height: 100%; width: 100%;"
+          />
+        </a>
+
+      </div>
+      <div class="col ml-md-4 ml-sm-2">
+        <div class="row">
+          <div class="badge text-primary text-sm">
+            <i class="fa fa-calendar fa-2x" aria-hidden="true"></i>
+            {{PublishDate}}
+          </div>
+          <div class="badge text-primary text-sm">
+            <i class="fa fa-eye fa-2x" aria-hidden="true"></i>
+            {{Views}}
+          </div>
+        </div>
+        <div class="row mt-2">
+          <a href="/papers/byCat/{{CatID}}">
+            <h5 class="text-primary text-md zoom">
+              {{CatName}}
+              <span style="font-size: 1rem;">
+                <i class="fa fa-long-arrow-right text-sm" aria-hidden="true">
+                  {{SubCatName}}
+                </i>
+              </span>
+            </h5>
+          </a>
+        </div>
+        <div class="row">
+          <h5 class="card-title text-dark text-justify">
+            <a
+              class="text-dark text-decoration-none text-md"
+              href="/papers/details/{{PaperID}}"
+            >
+              <b>
+                {{Title}}
+              </b>
+            </a>
+            {{#if Premium}}
+              <div class="badge">
+                <i class="fa fa-star text-primary" aria-hidden="true"></i>
+              </div>
+            {{/if}}
+          </h5>
+        </div>
+        <div class="responsive-desc-lg row text-sm">
+          <p class="text-muted text-justify">
+            {{Abstract}}
+          </p>
+        </div>
+      </div>
+    </div>
+  {{/each}}
+
   {{!  }}
 </div>

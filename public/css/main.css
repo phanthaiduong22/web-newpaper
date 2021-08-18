@@ -257,6 +257,13 @@ body {
   .img-category {
     height: 100% !important;
   }
+
+  .paper-title-responsive {
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-height: 120px !important;
+    min-width: 120px !important;
+  }
 }
 
 @media (max-width: 576px) {

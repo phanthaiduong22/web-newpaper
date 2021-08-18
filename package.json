@@ -32,6 +32,8 @@
     "nodemailer": "^6.6.3",
     "nodemon": "^2.0.7",
     "numeral": "^2.0.6",
+    "passport": "^0.4.1",
+    "passport-google-oauth": "^2.0.0",
     "pdfkit": "^0.12.1",
     "puppeteer": "^10.1.0",
     "socket.io": "^4.1.3",

@@ -33,24 +33,24 @@
             </a>
           </h4>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive px-4 mb-4">
           <table class="table border no-wrap user-table mb-0">
             <thead>
               <tr>
                 <div class="row">
                   <th scope="col" class="text-center">#</th>
-                  <th scope="col" class="text-center text-sm">Paper Title
+                  <th scope="col" class="text-center col-6 text-sm">Paper Title
                     {{{sortable "Title" _sort}}}
                   </th>
-                  <th scope="col" class="text-center text-sm">Status
+                  <th scope="col" class="text-center col-1 text-sm">Status
                     {{{sortable "Status" _sort}}}
                   </th>
-                  <th scope="col" class="text-center text-sm">Publish Date
+                  <th scope="col" class="text-center col-1 text-sm">Publish Date
                     {{{sortable "PublishDate" _sort}}}
                   </th>
-                  <th scope="col" class="text-center text-sm">Comment</th>
-                  <th scope="col" class="text-center text-sm">Premium</th>
-                  <th scope="col" class="text-sm"></th>
+                  <th scope="col" class="text-center col-2 text-sm">Comment</th>
+                  <th scope="col" class="text-center col-1 text-sm">Premium</th>
+                  <th scope="col" class="text-sm col-1"></th>
                 </div>
 
               </tr>
@@ -60,48 +60,48 @@
               {{#each this.papers}}
                 <tr>
                   <td class="text-center text-sm">{{sum @index 1}}</td>
-                  <td class="col-md-6">
+                  <td class="col-6">
                     {{#eq Status "Draft"}}
-                      <h5 class="text-justify"><a
-                          class="mb-0 text-sm"
+                      <p class="paper-title-responsive"><a
+                          class="text-justify mb-0 text-sm"
                           href="/writer/management/paper/{{PaperID}}"
-                        >{{Title}}</a></h5>
+                        >{{Title}}</a></p>
                     {{/eq}}
 
                     {{#eq Status "Rejected"}}
-                      <h5><a
-                          class="mb-0 text-sm"
+                      <p class="paper-title-responsive"><a
+                          class="text-justify mb-0 text-sm"
                           href="/writer/management/paper/{{PaperID}}"
-                        >{{Title}}</a></h5>
+                        >{{Title}}</a></p>
                     {{/eq}}
 
                     {{#eq Status "Accepted"}}
-                      <h5><a
-                          class="mb-0 text-sm"
+                      <p class="paper-title-responsive"><a
+                          class="text-justify mb-0 text-sm"
                           href="/writer/management/paper/{{PaperID}}"
-                        >{{Title}}</a></h5>
+                        >{{Title}}</a></p>
                     {{/eq}}
 
                     {{#eq Status "Published"}}
-                      <h5><a
-                          class="mb-0 text-sm"
+                      <p class="paper-title-responsive"><a
+                          class="text-justify mb-0 text-sm"
                           href="/papers/details/{{PaperID}}"
-                        >{{Title}}</a></h5>
+                        >{{Title}}</a></p>
                     {{/eq}}
                   </td>
-                  <td class="text-center col-md-1 text-sm">
+                  <td class="text-center col-1 text-sm">
                     <span class="text-muted">{{Status}}</span><br />
                   </td>
-                  <td class="text-center col-md-1">
+                  <td class="text-center col-1">
 
                     <span class="text-muted text-sm">{{PublishDate}}</span><br
                     />
 
                   </td>
-                  <td class="text-center col-md-2 text-sm">
+                  <td class="text-center col-2 text-sm">
                     <span class="text-muted">{{EditorComment}}</span><br />
                   </td>
-                  <td class="col-md-1">
+                  <td class="col-1">
                     {{#isnt Status "Published"}}
                       {{#isnt Status "Rejected"}}
                         <form
@@ -144,7 +144,7 @@
                     {{/if}}
 
                   </td>
-                  <td class="col-md-1">
+                  <td class="col-1">
                     <div class="dropdown">
                       <a
                         class="btn btn-secondary btn-sm dropdown-toggle"

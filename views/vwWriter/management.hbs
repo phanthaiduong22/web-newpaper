@@ -36,96 +36,155 @@
       {{err_message}}
     </div>
   {{/if}}
-  <div class="row">
-    <div class="col">
-      <div class="card-body bg-primary">
-        <h1 class="card-title mb-0 text-white text-center">List of Papers</h1>
-      </div>
-    </div>
-  </div>
-  <div class="row border-bottom mx-0">
-    <div
-      class="py-2 text-center col-1 font-weight-bold d-flex justify-content-center align-items-center"
-    >#</div>
-    <div
-      class="py-2 text-center col-5 font-weight-bold d-flex justify-content-center align-items-center"
-    >Title</div>
-    <div class="py-2 text-center col-2 font-weight-bold d-flex">
-      <div class="dropdown show">
-        <a
-          class="btn border-light dropdown-toggle font-weight-bold"
-          href="#"
-          role="button"
-          id="dropdownMenuLink"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Status
-        </a>
+  {{! New }}
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body bg-primary">
+            <h3 class="card-title text-white text-center mb-0">List of Papers</h3>
+          </div>
+          <div class="table-responsive">
+            <table class="table border no-wrap user-table mb-0">
+              <thead>
+                <tr class="text-center">
+                  <th scope="col" class="border-0 font-medium pl-4">#</th>
+                  <th scope="col" class="border-0 font-medium">Paper Title
+                    {{{sortable "Title" _sort}}}
+                  </th>
+                  <th scope="col" class="border-0 font-medium">
+                    <div class="dropdown show">
+                      <a
+                        class="btn border-light dropdown-toggle font-weight-bold"
+                        href="#"
+                        role="button"
+                        id="dropdownMenuLink"
+                        data-toggle="dropdown"
+                        aria-haspopup="true"
+                        aria-expanded="false"
+                      >
+                        Status
+                      </a>
 
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" href="/writer/management">All</a>
-          <a class="dropdown-item" href="?status=Published">Published</a>
-          <a class="dropdown-item" href="?status=Draft">Draft</a><a
-            class="dropdown-item"
-            href="?status=Accepted"
-          >Accepted</a><a
-            class="dropdown-item"
-            href="?status=Rejected"
-          >Rejected</a>
+                      <div
+                        class="dropdown-menu"
+                        aria-labelledby="dropdownMenuLink"
+                      >
+                        <a
+                          class="dropdown-item"
+                          href="/writer/management"
+                        >All</a>
+                        <a
+                          class="dropdown-item"
+                          href="?status=Published"
+                        >Published</a>
+                        <a
+                          class="dropdown-item"
+                          href="?status=Draft"
+                        >Draft</a><a
+                          class="dropdown-item"
+                          href="?status=Accepted"
+                        >Accepted</a><a
+                          class="dropdown-item"
+                          href="?status=Rejected"
+                        >Rejected</a>
+                      </div>
+                    </div>
+                  </th>
+                  <th scope="col" class="border-0 font-medium">Publish Date
+                    {{{sortable "PublishDate" _sort}}}
+                  </th>
+                  <th scope="col" class="border-0 font-medium">Comment</th>
+                </tr>
+              </thead>
+              <tbody>
+                {{!  }}
+                {{#each this.papers}}
+                  <tr>
+                    <td class="pl-4">{{@index}}</td>
+                    <td class="col-md-6">
+                      {{#eq Status "Draft"}}
+                        <p class="text-justify paper-title-responsive"><a
+                            class="font-medium mb-0"
+                            href="/writer/management/paper/{{PaperID}}"
+                          >{{Title}}</a></p>
+                      {{/eq}}
+
+                      {{#eq Status "Rejected"}}
+                        <p class="text-justify paper-title-responsive"><a
+                            class="font-medium mb-0"
+                            href="/writer/management/paper/{{PaperID}}"
+                          >{{Title}}</a></p>
+                      {{/eq}}
+
+                      {{#eq Status "Accepted"}}
+                        <p class="text-justify paper-title-responsive"><a
+                            class="font-medium mb-0"
+                            href="/writer/management/paper/{{PaperID}}"
+                          >{{Title}}</a></p>
+                      {{/eq}}
+
+                      {{#eq Status "Published"}}
+                        <p class="text-justify paper-title-responsive">
+                          <a
+                            class="font-medium mb-0"
+                            href="/papers/details/{{PaperID}}"
+                          >{{Title}}</a></p>
+                      {{/eq}}
+                    </td>
+                    <td class="col-md-1 text-center">
+                      <span class="text-muted">{{Status}}</span>
+                    </td>
+                    <td class="col-md-2 text-center">
+                      <span class="text-muted">{{PublishDate}}</span>
+                    </td>
+                    <td class="col-md-3">
+                      <span class="text-muted">{{EditorComment}}</span>
+                    </td>
+                  </tr>
+                {{else}}
+                  
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  </tr>
+                {{/each}}
+                {{!  }}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>
-    <div
-      class="py-2 text-center col-2 font-weight-bold d-flex justify-content-center align-items-center"
-    >Publish Date</div>
-    <div
-      class="py-2 text-center col-2 font-weight-bold d-flex justify-content-center align-items-center"
-    >Comment</div>
   </div>
-  {{#each this.papers}}
-    <div class="row border-bottom py-3">
-      <div class="text-center col-1">{{sum @index 1}}</div>
-      <div class="col-5">
-        {{#eq Status "Draft"}}
-          <h5 class="text-justify"><a
-              class="font-medium mb-0"
-              href="/writer/management/paper/{{PaperID}}"
-            >{{Title}}</a></h5>
-        {{/eq}}
-
-        {{#eq Status "Rejected"}}
-          <h5><a
-              class="font-medium mb-0"
-              href="/writer/management/paper/{{PaperID}}"
-            >{{Title}}</a></h5>
-        {{/eq}}
-
-        {{#eq Status "Accepted"}}
-          <h5><a
-              class="font-medium mb-0"
-              href="/writer/management/paper/{{PaperID}}"
-            >{{Title}}</a></h5>
-        {{/eq}}
-
-        {{#eq Status "Published"}}
-          <h5><a
-              class="font-medium mb-0"
-              href="/papers/details/{{PaperID}}"
-            >{{Title}}</a></h5>
-        {{/eq}}
-      </div>
-      <div class="col-2">
-        <span class="text-muted">{{Status}}
-        </span>
-      </div>
-      <div class="text-center col-2">
-        <span class="text-muted">{{PublishDate}}</span>
-      </div>
-      <div class="text-center col-2">
-        <span class="text-muted">{{EditorComment}}</span>
-      </div>
-    </div>
-  {{/each}}
 </div>
